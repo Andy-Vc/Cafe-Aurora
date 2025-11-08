@@ -1,0 +1,7 @@
+spring.datasource.url=jdbc:postgresql://YOUR-POOLER-URL:5432/postgres
+spring.datasource.username=postgres.YOUR-PROJECT-REF
+spring.datasource.password=YOUR_PASSWORD
+
+supabase.url=https://YOUR-PROJECT.supabase.co
+supabase.key=YOUR_ANON_KEY
+supabase.jwt.secret=YOUR_JWT_SECRET
