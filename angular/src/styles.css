@@ -1,0 +1,185 @@
+/* ============================= */
+/*           VARIABLES           */
+/* ============================= */
+:root {
+  /* Colores principales de la marca (Naranja Aurora) */
+  --color-accent: #ff6600; 
+  --color-accent-hover: #e55c00;
+  --success-color: #16a34a;
+  --error-color: #dc2626;
+  /* Modo Claro */
+  --light-bg-main: #fcfcfc;
+  --light-bg-sidebar: #f9f3e9; /* Crema/Blanco Roto */
+  --light-text-color: #333333;
+  --light-link-color: #4c2b00; /* Marrón Oscuro para enlaces */
+  --light-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+  
+  /* Modo Oscuro */
+  --dark-bg-main: #3a1a00; /* Fondo principal oscuro */
+  --dark-bg-sidebar: #2e1500; /* Sidebar aún más oscuro */
+  --dark-text-color: #f0e9e1; /* Texto Crema claro */
+  --dark-link-color: #ffffff;
+}
+
+/* ============================= */
+/*         ESTILOS BASE          */
+/* ============================= */
+.container-fluid {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ============================= */
+/*            BRANDING           */
+/* ============================= */
+.brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #d97706, #c2410c);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--light-text-color);
+}
+
+/* Modo oscuro para branding */
+.dark-mode .brand-name {
+  color: var(--dark-text-color);
+}
+
+/* ============================= */
+/*           SIDEBAR             */
+/* ============================= */
+.sidebar h5 {
+  font-weight: bold;
+  color: var(--color-accent) !important;
+}
+
+.submenu {
+  padding-left: 1rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.submenu.show {
+  max-height: 200px;
+}
+
+/* ============================= */
+/*           BOTONES             */
+/* ============================= */
+.btn-logout {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ============================= */
+/*           MODO CLARO          */
+/* ============================= */
+.light-mode {
+  background-color: var(--light-bg-main);
+  color: var(--light-text-color);
+}
+
+.light-mode .sidebar {
+  background-color: var(--light-bg-sidebar);
+  color: var(--light-link-color);
+  box-shadow: var(--light-shadow);
+}
+
+.light-mode .nav-link {
+  color: var(--light-link-color);
+}
+
+.light-mode .nav-link:hover,
+.light-mode .nav-link.active,
+.light-mode .submenu a:hover {
+  color: var(--color-accent);
+  background-color: rgba(255, 102, 0, 0.1);
+}
+
+.light-mode .btn-logout {
+  background-color: transparent;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.light-mode .btn-logout:hover {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* ============================= */
+/*           MODO OSCURO         */
+/* ============================= */
+.dark-mode {
+  background-color: var(--dark-bg-main);
+  color: var(--dark-text-color);
+}
+
+.dark-mode .sidebar {
+  background-color: var(--dark-bg-sidebar);
+  color: var(--dark-text-color);
+}
+
+.dark-mode h5,
+.dark-mode h2 {
+  color: var(--dark-text-color);
+}
+
+.dark-mode .nav-link {
+  color: var(--dark-text-color);
+}
+
+.dark-mode .nav-link:hover,
+.dark-mode .nav-link.active,
+.dark-mode .submenu a:hover {
+  color: var(--color-accent);
+  background-color: rgba(255, 102, 0, 0.15);
+}
+
+.dark-mode .submenu {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .btn-logout {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+.dark-mode .btn-logout:hover {
+  background-color: var(--color-accent-hover);
+}
+
+input[type="password"]::-webkit-password-toggle-button {
+  display: none;
+  -webkit-appearance: none;
+}
+
+input[type="password"]::-ms-reveal {
+  display: none;
+}
+
+textarea {
+  resize: none !important;       
+  overflow-y: auto !important;   
+}

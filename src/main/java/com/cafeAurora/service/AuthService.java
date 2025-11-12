@@ -47,7 +47,7 @@ public class AuthService {
         Map<String, Object> supabaseAuthRequest = new HashMap<>();
         supabaseAuthRequest.put("email", request.getEmail());
         supabaseAuthRequest.put("password", request.getPassword());
-        
+        supabaseAuthRequest.put("email_confirm", true); 
         // Metadata adicional para Supabase
         Map<String, String> userMetadata = new HashMap<>();
         userMetadata.put("name", request.getName());
@@ -90,6 +90,20 @@ public class AuthService {
 
             // 3. Retornar respuesta con token de Supabase
             Map<String, Object> session = (Map<String, Object>) responseBody.get("session");
+            if (session == null) {
+                // Obtener token iniciando sesión
+                Map<String, Object> loginRequest = Map.of(
+                    "email", request.getEmail(),
+                    "password", request.getPassword()
+                );
+                ResponseEntity<Map> loginResponse = restTemplate.exchange(
+                    supabaseUrl + "/auth/v1/token?grant_type=password",
+                    HttpMethod.POST,
+                    new HttpEntity<>(loginRequest, headers),
+                    Map.class
+                );
+                session = loginResponse.getBody();
+            }
             String accessToken = (String) session.get("access_token");
 
             return AuthResponse.builder()
@@ -98,7 +112,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .name(request.getName())
                 .role(clientRole.getNameRole())
-                .message("Usuario registrado exitosamente")
+                .message("Tu cuenta ha sido creada correctamente. ¡Bienvenido a Café Aurora!")
                 .build();
 
         } catch (Exception e) {
@@ -144,7 +158,7 @@ public class AuthService {
                 .name(user.getName())
                 .phone(user.getPhone())
                 .role(user.getRole().getNameRole())
-                .message("Login exitoso")
+                .message("Inicio de sesión exitoso. ¡Bienvenido de nuevo, " + user.getName() + "!")
                 .build();
 
         } catch (Exception e) {
