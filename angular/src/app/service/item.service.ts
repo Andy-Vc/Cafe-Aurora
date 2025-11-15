@@ -15,6 +15,11 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
+  getFeaturedItemsByCategory(idCat: number): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiUrl}/featured/category/${idCat}`);
+  }
+
+  /* Crud Items Services */
   getallItems(): void {
     this.http.get<Item[]>(`${this.apiUrl}/list`).subscribe({
       next: (data) => this.itemSubject.next(data),

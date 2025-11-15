@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from '../layout/admin/admin.component';
 import { CategoryCrudComponent } from './category-crud/category-crud.component';
 import { ItemCrudComponent } from './item-crud/item-crud.component';
+import { GalleryCrudComponent } from './gallery-crud/gallery-crud.component';
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
           },
         ],
       },
-      {
+       {
         path: 'item',
         children: [
           {
@@ -35,7 +36,17 @@ const routes: Routes = [
             data: { title: 'Productos' },
           },
         ],
-      } /*
+      },
+      {
+        path: 'gallery',
+        children: [
+          {
+            path: '',
+            component: GalleryCrudComponent,
+            data: { title: 'Galeria' },
+          },
+        ],
+      }/*
       {
         path: 'reportes',
         children : [

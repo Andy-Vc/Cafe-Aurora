@@ -15,6 +15,15 @@ export class CategoryService {
 
   constructor(private http: HttpClient) {}
 
+  allCategoriesActives(): void {
+    this.http.get<Category[]>(`${this.apiUrl}/listActives`)
+      .subscribe({
+        next: (data) => this.categoriesSubject.next(data),
+        error: (err) => console.error('Error fetching categories', err)
+      });
+  }
+
+  /*Crud Categories Services */
   allCategories(): void {
     this.http.get<Category[]>(`${this.apiUrl}/list`)
       .subscribe({

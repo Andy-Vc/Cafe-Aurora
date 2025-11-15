@@ -28,7 +28,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ItemController {
     private final ItemService itemService;
+    
+    @GetMapping("/featured/category/{idCategory}")
+    public ResponseEntity<?> getFeaturedByCategory(@PathVariable Integer idCategory) {
+        try {
+            List<Item> featured = itemService.getFeaturedByCategory(idCategory);
 
+            if (featured.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No hay productos destacados en la categoría " + idCategory);
+            }
+
+            return ResponseEntity.ok(featured);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al obtener productos destacados");
+        }
+    }
+    
+    /* Crud endpoints */
     @GetMapping("/list")
 	public List<Item> listAllitems(){
 		return itemService.getAllItems();

@@ -15,7 +15,6 @@ import { AuthService } from '../../service/auth.service';
   imports: [
     RouterOutlet,
     CommonModule,
-    RouterOutlet,
     RouterLink,
     RouterLinkWithHref,
     RouterLinkActive,

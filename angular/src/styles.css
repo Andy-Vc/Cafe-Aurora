@@ -13,10 +13,11 @@
   --light-text-color: #333333;
   --light-link-color: #4c2b00; /* Marrón Oscuro para enlaces */
   --light-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-  
+  --light-amber:  rgb(217, 119, 6);
   /* Modo Oscuro */
   --dark-bg-main: #3a1a00; /* Fondo principal oscuro */
   --dark-bg-sidebar: #2e1500; /* Sidebar aún más oscuro */
+  --dark-bg-brown:#450a0a;
   --dark-text-color: #f0e9e1; /* Texto Crema claro */
   --dark-link-color: #ffffff;
 }
@@ -57,7 +58,6 @@
 .brand-name {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--light-text-color);
 }
 
 /* Modo oscuro para branding */

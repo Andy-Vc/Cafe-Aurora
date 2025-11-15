@@ -9,8 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cafeAurora.dto.ResultResponse;
 import com.cafeAurora.model.Item;
 import com.cafeAurora.repository.IItemRepository;
-
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,7 +20,12 @@ public class ItemService {
 	public List<Item> getAllItems() {
 		return itemRepository.findAllByOrderByIdItemAsc();
 	}
-
+	
+	public List<Item> getFeaturedByCategory(Integer idCategoria){
+		return itemRepository.findByCategoryIdCatAndIsFeaturedTrueAndIsAvailableTrueOrderByCreatedAtDesc(idCategoria);
+	}
+	
+	/* Crud Services Item*/
 	public Item getOne(Integer id) {
 		return itemRepository.findById(id).orElseThrow();
 	}
@@ -30,7 +33,7 @@ public class ItemService {
 	public ResultResponse createItem(Item item, MultipartFile image) throws IOException {
 
 		if (image != null && !image.isEmpty()) {
-			String imageUrl = cloudinaryService.uploadImage(image);
+			String imageUrl = cloudinaryService.uploadItemImage(image);
 			item.setImageUrl(imageUrl);
 		}
 		try {
@@ -53,21 +56,20 @@ public class ItemService {
 			if (oldImageUrl != null && !oldImageUrl.isEmpty()) {
 				cloudinaryService.deleteImage(oldImageUrl);
 			}
-
-			String newImageUrl = cloudinaryService.uploadImage(image);
+			String newImageUrl = cloudinaryService.uploadItemImage(image);
 			item.setImageUrl(newImageUrl);
 		}
 
 		try {
 			Item existingItem = itemRepository.findByName(item.getName());
-	        if (existingItem != null && !existingItem.getIdItem().equals(item.getIdItem())) {
-	            return new ResultResponse(false,
-	                    "El nombre del producto " + item.getName() + " ya existe en el sistema");
-	        }
+			if (existingItem != null && !existingItem.getIdItem().equals(item.getIdItem())) {
+				return new ResultResponse(false,
+						"El nombre del producto " + item.getName() + " ya existe en el sistema");
+			}
 
-	        String message = "Producto " + item.getName() + " actualizado correctamente";
-	        itemRepository.save(item);
-	        return new ResultResponse(true, message);
+			String message = "Producto " + item.getName() + " actualizado correctamente";
+			itemRepository.save(item);
+			return new ResultResponse(true, message);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResultResponse(false, e.getMessage());

@@ -25,6 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class CategoryController {
 	private final CategoryService categoryService;
 
+	@GetMapping("/listActives")
+	public List<Category> listAllCategoriesActives(){
+		return categoryService.getAllCategoriesActive();
+	}
+	/*Crud Controller*/
 	@GetMapping("/list")
 	public List<Category> listAllCategories(){
 		return categoryService.getAllCategories();

@@ -14,6 +14,11 @@ import lombok.RequiredArgsConstructor;
 public class CategoryService {
 	private final ICategoryRepository categoryRepository;
 
+	public List<Category> getAllCategoriesActive(){
+		return categoryRepository.findAllByIsActiveTrue();
+	}
+	
+	/*Crud Service*/
 	public List<Category> getAllCategories() {
 		return categoryRepository.findAllByOrderByIdCatAsc();
 	}

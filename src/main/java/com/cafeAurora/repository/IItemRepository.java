@@ -11,5 +11,7 @@ import com.cafeAurora.model.Item;
 public interface IItemRepository extends JpaRepository<Item, Integer>{
 	Item findByName(String nombre);
 	List<Item> findAllByOrderByIdItemAsc();
-
+	/*Filtro menu impelemtnar en el servicio*/
+	List<Item> findByCategoryIdCatAndIsAvailableTrue(Integer idCat);
+	List<Item> findByCategoryIdCatAndIsFeaturedTrueAndIsAvailableTrueOrderByCreatedAtDesc(Integer idCat);
 }

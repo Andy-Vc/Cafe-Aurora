@@ -1,7 +1,6 @@
 import Swal from 'sweetalert2';
 
 export class AlertService {
-  
   static success(message: string, title = 'Éxito') {
     Swal.fire({
       icon: 'success',
@@ -36,19 +35,18 @@ export class AlertService {
       icon: 'error',
       title: 'Error',
       text: message,
-      confirmButtonText: 'OK'
+      confirmButtonText: 'OK',
     });
   }
 
   static confirm(message: string, title = 'Confirmar'): Promise<any> {
-  return Swal.fire({
-    icon: 'question',
-    title,
-    text: message,
-    showCancelButton: true,
-    confirmButtonText: 'Sí',
-    cancelButtonText: 'No',
-  });
-}
-
+    return Swal.fire({
+      icon: 'question',
+      title,
+      text: message,
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+    });
+  }
 }

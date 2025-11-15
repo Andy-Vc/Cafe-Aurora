@@ -12,4 +12,5 @@ import com.cafeAurora.model.Category;
 public interface ICategoryRepository extends JpaRepository<Category, Integer> {
 	Category findByNameCat(String nombre);
 	List<Category> findAllByOrderByIdCatAsc();
+	List<Category> findAllByIsActiveTrue();
 }

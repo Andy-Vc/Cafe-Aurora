@@ -24,7 +24,7 @@ export class RoleRedirectService {
         break;
       case 'CUSTOMER':
       case 'C':
-        this.router.navigate(['/cliente/inicio']);
+        this.router.navigate(['/cliente/index']);
         break;
       default:
         console.warn('Rol desconocido:', role);

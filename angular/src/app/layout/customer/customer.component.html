@@ -1,0 +1,178 @@
+<!-- layout.component.html -->
+<div class="public-layout" [class.dark-mode]="isDarkMode" [class.light-mode]="!isDarkMode">
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="brand-block" (click)="navigateToHome()">
+                    <div class="brand-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-coffee w-6 h-6 text-white" aria-hidden="true">
+                            <path d="M10 2v2"></path>
+                            <path d="M14 2v2"></path>
+                            <path
+                                d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1">
+                            </path>
+                            <path d="M6 2v2"></path>
+                        </svg>
+                    </div>
+                    <span class="brand-name">Café Aurora</span>
+                </div>
+
+                <ul class="nav-links">
+                    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+                    </li>
+                    <li><a routerLink="/menu" routerLinkActive="active">Menú</a></li>
+                    <li><a routerLink="/galeria" routerLinkActive="active">Galería</a></li>
+                    <li><a routerLink="/reserva" routerLinkActive="active">Reserva</a></li>
+                </ul>
+
+                <button class="theme-toggle" (click)="toggleTheme()" aria-label="Cambiar tema">
+                    <svg *ngIf="!isDarkMode" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                    </svg>
+                    <svg *ngIf="isDarkMode" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Section -->
+                <div class="footer-section">
+                    <div class="brand-block">
+                        <div class="brand-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-coffee w-6 h-6 text-white"
+                                aria-hidden="true">
+                                <path d="M10 2v2"></path>
+                                <path d="M14 2v2"></path>
+                                <path
+                                    d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1">
+                                </path>
+                                <path d="M6 2v2"></path>
+                            </svg>
+                        </div>
+                        <span class="brand-name">Café Aurora</span>
+                    </div>
+                    <p class="footer-tagline">Donde cada amanecer sabe mejor</p>
+                    <p class="footer-description">
+                        Un espacio donde la pasión por el café se encuentra con
+                        la calidez humana. Cada taza es una invitación a pausar y
+                        disfrutar el momento.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul class="contact-list">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>
+                            <span>Calle 85 #15-32, Chapinero, Bogotá</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                            <span>+57 1 234-5678</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                            <span>hola&#64;cafeaurora.co</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Horarios</h3>
+                    <ul class="hours-list">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <div>
+                                <strong>Lun - Vie</strong>
+                                <span>6:00 AM - 10:00 PM</span>
+                            </div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <div>
+                                <strong>Sáb - Dom</strong>
+                                <span>7:00 AM - 11:00 PM</span>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="social-links">
+                        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                            </svg>
+                        </a>
+                        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>
+                    © {{ currentYear }} Café Aurora. Hecho con
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                    </svg>
+                    en Bogotá, Colombia
+                </p>
+                <div class="footer-links">
+                    <a routerLink="/terminos">Términos de Servicio</a>
+                    <a routerLink="/privacidad">Política de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
