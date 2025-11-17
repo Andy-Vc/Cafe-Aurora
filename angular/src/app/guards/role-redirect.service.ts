@@ -45,7 +45,7 @@ export class RoleRedirectService {
         return '/recepcion/dashboard';
       case 'CUSTOMER':
       case 'C':
-        return '/cliente/inicio';
+        return '/cliente/index';
       default:
         return '/login';
     }

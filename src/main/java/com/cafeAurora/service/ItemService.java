@@ -17,8 +17,8 @@ public class ItemService {
 	private final IItemRepository itemRepository;
 	private final CloudinaryService cloudinaryService;
 
-	public List<Item> getAllItems() {
-		return itemRepository.findAllByOrderByIdItemAsc();
+	public List<Item> getItemsAvailableByCategory(Integer idCategoria) {
+		return itemRepository.findByCategoryIdCatAndIsAvailableTrue(idCategoria);
 	}
 	
 	public List<Item> getFeaturedByCategory(Integer idCategoria){
@@ -26,6 +26,10 @@ public class ItemService {
 	}
 	
 	/* Crud Services Item*/
+	public List<Item> getAllItems() {
+		return itemRepository.findAllByOrderByIdItemAsc();
+	}
+	
 	public Item getOne(Integer id) {
 		return itemRepository.findById(id).orElseThrow();
 	}

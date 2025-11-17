@@ -15,10 +15,10 @@
           </p>
           <div
             class="hero-buttons d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3 mb-5 animate-fade-in-delay-3">
-            <button class="btn btn-hero-primary" routerLink="/menu">
+            <button class="btn btn-hero-primary" routerLink="/cliente/menu">
               Ver Menú
             </button>
-            <button class="btn btn-hero-outline">
+            <button class="btn btn-hero-outline" routerLink="/cliente/reserva">
               Hacer Reserva
             </button>
           </div>
@@ -72,8 +72,8 @@
     <div class="text-center menu-header">
       <h2 class="menu-title">Nuestro Menú</h2>
       <p class="menu-subtitle">
-        Descubre nuestra selección cuidadosamente elaborada de cafés, tés,
-        pasteles artesanales y desayunos frescos
+        Conoce los productos más populares de cada categoría. Selecciona una y disfruta de nuestras mejores
+        recomendaciones.
       </p>
     </div>
 
@@ -84,45 +84,42 @@
       </button>
     </div>
 
-<div class="row g-4 menu-grid">
-  <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of items; let i = index">
-    <div class="menu-card" [style.animation-delay]="i * 0.1 + 's'">
-      
-      <div class="menu-card-image">
-        <img 
-          [src]="item.imageUrl || 'assets/images/placeholder-cafe.jpg'" 
-          [alt]="item.name"
-          class="menu-img"
-          loading="lazy">
-        
-        <div class="menu-badge" *ngIf="item.category">
-          <span>{{ item.category.nameCat }}</span>
-        </div>
-        <div class="menu-unavailable-badge" *ngIf="!item.isAvailable">
-          <span>No disponible</span>
-        </div>
-      </div>
-      <div class="menu-card-header">
-        <div class="d-flex justify-content-between align-items-start">
-          <h3 class="menu-card-title">{{ item.name }}</h3>
-          <span class="menu-card-price">S/ {{ item.price }}</span>
-        </div>
-      </div>
+    <div class="row g-4 menu-grid">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let item of items; let i = index">
+        <div class="menu-card" [style.animation-delay]="i * 0.1 + 's'">
 
-      <!-- Body con descripción -->
-      <div class="menu-card-body">
-        <p class="menu-card-description">{{ item.description }}</p>
+          <div class="menu-card-image">
+            <img [src]="item.imageUrl || 'assets/images/placeholder-cafe.jpg'" [alt]="item.name" class="menu-img"
+              loading="lazy">
+
+            <div class="menu-badge" *ngIf="item.category">
+              <span>{{ item.category.nameCat }}</span>
+            </div>
+            <div class="menu-unavailable-badge" *ngIf="!item.isAvailable">
+              <span>No disponible</span>
+            </div>
+          </div>
+          <div class="menu-card-header">
+            <div class="d-flex justify-content-between align-items-start">
+              <h3 class="menu-card-title">{{ item.name }}</h3>
+              <span class="menu-card-price">S/ {{ item.price }}</span>
+            </div>
+          </div>
+
+          <!-- Body con descripción -->
+          <div class="menu-card-body">
+            <p class="menu-card-description">{{ item.description }}</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
     <div class="text-center menu-cta">
       <div class="cta-box">
         <h3 class="cta-title">¿Listo para disfrutar?</h3>
         <p class="cta-description">
           Ven y vive la experiencia Aurora. Te esperamos con el mejor café de la ciudad.
         </p>
-        <button class="btn btn-cta">
+        <button class="btn btn-cta" routerLink="/cliente/reserva">
           Hacer Reserva
         </button>
       </div>
@@ -135,32 +132,24 @@
     <!-- Encabezado -->
     <div class="text-center galeria-header">
       <div class="d-flex align-items-center justify-content-center mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" 
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             class="camera-icon">
-          <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-          <circle cx="12" cy="13" r="3"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="camera-icon">
+          <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+          <circle cx="12" cy="13" r="3" />
         </svg>
         <h2 class="galeria-title mb-0">Galería</h2>
       </div>
       <p class="galeria-subtitle">
-        Conoce nuestro acogedor ambiente y los deliciosos productos que preparamos con amor
+        Explora nuestras mejores fotografías y descubre la esencia, el ambiente y los sabores que nos caracterizan.
       </p>
     </div>
 
     <div class="row g-4 galeria-grid">
       <div class="col-12 col-md-6 col-lg-4" *ngFor="let image of images; let i = index">
-        <div 
-          class="galeria-item" 
-          [style.animation-delay]="i * 0.1 + 's'"
-          (click)="openImage(i)">
-          
-          <img 
-            [src]="image.imageUrl" 
-            [alt]="image.title"
-            class="galeria-img"
-            loading="lazy">
-          
+        <div class="galeria-item" [style.animation-delay]="i * 0.1 + 's'" (click)="openImage(i)">
+
+          <img [src]="image.imageUrl" [alt]="image.title" class="galeria-img" loading="lazy">
+
           <div class="galeria-overlay">
             <div class="galeria-overlay-content">
               <span class="galeria-overlay-text">Ver imagen</span>
@@ -180,7 +169,7 @@
         <p class="cta-description">
           Cada foto cuenta una historia. Ven a crear la tuya en Café Aurora.
         </p>
-        <button class="btn btn-cta-galeria">
+        <button class="btn btn-cta-galeria" routerLink="/cliente/reserva">
           Visítanos
         </button>
       </div>
@@ -193,16 +182,10 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content bg-transparent border-0">
       <div class="modal-body p-0 position-relative">
-        <button 
-          type="button" 
-          class="btn-close btn-close-white position-absolute top-0 end-0 m-3" 
-          data-bs-dismiss="modal"
-          (click)="closeImage()">
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+          data-bs-dismiss="modal" (click)="closeImage()">
         </button>
-        <img 
-          [src]="images[selectedImage].imageUrl" 
-          [alt]="images[selectedImage].title"
-          class="w-100 rounded">
+        <img [src]="images[selectedImage].imageUrl" [alt]="images[selectedImage].title" class="w-100 rounded">
       </div>
     </div>
   </div>
@@ -221,18 +204,18 @@
         <div class="nosotros-text-content">
           <div class="nosotros-story">
             <div class="story-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" 
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 2v2"/>
-                <path d="M14 2v2"/>
-                <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/>
-                <path d="M6 2v2"/>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 2v2" />
+                <path d="M14 2v2" />
+                <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+                <path d="M6 2v2" />
               </svg>
             </div>
             <h3 class="story-title">Desde 2015</h3>
             <p class="story-text">
-              Café Aurora nació en el corazón de Chapinero con un sueño simple pero poderoso: 
-              crear un espacio donde cada amanecer traiga la promesa de un gran café y mejores momentos. 
+              Café Aurora nació en el corazón de Chapinero con un sueño simple pero poderoso:
+              crear un espacio donde cada amanecer traiga la promesa de un gran café y mejores momentos.
               Comenzamos como una pequeña cafetería familiar y hemos crecido gracias al amor de nuestra comunidad.
             </p>
           </div>
@@ -241,9 +224,10 @@
             <div class="col-12 col-sm-6">
               <div class="valor-card">
                 <div class="valor-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                      d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                   </svg>
                 </div>
                 <h4 class="valor-title">Pasión</h4>
@@ -254,12 +238,12 @@
             <div class="col-12 col-sm-6">
               <div class="valor-card">
                 <div class="valor-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                    <circle cx="9" cy="7" r="4"/>
-                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
                 </div>
                 <h4 class="valor-title">Comunidad</h4>
@@ -270,10 +254,11 @@
             <div class="col-12 col-sm-6">
               <div class="valor-card">
                 <div class="valor-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v20M2 12h20"/>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M2 12h20" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                   </svg>
                 </div>
                 <h4 class="valor-title">Calidad</h4>
@@ -284,10 +269,10 @@
             <div class="col-12 col-sm-6">
               <div class="valor-card">
                 <div class="valor-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
-                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
                   </svg>
                 </div>
                 <h4 class="valor-title">Sostenibilidad</h4>
@@ -302,10 +287,8 @@
       <div class="col-12 col-lg-6">
         <div class="nosotros-visual">
           <div class="nosotros-image-wrapper">
-            <img 
-              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=800&fit=crop" 
-              alt="Interior Café Aurora"
-              class="nosotros-image">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&h=800&fit=crop"
+              alt="Interior Café Aurora" class="nosotros-image">
             <div class="image-overlay">
               <div class="overlay-badge">
                 <span class="badge-number">9</span>
@@ -344,12 +327,12 @@
               <img [src]="member.image" [alt]="member.name" class="team-image">
               <div class="team-overlay">
                 <div class="team-social">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M10 2v2"/>
-                    <path d="M14 2v2"/>
-                    <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/>
-                    <path d="M6 2v2"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 2v2" />
+                    <path d="M14 2v2" />
+                    <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" />
+                    <path d="M6 2v2" />
                   </svg>
                 </div>
               </div>

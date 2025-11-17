@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +39,25 @@ public class ItemController {
             }
 
             return ResponseEntity.ok(featured);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al obtener productos destacados");
+        }
+    }
+    
+    @GetMapping("/available/category/{idCategory}")
+	public ResponseEntity<?> getItemsAvailableByCategory(@PathVariable Integer idCategory){
+    	try {
+            List<Item> itemsFilter = itemService.getItemsAvailableByCategory(idCategory);
+
+            if (itemsFilter.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No hay productos en la categoría " + idCategory);
+            }
+
+            return ResponseEntity.ok(itemsFilter);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import { CategoryService } from '../../service/category.service';
 import { ItemService } from '../../service/item.service';
 import { Gallery } from '../../shared/model/gallery.model';
 import { GalleryService } from '../../service/gallery.service';
+import { AdminRoutingModule } from "../../admin/admin-routing.module";
 declare var bootstrap: any;
 interface TeamMember {
   name: string;
@@ -14,7 +15,7 @@ interface TeamMember {
 }
 @Component({
   selector: 'app-index',
-  imports: [CommonModule],
+  imports: [CommonModule, AdminRoutingModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })

@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 4rem;
+  padding-top: 8rem;
   padding-bottom: 2rem;
   overflow: hidden;
   transition: background 0.5s ease;
@@ -398,7 +398,7 @@
 
 :host-context(.light-mode) .menu-section,
 :host-context(body:not(.dark-mode)) .menu-section {
-  background-color: #fcfcfc;
+  background-color: #FFFDFA;
 }
 
 :host-context(.dark-mode) .menu-section {
@@ -850,7 +850,7 @@
 
 :host-context(.light-mode) .galeria-section,
 :host-context(body:not(.dark-mode)) .galeria-section {
-  background-color: rgba(250, 250, 249, 0.3); /* muted/30 */
+  background-color: #FAF8F4;
 }
 
 :host-context(.dark-mode) .galeria-section {

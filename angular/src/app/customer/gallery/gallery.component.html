@@ -1,0 +1,137 @@
+<section class="gallery-hero">
+    <div class="container position-relative">
+        <div class="text-center hero-content">
+
+
+            <h1 class="hero-title">Nuestra Galería</h1>
+            <p class="hero-subtitle">
+                Conoce nuestro acogedor ambiente y los momentos especiales que vivimos cada día
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+    <div class="container">
+
+        <!-- Search Bar -->
+        <div class="search-wrapper mb-4">
+            <div class="search-box">
+                <i class="bi bi-search"></i>
+                <input type="text" class="form-control search-input" placeholder="Buscar en galería..."
+                    [(ngModel)]="searchTerm" (input)="applySearch()">
+                <button *ngIf="searchTerm" class="btn-clear" (click)="clearSearch()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div *ngIf="loading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div *ngIf="!loading && paginatedGalleries.length > 0" class="gallery-grid">
+            <div *ngFor="let gallery of paginatedGalleries; let i = index" class="gallery-item"
+                (click)="openGallery(gallery, i)">
+                <div class="gallery-image-wrapper">
+                    <img [src]="gallery.imageUrl" [alt]="gallery.title || 'Imagen de galería'" class="gallery-image"
+                        (error)="onImageError($event)" loading="lazy">
+
+                    <div class="gallery-overlay">
+                        <div class="gallery-info">
+                            <h3 class="gallery-title" *ngIf="gallery.title">{{ gallery.title }}</h3>
+                            <p class="gallery-description" *ngIf="gallery.description">
+                                {{ gallery.description }}
+                            </p>
+                            <button class="btn-view">
+                                <i class="bi bi-arrows-fullscreen me-2"></i>
+                                Ver imagen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!loading && paginatedGalleries.length === 0" class="no-results">
+            <i class="bi bi-images"></i>
+            <p>No se encontraron imágenes</p>
+        </div>
+
+        <div *ngIf="!loading && totalPages > 1" class="pagination-wrapper">
+            <div class="pagination-info">
+                <span>Mostrando {{ (currentPage - 1) * pageSize + 1 }} -
+                    {{ Math.min(currentPage * pageSize, getFilteredGalleries().length) }}
+                    de {{ getFilteredGalleries().length }} imágenes</span>
+            </div>
+            <nav class="pagination-nav">
+                <button class="btn-page" [disabled]="currentPage === 1" (click)="previousPage()">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+                <button *ngIf="showFirstPage" class="btn-page" (click)="goToPage(1)">
+                    1
+                </button>
+
+                <span *ngIf="showFirstPage && pageNumbers[0] > 2" class="page-dots">...</span>
+
+                <button *ngFor="let page of pageNumbers" class="btn-page" [class.active]="page === currentPage"
+                    (click)="goToPage(page)">
+                    {{ page }}
+                </button>
+
+                <span *ngIf="showLastPage && pageNumbers[pageNumbers.length - 1] < totalPages - 1"
+                    class="page-dots">...</span>
+
+                <button *ngIf="showLastPage" class="btn-page" (click)="goToPage(totalPages)">
+                    {{ totalPages }}
+                </button>
+
+                <button class="btn-page" [disabled]="currentPage === totalPages" (click)="nextPage()">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </nav>
+
+            <div class="page-size-selector">
+                <label for="pageSize">Por página:</label>
+                <select id="pageSize" class="form-select form-select-sm" [(ngModel)]="pageSize"
+                    (change)="onPageSizeChange()">
+                    <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="galleryModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content gallery-modal-content">
+            <button type="button" class="btn-close-modal" (click)="closeGallery()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <button *ngIf="selectedIndex > 0" class="btn-nav-modal btn-prev" (click)="previousImage()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <div class="modal-body p-0">
+                <img *ngIf="selectedGallery" [src]="selectedGallery.imageUrl" [alt]="selectedGallery.title || 'Imagen'"
+                    class="modal-image" (error)="onImageError($event)">
+                <div class="modal-info" *ngIf="selectedGallery?.title || selectedGallery?.description">
+                    <h4 *ngIf="selectedGallery?.title">{{ selectedGallery?.title }}</h4>
+                    <p *ngIf="selectedGallery?.description">{{ selectedGallery?.description }}</p>
+                </div>
+                <div class="modal-counter">
+                    {{ selectedIndex + 1 }} / {{ getFilteredGalleries().length }}
+                </div>
+            </div>
+            <button *ngIf="selectedIndex < getFilteredGalleries().length - 1" class="btn-nav-modal btn-next"
+                (click)="nextImage()">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

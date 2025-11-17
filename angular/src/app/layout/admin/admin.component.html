@@ -1,9 +1,6 @@
 <div class="admin-wrapper light-mode">
   <!-- Overlay para mobile -->
-  <div 
-    *ngIf="sidebarOpen" 
-    class="overlay"
-    (click)="toggleSidebar()">
+  <div *ngIf="sidebarOpen" class="overlay" (click)="toggleSidebar()">
   </div>
 
   <!-- Sidebar -->
@@ -22,7 +19,7 @@
         </div>
         <span class="brand-name">Café Aurora</span>
         <button class="close-btn" (click)="toggleSidebar()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -32,12 +29,8 @@
 
       <!-- Navigation -->
       <nav class="nav-menu">
-        <a 
-          routerLink="/admin/dashboard" 
-          routerLinkActive="active"
-          class="nav-link"
-          (click)="closeSidebarMobile()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+        <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link" (click)="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="7" height="7"></rect>
             <rect x="14" y="3" width="7" height="7"></rect>
@@ -47,24 +40,18 @@
           <span>Dashboard</span>
         </a>
 
-        <a 
-          routerLink="/admin/category" 
-          routerLinkActive="active"
-          class="nav-link"
-          (click)="closeSidebarMobile()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+        <a routerLink="/admin/category" routerLinkActive="active" class="nav-link" (click)="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+            </path>
           </svg>
           <span>Categorías</span>
         </a>
 
-        <a 
-          routerLink="/admin/item" 
-          routerLinkActive="active"
-          class="nav-link"
-          (click)="closeSidebarMobile()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+        <a routerLink="/admin/item" routerLinkActive="active" class="nav-link" (click)="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 2v2"></path>
             <path d="M14 2v2"></path>
@@ -73,26 +60,18 @@
           </svg>
           <span>Productos</span>
         </a>
-<a 
-          routerLink="/admin/gallery" 
-          routerLinkActive="active"
-          class="nav-link"
-          (click)="closeSidebarMobile()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
-  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-  <circle cx="8.5" cy="8.5" r="1.5"></circle>
-  <path d="M21 15l-5-5L5 21"></path>
-</svg>
+        <a routerLink="/admin/gallery" routerLinkActive="active" class="nav-link" (click)="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <path d="M21 15l-5-5L5 21"></path>
+          </svg>
 
           <span>Galerías</span>
         </a>
-        <a 
-          routerLink="/admin/usuarios" 
-          routerLinkActive="active"
-          class="nav-link"
-          (click)="closeSidebarMobile()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" 
+        <a routerLink="/admin/usuarios" routerLinkActive="active" class="nav-link" (click)="closeSidebarMobile()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="9" cy="7" r="4"></circle>
@@ -111,7 +90,7 @@
     <header class="header">
       <div class="header-left">
         <button class="menu-toggle" (click)="toggleSidebar()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" 
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -126,7 +105,7 @@
           <i class="fa-solid fa-sun"></i>
         </button>
         <button class="btn-logout" (click)="logout()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" 
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
             <polyline points="16 17 21 12 16 7"></polyline>

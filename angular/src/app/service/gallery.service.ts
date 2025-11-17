@@ -18,6 +18,10 @@ export class GalleryService {
   getAllGalleryFeatured(): Observable<Gallery[]> {
     return this.http.get<Gallery[]>(`${this.apiUrl}/listFeatured`);
   }
+
+  getAllGalleryVisibles(): Observable<Gallery[]> {
+    return this.http.get<Gallery[]>(`${this.apiUrl}/listVisibles`);
+  }
   /* Crud Services Gallery */
   getAllGallery(): void {
     this.http.get<Gallery[]>(`${this.apiUrl}/list`).subscribe({

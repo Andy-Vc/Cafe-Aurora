@@ -18,6 +18,10 @@ public class GalleryService {
 	private final IGalleryRepository galleryRepository;
 	private final CloudinaryService cloudinaryService;
 
+	public List<Gallery> getAllVisibles() {
+		return galleryRepository.findAllByIsVisibleTrueOrderByCreatedAtAsc();
+	}
+	
 	public List<Gallery> getAllFeatured() {
 		return galleryRepository.findAllByFeaturedTrueAndIsVisibleTrueOrderByCreatedAtAsc();
 	}

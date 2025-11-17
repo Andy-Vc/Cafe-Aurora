@@ -1,0 +1,178 @@
+<section class="profile-hero">
+  <div class="container position-relative">
+    <div class="hero-content">
+      <div class="profile-avatar-large">
+        <div class="avatar-initials">{{ userInitials }}</div>
+        <div class="avatar-badge">
+          <i class="bi bi-patch-check-fill"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
+
+<section class="profile-section" *ngIf="!loading && user">
+  <div class="container">
+    <div class="row g-4">  
+      <div class="col-lg-8">
+        <div class="profile-card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Información Personal</h2>
+              <p class="card-subtitle">Gestiona tu información de perfil</p>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="info-grid" *ngIf="!editMode">
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-person"></i>
+                </div>
+                <div class="info-content">
+                  <label>Nombre completo</label>
+                  <p>{{ user.name || 'No especificado' }}</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <div class="info-content">
+                  <label>Correo electrónico</label>
+                  <p>{{ user.email || 'No especificado' }}</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-phone"></i>
+                </div>
+                <div class="info-content">
+                  <label>Teléfono</label>
+                  <p>{{ user.phone || 'No especificado' }}</p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-calendar-check"></i>
+                </div>
+                <div class="info-content">
+                  <label>Estado de cuenta</label>
+                  <p>
+                    <span class="status-badge" [class.active]="user.isActive">
+                      <i class="bi" [ngClass]="user.isActive ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                      {{ user.isActive ? 'Activa' : 'Inactiva' }}
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="info-content">
+                  <label>Miembro desde</label>
+                  <p>{{ user.createdAt | date: 'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">   
+        <div class="profile-card stats-card">
+          <div class="card-header">
+            <h3 class="card-title">Estadísticas</h3>
+          </div>
+          <div class="card-body">
+            <div class="stat-item">
+              <div class="stat-icon reservations">
+                <i class="bi bi-calendar-event"></i>
+              </div>
+              <div class="stat-content">
+                <h4>{{ stats.reservationsCount }}</h4>
+                <p>Reservaciones</p>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon member">
+                <i class="bi bi-calendar-heart"></i>
+              </div>
+              <div class="stat-content">
+                <h4>{{ stats.memberSince }}</h4>
+                <p>Como miembro</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-card actions-card">
+          <div class="card-header">
+            <h3 class="card-title">Acciones Rápidas</h3>
+          </div>
+          <div class="card-body">
+            <a routerLink="/cliente/menu" class="action-item">
+              <div class="action-icon">
+                <i class="bi bi-cup-hot"></i>
+              </div>
+              <div class="action-content">
+                <h4>Ver Menú</h4>
+                <p>Explora nuestro menú</p>
+              </div>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+
+            <a routerLink="/cliente/reserva" class="action-item">
+              <div class="action-icon">
+                <i class="bi bi-calendar-plus"></i>
+              </div>
+              <div class="action-content">
+                <h4>Hacer Reserva</h4>
+                <p>Reserva tu mesa</p>
+              </div>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+            <a href="/historial" class="action-item">
+              <div class="action-icon">
+                <i class="bi bi-clock-history"></i>
+              </div>
+              <div class="action-content">
+                <h4>Historial</h4>
+                <p>Ver tus pedidos</p>
+              </div>
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="profile-card security-card">
+          <div class="card-header">
+            <h3 class="card-title">Seguridad</h3>
+          </div>
+          <div class="card-body">
+            <button class="security-btn">
+              <i class="bi bi-key"></i>
+              <span>Cambiar contraseña</span>
+            </button>
+            <button class="security-btn delete">
+              <i class="bi bi-trash"></i>
+              <span>Eliminar cuenta</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

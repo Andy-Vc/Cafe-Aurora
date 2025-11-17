@@ -1,7 +1,10 @@
 package com.cafeAurora.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
+import com.cafeAurora.model.User;
 import com.cafeAurora.repository.IUserRepository;
 
 @Service
@@ -12,5 +15,8 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 	
+	public User getOne(UUID id) {
+		return userRepository.findById(id).orElseThrow();
+	}
 	
 }

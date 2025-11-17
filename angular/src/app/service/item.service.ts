@@ -19,6 +19,10 @@ export class ItemService {
     return this.http.get<Item[]>(`${this.apiUrl}/featured/category/${idCat}`);
   }
 
+  getItemsByCategory(idCat: number): Observable<Item[]> {
+    return this.http.get<Item[]>(`${this.apiUrl}/available/category/${idCat}`);
+  }
+
   /* Crud Items Services */
   getallItems(): void {
     this.http.get<Item[]>(`${this.apiUrl}/list`).subscribe({

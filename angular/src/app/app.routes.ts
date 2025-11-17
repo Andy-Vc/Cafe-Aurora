@@ -6,11 +6,8 @@ export const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
-  
   {
     path: 'cliente',
-    canActivate: [authGuard],
-    data: { roles: ['CUSTOMER', 'C'] },
     loadChildren: () =>
       import('./customer/customer.module').then((m) => m.CustomerModule),
   },
@@ -31,7 +28,7 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./repartidor/repartidor.module').then((m) => m.RepartidorModule),
   },*/,
-  { path: '', redirectTo: 'cliente/index', pathMatch: 'full' },
+  { path: '', redirectTo: 'cliente/index', pathMatch: 'full'},
 
   { path: '**', redirectTo: 'auth/login' },
 ];

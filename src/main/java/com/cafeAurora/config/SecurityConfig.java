@@ -30,17 +30,23 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Rutas públicas (sin autenticación)
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/menu/**").permitAll()
+                .requestMatchers("/category/listActives").permitAll()
+                .requestMatchers("/item/featured/category/**").permitAll()
+                .requestMatchers("/item/available/category/**").permitAll()
+                .requestMatchers("/gallery/listVisibles").permitAll()
+                .requestMatchers("/gallery/listFeatured").permitAll()
+
                 // Rutas que requieren autenticación
-                .requestMatchers("/reservations/**").authenticated()
-                .requestMatchers("/profile/**").authenticated()
+                .requestMatchers("/reservation/**").authenticated()
+                .requestMatchers("/user/**").authenticated()
                 
                 // Rutas solo para Recepcionista (R)
                 .requestMatchers("/admin/reservations/**").hasAuthority("R")
                 
                 // Rutas solo para Administrador (A)
-                .requestMatchers("/admin/users/**").hasAuthority("A")
-                .requestMatchers("/admin/menu/**").hasAuthority("A")
+                .requestMatchers("/gallery/**").hasAuthority("A")
+                .requestMatchers("/item/**").hasAuthority("A")
+                .requestMatchers("/category/**").hasAuthority("A")
                 
                 .anyRequest().authenticated()
             )
