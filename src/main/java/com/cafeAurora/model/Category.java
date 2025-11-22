@@ -21,26 +21,26 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "tb_categories")
 public class Category {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cat")
-    private Integer idCat;
-    
-    @Column(name = "name_cat", nullable = false, unique = true, length = 100)
-    private String nameCat;
-    
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
-    
-    @Column(name = "is_active")
-    private Boolean isActive = true;
-    
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_cat")
+	private Integer idCat;
+
+	@Column(name = "name_cat", nullable = false, unique = true, length = 100)
+	private String nameCat;
+
+	@Column(name = "description", columnDefinition = "TEXT")
+	private String description;
+
+	@Column(name = "is_active")
+	private Boolean isActive = true;
+
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		createdAt = LocalDateTime.now();
+	}
 }

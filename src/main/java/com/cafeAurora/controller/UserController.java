@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
-	
+
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> getItem(@PathVariable("id") UUID id) {
 		try {

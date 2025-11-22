@@ -1,0 +1,132 @@
+<section class="section-hero">
+  <div class="container position-relative">
+    <div class="text-center hero-content">
+      <h1 class="hero-title">Historial de Reservas</h1>
+      <p class="hero-subtitle">
+        Consulta todas tus reservas pasadas y su estado
+      </p>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+</div>
+
+<section class="history-section" *ngIf="!loading">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon total">
+          <i class="bi bi-clock-history"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ totalReservations }}</h3>
+          <p>Total en Historial</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon completed">
+          <i class="bi bi-check-circle"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ completedReservations }}</h3>
+          <p>Completadas</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon cancelled">
+          <i class="bi bi-x-circle"></i>
+        </div>
+        <div class="stat-content">
+          <h3>{{ cancelledReservations }}</h3>
+          <p>Canceladas</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reservations-list" *ngIf="reservations.length > 0">
+      <div 
+        *ngFor="let reservation of reservations" 
+        class="reservation-card">
+        
+        <div class="reservation-header">
+          <div class="reservation-date">
+            <i class="bi bi-calendar3"></i>
+            <div>
+              <h3>{{ formatDate(reservation.reservationDate) }}</h3>
+              <p>{{ formatTime(reservation.reservationDate) }}</p>
+            </div>
+          </div>
+
+          <span 
+            class="status-badge"
+            [ngClass]="getStatusClass(reservation.status)">
+            <i [class]="getStatusIcon(reservation.status)"></i>
+            {{ getStatusLabel(reservation.status) }}
+          </span>
+        </div>
+
+        <div class="reservation-body">
+          <div class="reservation-details">
+            <div class="detail-item">
+              <i class="bi bi-person"></i>
+              <span>{{ reservation.customerName }}</span>
+            </div>
+
+            <div class="detail-item">
+              <i class="bi bi-envelope"></i>
+              <span>{{ reservation.customerEmail }}</span>
+            </div>
+
+            <div class="detail-item">
+              <i class="bi bi-telephone"></i>
+              <span>{{ reservation.customerPhone }}</span>
+            </div>
+
+            <div class="detail-item">
+              <i class="bi bi-people"></i>
+              <span>{{ reservation.numPeople }} {{ reservation.numPeople === 1 ? 'persona' : 'personas' }}</span>
+            </div>
+          </div>
+
+          <div class="reservation-message" *ngIf="reservation.specialNotes">
+            <i class="bi bi-chat-left-text"></i>
+            <p>{{ reservation.specialNotes }}</p>
+          </div>
+        </div>
+
+        <div class="reservation-footer">
+          <div class="reservation-meta">
+            <i class="bi bi-clock-history"></i>
+            <span>Creada: {{ formatDate(reservation.createdAt) }}</span>
+          </div>
+
+          <div class="reservation-id">
+            <span>#{{ reservation.idReservation }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && reservations.length === 0">
+      <div class="empty-icon">
+        <i class="bi bi-inbox"></i>
+      </div>
+      <h3>No hay historial de reservas</h3>
+      <p>
+        Aún no tienes reservas en tu historial
+      </p>
+      <a 
+        routerLink="/cliente/reserva"
+        class="btn-primary">
+        <i class="bi bi-calendar-plus me-2"></i>
+        Hacer una reserva
+      </a>
+    </div>
+  </div>
+</section>

@@ -21,11 +21,12 @@ public class GalleryService {
 	public List<Gallery> getAllVisibles() {
 		return galleryRepository.findAllByIsVisibleTrueOrderByCreatedAtAsc();
 	}
-	
+
 	public List<Gallery> getAllFeatured() {
 		return galleryRepository.findAllByFeaturedTrueAndIsVisibleTrueOrderByCreatedAtAsc();
 	}
-	/*Crud Services*/
+
+	/* Crud Services */
 	public List<Gallery> getAll() {
 		return galleryRepository.findAllByOrderByIdGalleryAsc();
 	}

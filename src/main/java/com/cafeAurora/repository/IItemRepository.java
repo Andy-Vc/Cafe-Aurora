@@ -8,9 +8,12 @@ import org.springframework.stereotype.Repository;
 import com.cafeAurora.model.Item;
 
 @Repository
-public interface IItemRepository extends JpaRepository<Item, Integer>{
+public interface IItemRepository extends JpaRepository<Item, Integer> {
 	Item findByName(String nombre);
+
 	List<Item> findAllByOrderByIdItemAsc();
+
 	List<Item> findByCategoryIdCatAndIsAvailableTrue(Integer idCat);
+
 	List<Item> findByCategoryIdCatAndIsFeaturedTrueAndIsAvailableTrueOrderByCreatedAtDesc(Integer idCat);
 }

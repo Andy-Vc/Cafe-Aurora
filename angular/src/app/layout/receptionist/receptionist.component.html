@@ -1,0 +1,114 @@
+<!-- Sidebar -->
+<aside class="sidebar" [class.open]="sidebarOpen">
+  <div class="sidebar-header">
+    <div class="brand-block">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 2v2"></path>
+          <path d="M14 2v2"></path>
+          <path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"></path>
+          <path d="M6 2v2"></path>
+        </svg>
+      </div>
+      <div class="brand-text" *ngIf="sidebarOpen">
+        <span class="brand-name">Café Aurora</span>
+        <span class="brand-role">Recepción</span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      *ngFor="let item of navItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      class="nav-item">
+      <i [class]="'bi ' + item.icon"></i>
+      <span *ngIf="sidebarOpen">{{ item.label }}</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button class="nav-item" (click)="toggleTheme()">
+      <i class="bi" [ngClass]="isDarkMode ? 'bi-sun' : 'bi-moon'"></i>
+      <span *ngIf="sidebarOpen">{{ isDarkMode ? 'Modo Claro' : 'Modo Oscuro' }}</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<div class="main-content" [class.sidebar-open]="sidebarOpen">
+  
+  <!-- Top Bar -->
+  <header class="topbar">
+    <button class="btn-toggle-sidebar" (click)="toggleSidebar()">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <div class="topbar-title">
+      <h1>Panel de Recepción</h1>
+    </div>
+
+    <div class="topbar-actions">
+      <!-- Notifications -->
+      <button class="btn-icon" title="Notificaciones">
+        <i class="bi bi-bell"></i>
+        <span class="notification-badge">3</span>
+      </button>
+
+      <!-- User Menu -->
+      <div class="user-menu-wrapper">
+        <button class="user-menu-trigger" (click)="toggleUserMenu()">
+          <div class="user-avatar">{{ userInitials }}</div>
+          <div class="user-info" *ngIf="currentUser">
+            <span class="user-name">{{ currentUser.name }}</span>
+            <span class="user-role">Recepcionista</span>
+          </div>
+          <i class="bi bi-chevron-down" [class.rotate]="showUserMenu"></i>
+        </button>
+
+        <div class="user-dropdown" *ngIf="showUserMenu">
+          <div class="dropdown-header">
+            <div class="user-avatar-large">{{ userInitials }}</div>
+            <div class="user-details">
+              <p class="user-name">{{ currentUser?.name }}</p>
+              <p class="user-email">{{ currentUser?.email }}</p>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" (click)="closeUserMenu()">
+            <i class="bi bi-person"></i>
+            <span>Mi Perfil</span>
+          </button>
+          <button class="dropdown-item" (click)="closeUserMenu()">
+            <i class="bi bi-gear"></i>
+            <span>Configuración</span>
+          </button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item logout" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="page-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; {{ currentYear }} Café Aurora. Todos los derechos reservados.</p>
+  </footer>
+
+</div>
+
+<!-- Overlay for mobile -->
+<div class="sidebar-overlay" 
+     *ngIf="sidebarOpen" 
+     (click)="toggleSidebar()"
+     [class.show]="sidebarOpen"></div>

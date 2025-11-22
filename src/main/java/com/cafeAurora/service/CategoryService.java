@@ -14,11 +14,11 @@ import lombok.RequiredArgsConstructor;
 public class CategoryService {
 	private final ICategoryRepository categoryRepository;
 
-	public List<Category> getAllCategoriesActive(){
+	public List<Category> getAllCategoriesActive() {
 		return categoryRepository.findAllByIsActiveTrue();
 	}
-	
-	/*Crud Service*/
+
+	/* Crud Service */
 	public List<Category> getAllCategories() {
 		return categoryRepository.findAllByOrderByIdCatAsc();
 	}
@@ -45,14 +45,14 @@ public class CategoryService {
 	public ResultResponse updateCategory(Category category) {
 		try {
 			Category existingCategory = categoryRepository.findByNameCat(category.getNameCat());
-	        if (existingCategory != null && !existingCategory.getIdCat().equals(category.getIdCat())) {
-	            return new ResultResponse(false,
-	                    "El nombre de la categoria " + category.getNameCat() + " ya existe en el sistema");
-	        }
+			if (existingCategory != null && !existingCategory.getIdCat().equals(category.getIdCat())) {
+				return new ResultResponse(false,
+						"El nombre de la categoria " + category.getNameCat() + " ya existe en el sistema");
+			}
 
-	        String message = "Categoria " + category.getNameCat() + " actualizada correctamente";
-	        categoryRepository.save(category);
-	        return new ResultResponse(true, message);
+			String message = "Categoria " + category.getNameCat() + " actualizada correctamente";
+			categoryRepository.save(category);
+			return new ResultResponse(true, message);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResultResponse(false, e.getMessage());

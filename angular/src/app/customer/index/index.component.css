@@ -1,89 +1,7 @@
 /*      HERO SECTION BASE        */
-.hero-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.section-hero{
   padding-top: 8rem;
   padding-bottom: 2rem;
-  overflow: hidden;
-  transition: background 0.5s ease;
-}
-
-:host-context(.light-mode) .hero-section,
-:host-context(body:not(.dark-mode)) .hero-section {
-  background: var(--light-bg-sidebar);
-}
-
-:host-context(.dark-mode) .hero-section {
-  background: var(--dark-bg-brown);
-}
-
-/*    DECORACIONES DE FONDO      */
-.hero-decorations {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.decoration {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  transition: background-color 0.5s ease;
-}
-
-.decoration-1 {
-  top: 5rem;
-  left: 2.5rem;
-  width: 8rem;
-  height: 8rem;
-  opacity: 0.3;
-}
-
-:host-context(.light-mode) .decoration-1,
-:host-context(body:not(.dark-mode)) .decoration-1 {
-  background-color: #fcd34d; 
-}
-
-:host-context(.dark-mode) .decoration-1 {
-  background-color: #92400e; 
-}
-
-.decoration-2 {
-  bottom: 10rem;
-  right: 5rem;
-  width: 10rem;
-  height: 10rem;
-  opacity: 0.25;
-}
-
-:host-context(.light-mode) .decoration-2,
-:host-context(body:not(.dark-mode)) .decoration-2 {
-  background-color: #fed7aa; 
-}
-
-:host-context(.dark-mode) .decoration-2 {
-  background-color: #9a3412;
-}
-
-.decoration-3 {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16rem;
-  height: 16rem;
-  opacity: 0.2;
-}
-
-:host-context(.light-mode) .decoration-3,
-:host-context(body:not(.dark-mode)) .decoration-3 {
-  background-color: #fee2e2; 
-}
-
-:host-context(.dark-mode) .decoration-3 {
-  background-color: #7f1d1d; 
 }
 
 /*       CONTENIDO HERO          */
@@ -97,19 +15,6 @@
 /*        TÍTULO HERO            */
 .hero-title {
   font-size: clamp(3.5rem, 10vw, 6rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(
-    to right,
-    #d97706,  
-    #ea580c,  
-    #dc2626  
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.02em;
 }
 
 /*         SLOGAN                */

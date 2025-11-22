@@ -28,62 +28,54 @@ import java.util.UUID;
 @Component
 public class SupabaseJwtFilter extends OncePerRequestFilter {
 	private final IUserRepository userRepository;
-    private final String jwtSecret;
-    private final String supabaseUrl;
+	private final String jwtSecret;
+	private final String supabaseUrl;
 
-    public SupabaseJwtFilter(
-        IUserRepository userRepository,
-        @Value("${supabase.jwt.secret}") String jwtSecret,
-        @Value("${supabase.url}") String supabaseUrl
-    ) {
-        this.userRepository = userRepository;
-        this.jwtSecret = jwtSecret;
-        this.supabaseUrl = supabaseUrl;
-    }
-    
-    @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+	public SupabaseJwtFilter(IUserRepository userRepository, @Value("${supabase.jwt.secret}") String jwtSecret,
+			@Value("${supabase.url}") String supabaseUrl) {
+		this.userRepository = userRepository;
+		this.jwtSecret = jwtSecret;
+		this.supabaseUrl = supabaseUrl;
+	}
 
-        String authHeader = request.getHeader("Authorization");
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+		String authHeader = request.getHeader("Authorization");
 
-        try {
-            String token = authHeader.substring(7);
+		if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 
-            Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
-            DecodedJWT jwt = JWT.require(algorithm)
-                .withIssuer(supabaseUrl + "/auth/v1")
-                .build()
-                .verify(token);
+		try {
+			String token = authHeader.substring(7);
 
-            String userId = jwt.getSubject();
-            
-            User user = userRepository.findById(UUID.fromString(userId))
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-            
-            String role = user.getRole().getNameRole();
+			Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
+			DecodedJWT jwt = JWT.require(algorithm).withIssuer(supabaseUrl + "/auth/v1").build().verify(token);
 
-            List<SimpleGrantedAuthority> authorities =
-                Collections.singletonList(new SimpleGrantedAuthority(role));
+			String userId = jwt.getSubject();
 
-            UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userId, null, authorities);
+			User user = userRepository.findById(UUID.fromString(userId))
+					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+			String role = user.getRole().getNameRole();
 
-        } catch (Exception e) {
-            System.out.println("Error al validar token: " + e.getMessage());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token JWT inválido: " + e.getMessage());
-            return;
-        }
+			List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
 
-        filterChain.doFilter(request, response);
-    }
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userId, null,
+					authorities);
+
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		} catch (Exception e) {
+			System.out.println("Error al validar token: " + e.getMessage());
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().write("Token JWT inválido: " + e.getMessage());
+			return;
+		}
+
+		filterChain.doFilter(request, response);
+	}
 }

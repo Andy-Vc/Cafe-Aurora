@@ -20,16 +20,16 @@ public class ItemService {
 	public List<Item> getItemsAvailableByCategory(Integer idCategoria) {
 		return itemRepository.findByCategoryIdCatAndIsAvailableTrue(idCategoria);
 	}
-	
-	public List<Item> getFeaturedByCategory(Integer idCategoria){
+
+	public List<Item> getFeaturedByCategory(Integer idCategoria) {
 		return itemRepository.findByCategoryIdCatAndIsFeaturedTrueAndIsAvailableTrueOrderByCreatedAtDesc(idCategoria);
 	}
-	
-	/* Crud Services Item*/
+
+	/* Crud Services Item */
 	public List<Item> getAllItems() {
 		return itemRepository.findAllByOrderByIdItemAsc();
 	}
-	
+
 	public Item getOne(Integer id) {
 		return itemRepository.findById(id).orElseThrow();
 	}

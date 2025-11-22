@@ -27,18 +27,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GalleryController {
 	private final GalleryService galleryService;
-	
+
 	@GetMapping("/listVisibles")
 	public List<Gallery> listAllGalleryVisibles() {
 		return galleryService.getAllVisibles();
 	}
-	
+
 	@GetMapping("/listFeatured")
 	public List<Gallery> listAllGalleryFeatured() {
 		return galleryService.getAllFeatured();
 	}
-	
-	/*Crud Enpoints*/
+
+	/* Crud Enpoints */
 	@GetMapping("/list")
 	public List<Gallery> listAllGallery() {
 		return galleryService.getAll();

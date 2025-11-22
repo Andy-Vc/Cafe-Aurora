@@ -14,9 +14,9 @@ public class UserService {
 	public UserService(IUserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-	
+
 	public User getOne(UUID id) {
 		return userRepository.findById(id).orElseThrow();
 	}
-	
+
 }

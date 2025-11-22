@@ -1,30 +1,3 @@
-/*         HERO SECTION          */
-.profile-hero {
-  position: relative;
-  min-height: 35vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 0 2rem;
-  overflow: hidden;
-  transition: background 0.5s ease;
-}
-
-:host-context(.light-mode) .profile-hero,
-:host-context(body:not(.dark-mode)) .profile-hero {
-  background: var(--light-bg-sidebar);
-}
-
-:host-context(.dark-mode) .profile-hero {
-  background: linear-gradient(135deg, #451a03 0%, #431407 50%, #450a0a 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-}
-
 /* Avatar */
 .profile-avatar-large {
   position: relative;

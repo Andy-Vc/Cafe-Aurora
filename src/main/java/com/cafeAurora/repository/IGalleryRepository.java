@@ -8,10 +8,12 @@ import org.springframework.stereotype.Repository;
 import com.cafeAurora.model.Gallery;
 
 @Repository
-public interface IGalleryRepository extends JpaRepository<Gallery, Integer>{
+public interface IGalleryRepository extends JpaRepository<Gallery, Integer> {
 	Gallery findByTitle(String title);
-	List<Gallery> findAllByOrderByIdGalleryAsc()
-	/*Galerias Generales*/;
+
+	List<Gallery> findAllByOrderByIdGalleryAsc();
+
 	List<Gallery> findAllByIsVisibleTrueOrderByCreatedAtAsc();
+
 	List<Gallery> findAllByFeaturedTrueAndIsVisibleTrueOrderByCreatedAtAsc();
 }

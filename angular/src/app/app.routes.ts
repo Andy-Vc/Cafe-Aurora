@@ -17,18 +17,17 @@ export const routes: Routes = [
     data: { roles: ['ADMIN', 'A'] },
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
-  } /*
-  {
-    path: 'vendedor',
-    loadChildren: () =>
-      import('./vendedor/vendedor.module').then((m) => m.VendedorModule),
   },
   {
-    path: 'repartidor',
+    path: 'recepcionista',
+    canActivate: [authGuard],
+    data: { roles: ['RECEPTIONIST', 'R'] },
     loadChildren: () =>
-      import('./repartidor/repartidor.module').then((m) => m.RepartidorModule),
-  },*/,
-  { path: '', redirectTo: 'cliente/index', pathMatch: 'full'},
+      import('./receptionist/receptionist.module').then(
+        (m) => m.ReceptionistModule
+      ),
+  },
+  { path: '', redirectTo: 'cliente/index', pathMatch: 'full' },
 
   { path: '**', redirectTo: 'auth/login' },
 ];

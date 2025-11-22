@@ -5,11 +5,12 @@ import { User } from '../../shared/model/user.model';
 import { UserResponse } from '../../shared/dto/userresponse';
 import { AuthService } from '../../service/auth.service';
 import { UserService } from '../../service/user.service';
+import { ReservationService } from '../../service/reservation.service';
 import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule,FormsModule, RouterLinkWithHref],
+  imports: [CommonModule, FormsModule, RouterLinkWithHref],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -19,7 +20,6 @@ export class ProfileComponent implements OnInit {
   loading = true;
   editMode = false;
 
-  // Stats
   stats = {
     reservationsCount: 0,
     memberSince: ''
@@ -27,7 +27,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private reservationService: ReservationService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +46,7 @@ export class ProfileComponent implements OnInit {
           this.userService.getUserById(currentUser.idUser).subscribe({
             next: (user) => {
               this.user = user;
+              this.loadReservationStats(currentUser.idUser);
               this.calculateStats();
               this.loading = false;
             },
@@ -60,6 +62,18 @@ export class ProfileComponent implements OnInit {
       error: (err) => {
         console.error('Error loading current user:', err);
         this.loading = false;
+      }
+    });
+  }
+
+  loadReservationStats(idUser: string): void {
+    this.reservationService.countReservationsByUser(idUser).subscribe({
+      next: (count) => {
+        this.stats.reservationsCount = count;
+      },
+      error: (err) => {
+        console.error('Error cargando cantidad de reservas:', err);
+        this.stats.reservationsCount = 0;
       }
     });
   }
@@ -81,9 +95,7 @@ export class ProfileComponent implements OnInit {
         this.stats.memberSince = `${years} ${years === 1 ? 'año' : 'años'}`;
       }
     }
-    this.stats.reservationsCount = 0;
   }
-
 
   get userInitials(): string {
     if (!this.user?.name) return 'U';
@@ -93,5 +105,4 @@ export class ProfileComponent implements OnInit {
     }
     return this.user.name.substring(0, 2).toUpperCase();
   }
-
 }

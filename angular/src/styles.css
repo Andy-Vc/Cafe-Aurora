@@ -3,22 +3,27 @@
 /* ============================= */
 :root {
   /* Colores principales de la marca (Naranja Aurora) */
-  --color-accent: #ff6600; 
+  --color-accent: #ff6600;
   --color-accent-hover: #e55c00;
   --success-color: #16a34a;
   --error-color: #dc2626;
   /* Modo Claro */
   --light-bg-main: #fcfcfc;
-  --light-bg-sidebar: #f9f3e9; /* Crema/Blanco Roto */
+  --light-bg-sidebar: #f9f3e9;
+  /* Crema/Blanco Roto */
   --light-text-color: #333333;
-  --light-link-color: #4c2b00; /* Marrón Oscuro para enlaces */
+  --light-link-color: #4c2b00;
+  /* Marrón Oscuro para enlaces */
   --light-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
-  --light-amber:  rgb(217, 119, 6);
+  --light-amber: rgb(217, 119, 6);
   /* Modo Oscuro */
-  --dark-bg-main: #3a1a00; /* Fondo principal oscuro */
-  --dark-bg-sidebar: #2e1500; /* Sidebar aún más oscuro */
-  --dark-bg-brown:#450a0a;
-  --dark-text-color: #f0e9e1; /* Texto Crema claro */
+  --dark-bg-main: #3a1a00;
+  /* Fondo principal oscuro */
+  --dark-bg-sidebar: #2e1500;
+  /* Sidebar aún más oscuro */
+  --dark-bg-brown: #450a0a;
+  --dark-text-color: #f0e9e1;
+  /* Texto Crema claro */
   --dark-link-color: #ffffff;
 }
 
@@ -180,6 +185,57 @@ input[type="password"]::-ms-reveal {
 }
 
 textarea {
-  resize: none !important;       
-  overflow-y: auto !important;   
+  resize: none !important;
+  overflow-y: auto !important;
+}
+
+/*         HERO SECTION          */
+.section-hero {
+  position: relative;
+  min-height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+.light-mode .section-hero {
+  background: var(--light-bg-sidebar);
+}
+
+.dark-mode .section-hero {
+  background: linear-gradient(135deg, #451a03 0%, #431407 50%, #450a0a 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #d97706, #ea580c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.7;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.light-mode .hero-subtitle {
+  color: #57534e;
+}
+
+.dark-mode .hero-subtitle {
+  color: #d6d3d1;
 }

@@ -15,48 +15,40 @@ import com.cafeAurora.util.SupabaseJwtFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final SupabaseJwtFilter supabaseJwtFilter;
+	private final SupabaseJwtFilter supabaseJwtFilter;
 
-    public SecurityConfig(SupabaseJwtFilter supabaseJwtFilter) {
-        this.supabaseJwtFilter = supabaseJwtFilter;
-    }
+	public SecurityConfig(SupabaseJwtFilter supabaseJwtFilter) {
+		this.supabaseJwtFilter = supabaseJwtFilter;
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors().and()
-            .csrf().disable()
-            
-            .authorizeHttpRequests(auth -> auth
-                // Rutas públicas (sin autenticación)
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/category/listActives").permitAll()
-                .requestMatchers("/item/featured/category/**").permitAll()
-                .requestMatchers("/item/available/category/**").permitAll()
-                .requestMatchers("/gallery/listVisibles").permitAll()
-                .requestMatchers("/gallery/listFeatured").permitAll()
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable()
 
-                // Rutas que requieren autenticación
-                .requestMatchers("/reservation/**").authenticated()
-                .requestMatchers("/user/**").authenticated()
-                
-                // Rutas solo para Recepcionista (R)
-                .requestMatchers("/admin/reservations/**").hasAuthority("R")
-                
-                // Rutas solo para Administrador (A)
-                .requestMatchers("/gallery/**").hasAuthority("A")
-                .requestMatchers("/item/**").hasAuthority("A")
-                .requestMatchers("/category/**").hasAuthority("A")
-                
-                .anyRequest().authenticated()
-            )
-            
-            .sessionManagement(sess -> 
-                sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            );
+				.authorizeHttpRequests(auth -> auth
+						// Rutas públicas (sin autenticación)
+						.requestMatchers("/auth/**").permitAll().requestMatchers("/category/listActives").permitAll()
+						.requestMatchers("/item/featured/category/**").permitAll()
+						.requestMatchers("/item/available/category/**").permitAll()
+						.requestMatchers("/gallery/listVisibles").permitAll().requestMatchers("/gallery/listFeatured")
+						.permitAll()
 
-        http.addFilterBefore(supabaseJwtFilter, UsernamePasswordAuthenticationFilter.class);
+						// Rutas que requieren autenticación
+						.requestMatchers("/reservation/**").authenticated().requestMatchers("/user/**").authenticated()
 
-        return http.build();
-    }
+						// Rutas solo para Recepcionista (R)
+						.requestMatchers("/admin/reservations/**").hasAuthority("R")
+
+						// Rutas solo para Administrador (A)
+						.requestMatchers("/gallery/**").hasAuthority("A").requestMatchers("/item/**").hasAuthority("A")
+						.requestMatchers("/category/**").hasAuthority("A")
+
+						.anyRequest().authenticated())
+
+				.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+		http.addFilterBefore(supabaseJwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+		return http.build();
+	}
 }

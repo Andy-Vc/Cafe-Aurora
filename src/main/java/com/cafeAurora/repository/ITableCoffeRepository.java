@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.cafeAurora.model.TableCoffe;
 
 @Repository
-public interface ITableCoffe extends JpaRepository<TableCoffe, Integer>{
+public interface ITableCoffeRepository extends JpaRepository<TableCoffe, Integer>{
 
 }

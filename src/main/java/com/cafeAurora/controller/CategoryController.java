@@ -26,15 +26,16 @@ public class CategoryController {
 	private final CategoryService categoryService;
 
 	@GetMapping("/listActives")
-	public List<Category> listAllCategoriesActives(){
+	public List<Category> listAllCategoriesActives() {
 		return categoryService.getAllCategoriesActive();
 	}
-	/*Crud Controller*/
+
+	/* Crud Controller */
 	@GetMapping("/list")
-	public List<Category> listAllCategories(){
+	public List<Category> listAllCategories() {
 		return categoryService.getAllCategories();
 	}
-	
+
 	@PostMapping("/register")
 	public ResponseEntity<ResultResponse> createCategory(@RequestBody Category category) {
 		try {
@@ -55,7 +56,8 @@ public class CategoryController {
 		try {
 			Category getCategory = categoryService.getOne(id);
 			if (getCategory == null) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró ninguna categoria con ID: " + id);
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body("No se encontró ninguna categoria con ID: " + id);
 			}
 			return ResponseEntity.ok(getCategory);
 		} catch (Exception e) {

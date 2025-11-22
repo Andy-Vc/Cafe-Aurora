@@ -26,71 +26,69 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/item")
 @RequiredArgsConstructor
 public class ItemController {
-    private final ItemService itemService;
-    
-    @GetMapping("/featured/category/{idCategory}")
-    public ResponseEntity<?> getFeaturedByCategory(@PathVariable Integer idCategory) {
-        try {
-            List<Item> featured = itemService.getFeaturedByCategory(idCategory);
+	private final ItemService itemService;
 
-            if (featured.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No hay productos destacados en la categoría " + idCategory);
-            }
+	@GetMapping("/featured/category/{idCategory}")
+	public ResponseEntity<?> getFeaturedByCategory(@PathVariable Integer idCategory) {
+		try {
+			List<Item> featured = itemService.getFeaturedByCategory(idCategory);
 
-            return ResponseEntity.ok(featured);
+			if (featured.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body("No hay productos destacados en la categoría " + idCategory);
+			}
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al obtener productos destacados");
-        }
-    }
-    
-    @GetMapping("/available/category/{idCategory}")
-	public ResponseEntity<?> getItemsAvailableByCategory(@PathVariable Integer idCategory){
-    	try {
-            List<Item> itemsFilter = itemService.getItemsAvailableByCategory(idCategory);
+			return ResponseEntity.ok(featured);
 
-            if (itemsFilter.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("No hay productos en la categoría " + idCategory);
-            }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al obtener productos destacados");
+		}
+	}
 
-            return ResponseEntity.ok(itemsFilter);
+	@GetMapping("/available/category/{idCategory}")
+	public ResponseEntity<?> getItemsAvailableByCategory(@PathVariable Integer idCategory) {
+		try {
+			List<Item> itemsFilter = itemService.getItemsAvailableByCategory(idCategory);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al obtener productos destacados");
-        }
-    }
-    
-    /* Crud endpoints */
-    @GetMapping("/list")
-	public List<Item> listAllitems(){
+			if (itemsFilter.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body("No hay productos en la categoría " + idCategory);
+			}
+
+			return ResponseEntity.ok(itemsFilter);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al obtener productos destacados");
+		}
+	}
+
+	/* Crud endpoints */
+	@GetMapping("/list")
+	public List<Item> listAllitems() {
 		return itemService.getAllItems();
 	}
-	
-    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResultResponse> createItem(
-        @RequestPart("item") Item item,
-        @RequestPart(value = "image", required = false) MultipartFile image
-    ) {
-        try {
-            ResultResponse result = itemService.createItem(item, image);
 
-            if (!result.getValue()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-            }
+	@PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ResultResponse> createItem(@RequestPart("item") Item item,
+			@RequestPart(value = "image", required = false) MultipartFile image) {
+		try {
+			ResultResponse result = itemService.createItem(item, image);
 
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
+			if (!result.getValue()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			}
+
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
+	}
 
 	@GetMapping("/id/{id}")
 	public ResponseEntity<?> getItem(@PathVariable("id") Integer id) {
@@ -107,8 +105,9 @@ public class ItemController {
 		}
 	}
 
-	@PatchMapping(value = "/update",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<ResultResponse> updateCategory(@RequestPart("item") Item item, @RequestPart(value = "image", required = false) MultipartFile image) {
+	@PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ResultResponse> updateCategory(@RequestPart("item") Item item,
+			@RequestPart(value = "image", required = false) MultipartFile image) {
 		try {
 			ResultResponse result = itemService.updateItem(item, image);
 			if (!result.getValue()) {
@@ -136,20 +135,20 @@ public class ItemController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
 	}
-	
+
 	@PutMapping("/feature/{id}")
 	public ResponseEntity<ResultResponse> favoriteItem(@PathVariable("id") Integer id) {
-	    try {
-	        ResultResponse result = itemService.featureItem(id);
-	        if (!result.getValue()) {
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
-	        }
-	        return ResponseEntity.ok(result);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-	    }
+		try {
+			ResultResponse result = itemService.featureItem(id);
+			if (!result.getValue()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			}
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ export class RoleRedirectService {
         break;
       case 'RECEPTIONIST':
       case 'R':
-        this.router.navigate(['/recepcion/dashboard']);
+        this.router.navigate(['/recepcionista/dashboard']);
         break;
       case 'CUSTOMER':
       case 'C':
@@ -42,7 +42,7 @@ export class RoleRedirectService {
         return '/admin/dashboard';
       case 'RECEPTIONIST':
       case 'R':
-        return '/recepcion/dashboard';
+        return '/recepcionista/dashboard';
       case 'CUSTOMER':
       case 'C':
         return '/cliente/index';
