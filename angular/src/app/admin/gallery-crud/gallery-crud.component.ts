@@ -21,7 +21,7 @@ declare var bootstrap: any;
 export class GalleryCrudComponent implements OnInit {
   galleries: Gallery[] = [];
   filteredGalleries: Gallery[] = [];
-  paginatedGalleries: Gallery[] = []; // ⬅️ NUEVO
+  paginatedGalleries: Gallery[] = []; 
   galleryForm!: FormGroup;
   selectedGallery: Gallery | null = null;
   selectedFile?: File;

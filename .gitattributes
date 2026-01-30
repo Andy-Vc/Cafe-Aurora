@@ -1,17 +1,21 @@
-# Marcar Java y TypeScript como lenguajes principales
 *.java linguist-detectable=true
 *.ts linguist-detectable=true
+*.js linguist-detectable=true
 *.sql linguist-detectable=true
 
-# Mantener CSS/HTML pero con menos peso
-*.css linguist-detectable=true
-*.html linguist-detectable=true
+*.css linguist-documentation=true
+*.html linguist-documentation=true
+*.scss linguist-documentation=true
 
-# Excluir solo dependencias y archivos generados
 node_modules/** linguist-vendored
 angular/node_modules/** linguist-vendored
 angular/dist/** linguist-vendored
+angular/.angular/** linguist-vendored
 target/** linguist-vendored
 .mvn/** linguist-vendored
 *.min.js linguist-vendored
 *.min.css linguist-vendored
+
+package-lock.json linguist-generated
+angular/package-lock.json linguist-generated
+*.map linguist-generated
