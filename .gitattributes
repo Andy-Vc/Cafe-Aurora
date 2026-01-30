@@ -1,2 +1,19 @@
-/mvnw text eol=lf
-*.cmd text eol=crlf
+# Marcar Java y TypeScript como lenguajes principales
+*.java linguist-detectable=true linguist-language=Java
+*.ts linguist-detectable=true linguist-language=TypeScript
+
+# Reducir peso de CSS y HTML (marcarlos como documentación)
+*.css linguist-documentation
+*.html linguist-documentation
+*.scss linguist-documentation
+
+# Excluir archivos generados y dependencias
+node_modules/** linguist-vendored
+angular/node_modules/** linguist-vendored
+angular/dist/** linguist-vendored
+target/** linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
+
+# SQL también visible
+*.sql linguist-detectable=true
