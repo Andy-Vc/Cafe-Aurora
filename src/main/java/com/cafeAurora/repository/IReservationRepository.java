@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.cafeAurora.dto.ReservationStatus;
+import com.cafeAurora.enums.ReservationStatus;
 import com.cafeAurora.model.Reservation;
 
 @Repository

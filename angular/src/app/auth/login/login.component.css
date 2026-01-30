@@ -9,7 +9,6 @@
   padding: 20px;
 }
 
-/* Container principal */
 .login-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -29,7 +28,6 @@
   }
 }
 
-/* Lado izquierdo - Branding */
 .login-brand {
   background: linear-gradient(135deg, #d97706 0%, #c2410c 100%);
   padding: 60px 40px;
@@ -128,7 +126,6 @@
   }
 }
 
-/* Lado derecho - Formulario */
 .login-form-section {
   padding: 60px 40px;
   display: flex;
@@ -164,7 +161,6 @@
   font-size: 0.95rem;
 }
 
-/* Formulario */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -249,7 +245,6 @@
   margin-top: 4px;
 }
 
-/* Opciones del formulario */
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -286,7 +281,6 @@
   text-decoration: underline;
 }
 
-/* Alerta de error */
 .alert-error {
   display: flex;
   align-items: center;
@@ -299,7 +293,6 @@
   font-size: 0.9rem;
 }
 
-/* Botón Submit */
 .btn-submit {
   padding: 16px;
   background: var(--color-accent);
@@ -342,7 +335,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Footer */
 .form-footer {
   margin-top: 32px;
   text-align: center;

@@ -1,6 +1,17 @@
-/* ============================= */
-/*       TARJETA GALERÍA         */
-/* ============================= */
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--light-text);
+  margin: 0 0 8px 0;
+}
+
+.page-title svg {
+  color: var(--color-accent);
+}
+
 .gallery-card {
   border-radius: 0.75rem;
   overflow: hidden;
@@ -25,13 +36,10 @@
   opacity: 0.6;
 }
 
-/* ============================= */
-/*       IMAGEN WRAPPER          */
-/* ============================= */
 .gallery-image-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 75%; /* Aspect ratio 4:3 */
+  padding-bottom: 75%; 
   overflow: hidden;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
 }
@@ -50,9 +58,6 @@
   transform: scale(1.1);
 }
 
-/* ============================= */
-/*          BADGES               */
-/* ============================= */
 .gallery-badges {
   position: absolute;
   top: 0.75rem;
@@ -70,9 +75,6 @@
   backdrop-filter: blur(8px);
 }
 
-/* ============================= */
-/*          OVERLAY              */
-/* ============================= */
 .gallery-overlay {
   position: absolute;
   inset: 0;
@@ -120,9 +122,6 @@
   color: white;
 }
 
-/* ============================= */
-/*          INFO                 */
-/* ============================= */
 .gallery-info {
   padding: 1rem;
   flex: 1;
@@ -149,9 +148,7 @@
   -webkit-box-orient: vertical;
 }
 
-/* ============================= */
-/*       PREVIEW IMÁGENES        */
-/* ============================= */
+
 .current-image-preview,
 .image-preview {
   position: relative;
@@ -182,9 +179,6 @@
   justify-content: center;
 }
 
-/* ============================= */
-/*       FORM SWITCHES           */
-/* ============================= */
 .form-check-input:checked {
   background-color: #d97706;
   border-color: #d97706;
@@ -195,9 +189,6 @@
   box-shadow: 0 0 0 0.25rem rgba(251, 191, 36, 0.25);
 }
 
-/* ============================= */
-/*          BOTONES              */
-/* ============================= */
 .btn-primary {
   background-color: #d97706;
   border-color: #d97706;
@@ -214,16 +205,10 @@
   opacity: 0.6;
 }
 
-/* ============================= */
-/*          EMPTY STATE          */
-/* ============================= */
 .text-center .bi-images {
   opacity: 0.3;
 }
 
-/* ============================= */
-/*          RESPONSIVE           */
-/* ============================= */
 @media (max-width: 768px) {
   .gallery-badges {
     top: 0.5rem;
@@ -253,18 +238,12 @@
   }
 }
 
-/* ============================= */
-/*       LOADING STATE           */
-/* ============================= */
 .spinner-border-sm {
   width: 1rem;
   height: 1rem;
   border-width: 0.15em;
 }
 
-/* ============================= */
-/*          MODALES              */
-/* ============================= */
 .modal-content {
   border-radius: 1rem;
 }
@@ -283,9 +262,6 @@
   padding: 1rem 1.5rem;
 }
 
-/* ============================= */
-/*          CARDS                */
-/* ============================= */
 .card {
   border-radius: 0.75rem;
   border: 1px solid #e5e7eb;
@@ -296,16 +272,13 @@
   padding: 1.25rem;
 }
 
-/* ============================= */
-/*       FORM CONTROLS           */
-/* ============================= */
+
 .form-control:focus,
 .form-select:focus {
   border-color: #fbbf24;
   box-shadow: 0 0 0 0.25rem rgba(251, 191, 36, 0.15);
 }
 
-/* Paginación */
 .pagination {
   margin-bottom: 0;
 }

@@ -1,4 +1,4 @@
-package com.cafeAurora.dto;
+package com.cafeAurora.enums;
 
 public enum TableStatus {
     RESERVADA,

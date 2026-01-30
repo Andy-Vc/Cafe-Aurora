@@ -236,4 +236,5 @@ export class ReservationComponent implements OnInit {
   getCurrentDate(): string {
     return new Date().toISOString().split('T')[0];
   }
+  
 }

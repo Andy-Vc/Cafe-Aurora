@@ -1,42 +1,25 @@
-/* ============================= */
-/*           VARIABLES           */
-/* ============================= */
 :root {
-  /* Colores principales de la marca (Naranja Aurora) */
   --color-accent: #ff6600;
   --color-accent-hover: #e55c00;
   --success-color: #16a34a;
   --error-color: #dc2626;
-  /* Modo Claro */
   --light-bg-main: #fcfcfc;
   --light-bg-sidebar: #f9f3e9;
-  /* Crema/Blanco Roto */
   --light-text-color: #333333;
   --light-link-color: #4c2b00;
-  /* Marrón Oscuro para enlaces */
   --light-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
   --light-amber: rgb(217, 119, 6);
-  /* Modo Oscuro */
   --dark-bg-main: #3a1a00;
-  /* Fondo principal oscuro */
   --dark-bg-sidebar: #2e1500;
-  /* Sidebar aún más oscuro */
   --dark-bg-brown: #450a0a;
   --dark-text-color: #f0e9e1;
-  /* Texto Crema claro */
   --dark-link-color: #ffffff;
 }
 
-/* ============================= */
-/*         ESTILOS BASE          */
-/* ============================= */
 .container-fluid {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* ============================= */
-/*            BRANDING           */
-/* ============================= */
 .brand-block {
   display: flex;
   align-items: center;
@@ -65,14 +48,10 @@
   font-weight: bold;
 }
 
-/* Modo oscuro para branding */
 .dark-mode .brand-name {
   color: var(--dark-text-color);
 }
 
-/* ============================= */
-/*           SIDEBAR             */
-/* ============================= */
 .sidebar h5 {
   font-weight: bold;
   color: var(--color-accent) !important;
@@ -89,16 +68,10 @@
   max-height: 200px;
 }
 
-/* ============================= */
-/*           BOTONES             */
-/* ============================= */
 .btn-logout {
   transition: background-color 0.3s, color 0.3s;
 }
 
-/* ============================= */
-/*           MODO CLARO          */
-/* ============================= */
 .light-mode {
   background-color: var(--light-bg-main);
   color: var(--light-text-color);
@@ -132,9 +105,6 @@
   color: white;
 }
 
-/* ============================= */
-/*           MODO OSCURO         */
-/* ============================= */
 .dark-mode {
   background-color: var(--dark-bg-main);
   color: var(--dark-text-color);
@@ -189,7 +159,6 @@ textarea {
   overflow-y: auto !important;
 }
 
-/*         HERO SECTION          */
 .section-hero {
   position: relative;
   min-height: 45vh;

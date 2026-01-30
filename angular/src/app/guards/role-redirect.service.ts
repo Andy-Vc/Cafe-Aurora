@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 })
 export class RoleRedirectService {
   constructor(private router: Router) {}
-  /*Falta mejorar los guards */
+
   redirectByRole(role: string | undefined) {
     if (!role) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth/login']); 
       return;
     }
 
@@ -28,13 +28,13 @@ export class RoleRedirectService {
         break;
       default:
         console.warn('Rol desconocido:', role);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']); 
         break;
     }
   }
 
   getDefaultRouteByRole(role: string | undefined): string {
-    if (!role) return '/login';
+    if (!role) return '/auth/login'; 
 
     switch (role.toUpperCase()) {
       case 'ADMIN':
@@ -47,7 +47,7 @@ export class RoleRedirectService {
       case 'C':
         return '/cliente/index';
       default:
-        return '/login';
+        return '/auth/login';
     }
   }
 }

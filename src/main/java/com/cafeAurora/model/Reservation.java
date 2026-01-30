@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-import com.cafeAurora.dto.ReservationStatus;
+import com.cafeAurora.enums.ReservationStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

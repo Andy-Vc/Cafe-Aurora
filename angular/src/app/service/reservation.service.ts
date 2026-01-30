@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Reservation } from '../shared/model/reservation.model';
 import { ResultResponse } from '../shared/dto/resultresponse';
+import { ConfirmReservationRequest } from '../shared/dto/confirmreservation';
 
 @Injectable({
   providedIn: 'root',
@@ -16,33 +17,21 @@ export class ReservationService {
   getPendientes(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/list/pendientes`);
   }
-
+  
   confirmReservation(
-    idReservation: number,
-    idRecepcionista: string,
-    idTable: number,
-    notes?: string
+    request: ConfirmReservationRequest,
   ): Observable<ResultResponse> {
-    let params = new HttpParams()
-      .set('idRecepcionista', idRecepcionista)
-      .set('idTable', idTable.toString());
-
-    if (notes) {
-      params = params.set('notes', notes);
-    }
-
     return this.http.put<ResultResponse>(
-      `${this.apiUrl}/confirm/${idReservation}`,
-      null,
-      { params }
+      `${this.apiUrl}/confirm/${request.idReservation}`,
+      request,
     );
   }
 
   getConfirmedByRecepcionist(
-    idRecepcionista: string
+    idRecepcionista: string,
   ): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(
-      `${this.apiUrl}/list/confirmed/${idRecepcionista}`
+      `${this.apiUrl}/list/confirmed/${idRecepcionista}`,
     );
   }
 
@@ -50,7 +39,7 @@ export class ReservationService {
   createReservation(reservation: Reservation): Observable<ResultResponse> {
     return this.http.post<ResultResponse>(
       `${this.apiUrl}/register`,
-      reservation
+      reservation,
     );
   }
 
@@ -64,7 +53,7 @@ export class ReservationService {
 
   downloadReservationPdf(
     idReservation: number,
-    idUser: string
+    idUser: string,
   ): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/pdf/${idReservation}/user/${idUser}`, {
       responseType: 'blob',

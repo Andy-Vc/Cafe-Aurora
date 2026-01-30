@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.cafeAurora.dto.ConfirmReservationRequest;
 import org.springframework.stereotype.Service;
 
-import com.cafeAurora.dto.ReservationStatus;
+import com.cafeAurora.enums.ReservationStatus;
 import com.cafeAurora.dto.ResultResponse;
-import com.cafeAurora.dto.TableStatus;
+import com.cafeAurora.enums.TableStatus;
 import com.cafeAurora.model.Reservation;
 import com.cafeAurora.model.TableCoffe;
 import com.cafeAurora.model.User;
@@ -58,20 +59,20 @@ public class ReservationService {
 		return reservationRepository.findByStatusOrderByCreatedAtDesc(ReservationStatus.PENDIENTE);
 	}
 
-	public ResultResponse confirmReservation(Integer idReservation, UUID idRecepcionista, String notes,Integer idTable) {
+	public ResultResponse confirmReservation(ConfirmReservationRequest request) {
 		try {
-			Reservation reservation = reservationRepository.findById(idReservation)
+			Reservation reservation = reservationRepository.findById(request.getIdReservation())
 	                .orElseThrow(() -> new RuntimeException("La reserva no existe"));
 
-	        TableCoffe table = tableCoffeRepository.findById(idTable)
+	        TableCoffe table = tableCoffeRepository.findById(request.getIdTable())
 	                .orElseThrow(() -> new RuntimeException("La mesa no existe"));
 
-	        User recepcionista = userRepository.findById(idRecepcionista)
+	        User recepcionista = userRepository.findById(request.getIdRecepcionista())
 	                .orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
 
 	        reservation.setStatus(ReservationStatus.CONFIRMADA);
 	        reservation.setAttendedBy(recepcionista);
-	        reservation.setResponseNotes(notes);
+	        reservation.setResponseNotes(request.getNotes());
 	        reservation.setUpdatedAt(LocalDateTime.now());
 	        reservation.setTable(table);  
 

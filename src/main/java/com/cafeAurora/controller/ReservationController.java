@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.cafeAurora.dto.ConfirmReservationRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafeAurora.dto.ReservationStatus;
+import com.cafeAurora.enums.ReservationStatus;
 import com.cafeAurora.dto.ResultResponse;
 import com.cafeAurora.model.Reservation;
 import com.cafeAurora.service.ReservationService;
@@ -66,13 +67,14 @@ public class ReservationController {
 	}
 
 	@PutMapping("/confirm/{idReservation}")
-	public ResponseEntity<ResultResponse> confirmReservation(@PathVariable Integer idReservation,
-			@RequestParam UUID idRecepcionista, @RequestParam(required = false) String notes,
-			@RequestParam Integer idTable) {
-
+	public ResponseEntity<ResultResponse> confirmReservation(
+			@PathVariable Integer idReservation,
+			@RequestBody ConfirmReservationRequest request
+	) {
 		try {
-			ResultResponse result = reservationService.confirmReservation(idReservation, idRecepcionista, notes,
-					idTable);
+			request.setIdReservation(idReservation);
+
+			ResultResponse result = reservationService.confirmReservation(request);
 
 			if (!result.getValue()) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
@@ -86,6 +88,7 @@ public class ReservationController {
 					.body(new ResultResponse(false, e.getMessage()));
 		}
 	}
+
 
 	@GetMapping("/list/confirmed/{idRecepcionist}")
 	public ResponseEntity<?> getConfirmedByRecepcionist(@PathVariable UUID idRecepcionist) {

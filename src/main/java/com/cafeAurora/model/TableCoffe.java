@@ -2,7 +2,7 @@ package com.cafeAurora.model;
 
 import java.time.LocalDateTime;
 
-import com.cafeAurora.dto.TableStatus;
+import com.cafeAurora.enums.TableStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

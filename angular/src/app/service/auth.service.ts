@@ -17,17 +17,20 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<UserResponse | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private tokenService: TokenService) {
-  const token = this.tokenService.getToken();
-  if (token) {
-    this.loadCurrentUser().subscribe({
-      error: () => {
-        this.logout();
-      }
-    });
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+  ) {
+    const token = this.tokenService.getToken();
+    if (token) {
+      this.loadCurrentUser().subscribe({
+        error: () => {
+          this.logout();
+        },
+      });
+    }
   }
-}
-
+  
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/register`, request)
@@ -63,7 +66,7 @@ export class AuthService {
 
   private loadCurrentUser(): Observable<any> {
     return this.getCurrentUser().pipe(
-      tap((user) => this.currentUserSubject.next(user))
+      tap((user) => this.currentUserSubject.next(user)),
     );
   }
 
@@ -83,5 +86,4 @@ export class AuthService {
       this.currentUserSubject.next(user);
     }
   }
-  
 }

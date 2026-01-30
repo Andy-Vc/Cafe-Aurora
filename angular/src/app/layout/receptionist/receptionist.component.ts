@@ -44,7 +44,7 @@ export class ReceptionistComponent implements OnInit {
     {
       icon: 'bi-calendar-check',
       label: 'Reservas',
-      route: '/recepcionista/reservas',
+      route: '/recepcionista/reserva',
       active: false
     },
     {

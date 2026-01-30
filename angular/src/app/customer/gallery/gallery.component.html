@@ -8,12 +8,8 @@
         </div>
     </div>
 </section>
-
-<!-- Gallery Section -->
 <section class="gallery-section">
     <div class="container">
-
-        <!-- Search Bar -->
         <div class="search-wrapper mb-4">
             <div class="search-box">
                 <i class="bi bi-search"></i>
@@ -24,15 +20,11 @@
                 </button>
             </div>
         </div>
-
-        <!-- Loading -->
         <div *ngIf="loading" class="text-center py-5">
             <div class="spinner-border text-primary" role="status">
                 <span class="visually-hidden">Cargando...</span>
             </div>
         </div>
-
-        <!-- Gallery Grid -->
         <div *ngIf="!loading && paginatedGalleries.length > 0" class="gallery-grid">
             <div *ngFor="let gallery of paginatedGalleries; let i = index" class="gallery-item"
                 (click)="openGallery(gallery, i)">

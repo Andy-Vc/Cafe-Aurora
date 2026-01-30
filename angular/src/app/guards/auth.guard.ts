@@ -16,15 +16,24 @@ export const authGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   const allowedRoles = route.data['roles'] as string[];
 
   return authService.currentUser$.pipe(
-  filter(user => user !== null), 
-  take(1),
-  map(user => {
-    if (allowedRoles && !allowedRoles.includes(user.role.toUpperCase()) && !allowedRoles.includes(user.role)) {
-      console.warn('Acceso denegado. Rol requerido:', allowedRoles, 'Rol actual:', user.role);
-      roleRedirectService.redirectByRole(user.role);
-      return false;
-    }
-    return true;
-  })
-);
+    filter((user) => user !== null),
+    take(1),
+    map((user) => {
+      if (
+        allowedRoles &&
+        !allowedRoles.includes(user.role.toUpperCase()) &&
+        !allowedRoles.includes(user.role)
+      ) {
+        console.warn(
+          'Acceso denegado. Rol requerido:',
+          allowedRoles,
+          'Rol actual:',
+          user.role,
+        );
+        roleRedirectService.redirectByRole(user.role);
+        return false;
+      }
+      return true;
+    }),
+  );
 };

@@ -186,10 +186,7 @@
   color: #d6d3d1;
 }
 
-
-/* ============================= */
 /*      ANIMACIONES FADE IN      */
-/* ============================= */
 @keyframes fadeIn {
   from {
     opacity: 0;

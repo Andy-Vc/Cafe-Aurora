@@ -5,3 +5,7 @@ spring.datasource.password=YOUR_PASSWORD
 supabase.url=https://YOUR-PROJECT.supabase.co
 supabase.key=YOUR_ANON_KEY
 supabase.jwt.secret=YOUR_JWT_SECRET
+
+cloudinary.cloud-name=YOUR_NAME_CLOUDINARY
+cloudinary.api-key=YOUR_API_CLOUDINARY
+cloudinary.api-secret=YOUT_SECRET

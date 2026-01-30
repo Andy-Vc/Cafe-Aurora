@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    data: { title: 'Registrate' },
+    data: { title: 'Registrate' }
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
