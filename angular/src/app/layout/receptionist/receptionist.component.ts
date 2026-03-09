@@ -13,12 +13,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-receptionist',
-  imports: [
-    RouterOutlet,
-    CommonModule,
-    RouterLink,
-    RouterLinkActive,
-  ],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './receptionist.component.html',
   styleUrl: './receptionist.component.css',
 })
@@ -26,11 +21,11 @@ export class ReceptionistComponent implements OnInit {
   isDarkMode = false;
   currentYear = new Date().getFullYear();
   sidebarOpen = true;
-  
+
   // Auth state
   currentUser: UserResponse | null = null;
   showUserMenu = false;
-  
+
   private userSubscription?: Subscription;
 
   // Navigation items
@@ -39,37 +34,43 @@ export class ReceptionistComponent implements OnInit {
       icon: 'bi-speedometer2',
       label: 'Dashboard',
       route: '/recepcionista/dashboard',
-      active: true
+      active: true,
     },
     {
       icon: 'bi-calendar-check',
       label: 'Reservas',
       route: '/recepcionista/reserva',
-      active: false
+      active: false,
+    },
+    {
+      icon: 'bi-calendar-day',
+      label: 'Reservas de Hoy',
+      route: '/recepcionista/reservas-hoy',
+      active: false,
     },
     {
       icon: 'bi-table',
       label: 'Mesas',
       route: '/recepcionista/mesas',
-      active: false
+      active: false,
     },
     {
       icon: 'bi-people',
       label: 'Clientes',
       route: '/recepcionista/clientes',
-      active: false
+      active: false,
     },
     {
       icon: 'bi-clock-history',
       label: 'Historial',
       route: '/recepcionista/historial',
-      active: false
-    }
+      active: false,
+    },
   ];
 
   constructor(
-    private authService: AuthService, 
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +87,7 @@ export class ReceptionistComponent implements OnInit {
     this.userSubscription = this.authService.currentUser$.subscribe({
       next: (user) => {
         this.currentUser = user;
-      }
+      },
     });
 
     // Check screen size on init

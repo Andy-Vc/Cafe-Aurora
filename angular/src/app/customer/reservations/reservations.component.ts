@@ -5,6 +5,7 @@ import { UserResponse } from '../../shared/dto/userresponse';
 import { AuthService } from '../../service/auth.service';
 import { ReservationService } from '../../service/reservation.service';
 import { CommonModule } from '@angular/common';
+import { CancelReservation } from '../../shared/dto/cancelreservation';
 
 @Component({
   selector: 'app-reservations',
@@ -17,10 +18,11 @@ export class ReservationsComponent implements OnInit {
   reservations: Reservation[] = [];
   loading = true;
   downloadingPdf: { [key: number]: boolean } = {};
+  cancellingReservation: { [key: number]: boolean } = {};
 
   constructor(
     private authService: AuthService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
   ) {}
 
   ngOnInit(): void {
@@ -48,10 +50,44 @@ export class ReservationsComponent implements OnInit {
         console.error('Error loading reservations:', err);
         AlertService.error(
           'Error al cargar reservas',
-          'No se pudieron cargar tus reservas. Por favor intenta nuevamente.'
+          'No se pudieron cargar tus reservas. Por favor intenta nuevamente.',
         );
         this.loading = false;
       },
+    });
+  }
+
+  cancelReservation(reservation: Reservation): void {
+    if (!this.currentUser?.idUser) return;
+
+    AlertService.confirm(
+      '¿Cancelar reserva?',
+      'Esta acción no se puede deshacer.',
+    ).then((result) => {
+      if (!result.isConfirmed) return;
+
+      this.cancellingReservation[reservation.idReservation!] = true;
+
+      const request: CancelReservation = {
+        idReservation: reservation.idReservation!,
+        notes: 'Cancelado por el usuario',
+      };
+
+      this.reservationService.cancelReservation(request).subscribe({
+        next: () => {
+          this.cancellingReservation[reservation.idReservation!] = false;
+          AlertService.success(
+            'Reserva cancelada',
+            'Tu reserva fue cancelada correctamente.',
+          );
+          this.loadReservations(this.currentUser!.idUser);
+        },
+        error: (err) => {
+          console.error('Error al cancelar:', err);
+          this.cancellingReservation[reservation.idReservation!] = false;
+          AlertService.error('Error', 'No se pudo cancelar la reserva.');
+        },
+      });
     });
   }
   downloadPdf(reservation: Reservation): void {
@@ -65,7 +101,7 @@ export class ReservationsComponent implements OnInit {
     this.reservationService
       .downloadReservationPdf(
         reservation.idReservation!,
-        this.currentUser.idUser
+        this.currentUser.idUser,
       )
       .subscribe({
         next: (blob) => {
@@ -82,7 +118,7 @@ export class ReservationsComponent implements OnInit {
 
           AlertService.success(
             'PDF descargado',
-            'Tu reserva se ha descargado correctamente'
+            'Tu reserva se ha descargado correctamente',
           );
         },
         error: (err) => {
@@ -90,7 +126,7 @@ export class ReservationsComponent implements OnInit {
           this.downloadingPdf[reservation.idReservation!] = false;
           AlertService.error(
             'Error al descargar PDF',
-            'No se pudo descargar el PDF. Por favor intenta nuevamente.'
+            'No se pudo descargar el PDF. Por favor intenta nuevamente.',
           );
         },
       });
@@ -155,7 +191,7 @@ export class ReservationsComponent implements OnInit {
 
   get confirmedReservations(): number {
     return this.reservations.filter(
-      (r) => r.status.toUpperCase() === 'CONFIRMADA'
+      (r) => r.status.toUpperCase() === 'CONFIRMADA',
     ).length;
   }
 }

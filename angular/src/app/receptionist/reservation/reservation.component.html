@@ -1,7 +1,5 @@
 <div class="reservations-container">
-  <!-- Main Content -->
   <div class="content-wrapper">
-    <!-- Title Section -->
     <div class="section-header">
       <div class="title-group">
         <i class="section-icon">📋</i>
@@ -12,65 +10,53 @@
       </div>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs-container">
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'pendientes'"
-        (click)="switchTab('pendientes')">
+      <button class="tab-button" [class.active]="activeTab === 'pendientes'" (click)="switchTab('pendientes')">
         Pendientes
       </button>
-      <button 
-        class="tab-button" 
-        [class.active]="activeTab === 'confirmadas'"
-        (click)="switchTab('confirmadas')">
+      <button class="tab-button" [class.active]="activeTab === 'confirmadas'" (click)="switchTab('confirmadas')">
         Confirmadas por mí
+      </button>
+      <button class="tab-button" [class.active]="activeTab === 'rechazadas'" (click)="switchTab('rechazadas')">
+        Rechazadas por mí
       </button>
     </div>
 
-    <!-- Search Bar -->
     <div class="search-container">
       <div class="search-box">
         <i class="search-icon">🔍</i>
-        <input 
-          type="text" 
-          placeholder="Buscar reserva por nombre, email, teléfono o fecha..."
-          [(ngModel)]="searchTerm"
-          (input)="searchReservations()"
-          class="search-input">
+        <input type="text" placeholder="Buscar reserva por nombre, email, teléfono o fecha..." [(ngModel)]="searchTerm"
+          (input)="searchReservations()" class="search-input">
       </div>
     </div>
 
-    <!-- Results Count -->
     <p class="results-count">
-      Mostrando {{ filteredReservations.length }} de {{ reservations.length }} reservas
+      Mostrando {{ filteredReservations?.length || 0 }} de {{ reservations?.length || 0 }} reservas
     </p>
 
-    <!-- Loading State -->
     <div *ngIf="loading" class="loading-state">
       <div class="spinner"></div>
       <p>Cargando reservas...</p>
     </div>
 
-    <!-- Table -->
     <div *ngIf="!loading" class="table-container">
       <table class="data-table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>CLIENTE</th>
-            <th>FECHA</th>
-            <th>HORA</th>
-            <th>PERSONAS</th>
-            <th>CONTACTO</th>
-            <th>ESTADO</th>
-            <th *ngIf="activeTab === 'confirmadas'">MESA</th>
-            <th>ACCIONES</th>
+            <th><i class="bi bi-hash"></i> ID</th>
+            <th><i class="bi bi-person"></i> Cliente</th>
+            <th><i class="bi bi-calendar3"></i> Fecha</th>
+            <th><i class="bi bi-clock"></i> Hora</th>
+            <th><i class="bi bi-people"></i> Personas</th>
+            <th><i class="bi bi-telephone"></i> Contacto</th>
+            <th><i class="bi bi-circle-half"></i> Estado</th>
+            <th *ngIf="activeTab === 'confirmadas'"><i class="bi bi-grid"></i> Mesa</th>
+            <th><i class="bi bi-gear"></i> Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let reservation of filteredReservations">
-            <td>{{ reservation.idReservation }}</td>
+            <td><span class="id-badge">#{{ reservation.idReservation }}</span></td>
             <td>
               <div class="customer-info">
                 <strong>{{ reservation.customerName }}</strong>
@@ -79,12 +65,14 @@
             <td>{{ formatDate(reservation.reservationDate) }}</td>
             <td>{{ formatTime(reservation.reservationTime) }}</td>
             <td>
-              <span class="people-badge">👥 {{ reservation.numPeople }}</span>
+              <span class="people-badge">
+                <i class="bi bi-people-fill me-1"></i>{{ reservation.numPeople }}
+              </span>
             </td>
             <td>
               <div class="contact-info">
-                <div>📧 {{ reservation.customerEmail }}</div>
-                <div>📱 {{ reservation.customerPhone }}</div>
+                <div><i class="bi bi-envelope me-1"></i>{{ reservation.customerEmail }}</div>
+                <div><i class="bi bi-phone me-1"></i>{{ reservation.customerPhone }}</div>
               </div>
             </td>
             <td>
@@ -94,23 +82,21 @@
             </td>
             <td *ngIf="activeTab === 'confirmadas'">
               <span *ngIf="reservation.table" class="table-badge">
-                Mesa {{ reservation.table.tableNumber }}
+                <i class="bi bi-grid-3x3-gap me-1"></i>Mesa {{ reservation.table.tableNumber }}
               </span>
             </td>
             <td>
               <div class="action-buttons">
-                <button 
-                  class="btn-action btn-view" 
-                  (click)="openViewModal(reservation)"
-                  title="Ver detalles">
-                  👁️
+                <button class="btn-action btn-view" (click)="openViewModal(reservation)" title="Ver detalles">
+                  <i class="bi bi-eye"></i>
                 </button>
-                <button 
-                  *ngIf="activeTab === 'pendientes'"
-                  class="btn-action btn-confirm" 
-                  (click)="openConfirmModal(reservation)"
-                  title="Confirmar reserva">
-                  ✅
+                <button *ngIf="activeTab === 'pendientes'" class="btn-action btn-confirm"
+                  (click)="openConfirmModal(reservation)" title="Confirmar reserva">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button *ngIf="activeTab === 'pendientes'" class="btn-action btn-reject"
+                  (click)="openRejectModal(reservation)" title="Rechazar reserva">
+                  <i class="bi bi-x-lg"></i>
                 </button>
               </div>
             </td>
@@ -118,7 +104,6 @@
         </tbody>
       </table>
 
-      <!-- Empty State -->
       <div *ngIf="filteredReservations.length === 0" class="empty-state">
         <p>📭 No hay reservas {{ activeTab === 'pendientes' ? 'pendientes' : 'confirmadas' }}</p>
       </div>
@@ -126,7 +111,6 @@
   </div>
 </div>
 
-<!-- Modal de Confirmación -->
 <div *ngIf="showConfirmModal" class="modal-overlay" (click)="closeConfirmModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
@@ -163,31 +147,21 @@
 
       <div class="form-group">
         <label for="tableSelect">Seleccionar Mesa *</label>
-        <select 
-          id="tableSelect"
-          [(ngModel)]="confirmRequest.idTable"
-          class="form-control"
-          required>
+        <select id="tableSelect" [(ngModel)]="confirmRequest.idTable" class="form-control" required>
           <option [value]="0" disabled>-- Seleccione una mesa --</option>
-          <option 
-            *ngFor="let table of availableTables" 
-            [value]="table.idTable">
+          <option *ngFor="let table of availableTables" [value]="table.idTable">
             Mesa {{ table.tableNumber }} - Capacidad: {{ table.capacity }} personas
             <span *ngIf="table.location"> ({{ table.location }})</span>
           </option>
         </select>
-        <p *ngIf="availableTables.length === 0" class="warning-text">
+        <p *ngIf="availableTables?.length === 0" class="warning-text">
           ⚠️ No hay mesas disponibles para esta fecha y hora con capacidad suficiente
         </p>
       </div>
 
       <div class="form-group">
         <label for="notes">Notas de confirmación (opcional)</label>
-        <textarea 
-          id="notes"
-          [(ngModel)]="confirmRequest.notes"
-          class="form-control"
-          rows="3"
+        <textarea id="notes" [(ngModel)]="confirmRequest.notes" class="form-control" rows="3"
           placeholder="Ej: Mesa junto a la ventana, cerca de la entrada, etc."></textarea>
       </div>
     </div>
@@ -196,17 +170,13 @@
       <button class="btn btn-secondary" (click)="closeConfirmModal()">
         Cancelar
       </button>
-      <button 
-        class="btn btn-primary" 
-        (click)="confirmReservation()"
-        [disabled]="!confirmRequest.idTable || loading">
+      <button class="btn btn-primary" (click)="confirmReservation()" [disabled]="!confirmRequest.idTable || loading">
         {{ loading ? 'Confirmando...' : 'Confirmar Reserva' }}
       </button>
     </div>
   </div>
 </div>
 
-<!-- Modal de Vista Detallada -->
 <div *ngIf="showViewModal" class="modal-overlay" (click)="closeViewModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
@@ -308,6 +278,59 @@
     <div class="modal-footer">
       <button class="btn btn-secondary" (click)="closeViewModal()">
         Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="showRejectModal" class="modal-overlay" (click)="closeRejectModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3><i class="bi bi-x-circle me-2 text-danger"></i>Rechazar Reserva</h3>
+      <button class="btn-close-modal" (click)="closeRejectModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="reservation-summary">
+        <h4><i class="bi bi-info-circle me-2"></i>Información de la Reserva</h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Cliente</label>
+            <span>{{ rejectingReservation?.customerName }}</span>
+          </div>
+          <div class="info-item">
+            <label>Fecha</label>
+            <span>{{ formatDate(rejectingReservation?.reservationDate || '') }}</span>
+          </div>
+          <div class="info-item">
+            <label>Hora</label>
+            <span>{{ formatTime(rejectingReservation?.reservationTime || '') }}</span>
+          </div>
+          <div class="info-item">
+            <label>Personas</label>
+            <span>{{ rejectingReservation?.numPeople }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="rejectNotes">
+          <i class="bi bi-chat-left-text me-1"></i>Motivo del rechazo <span class="text-danger">*</span>
+        </label>
+        <textarea id="rejectNotes" [(ngModel)]="rejectRequest.notes" class="form-control" rows="3"
+          placeholder="Explica el motivo del rechazo..."></textarea>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeRejectModal()">
+        <i class="bi bi-arrow-left me-1"></i>Cancelar
+      </button>
+      <button class="btn btn-danger-custom" (click)="rejectReservation()"
+        [disabled]="!rejectRequest.notes.trim() || loading">
+        <span *ngIf="!loading"><i class="bi bi-x-circle me-1"></i>Rechazar Reserva</span>
+        <span *ngIf="loading"><span class="spinner-border spinner-border-sm me-1"></span>Rechazando...</span>
       </button>
     </div>
   </div>

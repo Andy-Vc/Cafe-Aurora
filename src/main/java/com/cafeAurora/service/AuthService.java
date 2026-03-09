@@ -16,6 +16,7 @@ import com.cafeAurora.repository.IRoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -31,6 +32,7 @@ public class AuthService {
     private final IUserRepository userRepository;
     private final IRoleRepository roleRepository;
     private final RestTemplate restTemplate;
+    private final BCryptPasswordEncoder passwordEncoder;
     
     @Value("${supabase.jwt.secret}")
     private String supabaseJwtSecret;
@@ -81,7 +83,7 @@ public class AuthService {
             user.setIdUser(UUID.fromString(userId));
             user.setRole(clientRole);
             user.setEmail(request.getEmail());
-            user.setPassword(request.getPassword()); // Supabase ya lo hashea
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setName(request.getName());
             user.setPhone(request.getPhone());
             user.setIsActive(true);

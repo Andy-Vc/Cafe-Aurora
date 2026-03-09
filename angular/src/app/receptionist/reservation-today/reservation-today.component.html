@@ -1,0 +1,243 @@
+<div class="today-container">
+  <div class="content-wrapper">
+
+    <!-- Header -->
+    <div class="section-header">
+      <div class="title-group">
+        <div class="section-icon-wrapper">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <div>
+          <h2 class="page-title">Reservas de Hoy</h2>
+          <p class="subtitle">
+            <i class="bi bi-clock me-1"></i>{{ today | date:'EEEE, d \'de\' MMMM yyyy':'':'es' }}
+          </p>
+        </div>
+      </div>
+      <button class="btn-refresh" (click)="loadTodayReservations()" [disabled]="loading">
+        <i class="bi bi-arrow-clockwise" [class.spinning]="loading"></i>
+        Actualizar
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon total"><i class="bi bi-calendar3"></i></div>
+        <div class="stat-content">
+          <h3>{{ totalToday }}</h3>
+          <p>Total hoy</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pending"><i class="bi bi-hourglass-split"></i></div>
+        <div class="stat-content">
+          <h3>{{ pendingToday }}</h3>
+          <p>Por atender</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon completed"><i class="bi bi-check-circle"></i></div>
+        <div class="stat-content">
+          <h3>{{ completedToday }}</h3>
+          <p>Completadas</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-container">
+      <div class="search-box">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" placeholder="Buscar por nombre, email o teléfono..."
+          [(ngModel)]="searchTerm" (input)="searchReservations()" class="search-input">
+      </div>
+      <p class="results-count">
+        Mostrando {{ filteredReservations.length }} de {{ reservations.length }} reservas
+      </p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando reservas de hoy...</p>
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="!loading" class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th><i class="bi bi-hash"></i> ID</th>
+            <th><i class="bi bi-person"></i> Cliente</th>
+            <th><i class="bi bi-clock"></i> Hora</th>
+            <th><i class="bi bi-people"></i> Personas</th>
+            <th><i class="bi bi-grid"></i> Mesa</th>
+            <th><i class="bi bi-telephone"></i> Contacto</th>
+            <th><i class="bi bi-circle-half"></i> Estado</th>
+            <th><i class="bi bi-gear"></i> Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reservation of filteredReservations"
+            [class.row-completed]="reservation.status === 'COMPLETADA'">
+            <td><span class="id-badge">#{{ reservation.idReservation }}</span></td>
+            <td>
+              <div class="customer-info">
+                <strong>{{ reservation.customerName }}</strong>
+              </div>
+            </td>
+            <td>
+              <span class="time-badge">
+                <i class="bi bi-clock-fill me-1"></i>{{ formatTime(reservation.reservationTime) }}
+              </span>
+            </td>
+            <td>
+              <span class="people-badge">
+                <i class="bi bi-people-fill me-1"></i>{{ reservation.numPeople }}
+              </span>
+            </td>
+            <td>
+              <span *ngIf="reservation.table" class="table-badge">
+                <i class="bi bi-grid-3x3-gap me-1"></i>Mesa {{ reservation.table.tableNumber }}
+              </span>
+              <span *ngIf="!reservation.table" class="text-muted">—</span>
+            </td>
+            <td>
+              <div class="contact-info">
+                <div><i class="bi bi-envelope me-1"></i>{{ reservation.customerEmail }}</div>
+                <div><i class="bi bi-phone me-1"></i>{{ reservation.customerPhone }}</div>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(reservation.status)">
+                {{ getStatusText(reservation.status) }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-action btn-view" (click)="openViewModal(reservation)" title="Ver detalles">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <button *ngIf="reservation.status !== 'COMPLETADA'"
+                  class="btn-action btn-complete"
+                  (click)="openCompleteModal(reservation)"
+                  [disabled]="completingReservation[reservation.idReservation!]"
+                  title="Marcar como completada">
+                  <i class="bi bi-check2-circle"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="filteredReservations.length === 0" class="empty-state">
+        <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+        <h4>Sin reservas para hoy</h4>
+        <p>No hay reservas confirmadas para el día de hoy</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Completar -->
+<div *ngIf="showCompleteModal" class="modal-overlay" (click)="closeCompleteModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3><i class="bi bi-check2-circle me-2 text-success-custom"></i>Completar Reserva</h3>
+      <button class="btn-close-modal" (click)="closeCompleteModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="reservation-summary">
+        <h4><i class="bi bi-info-circle me-2"></i>Información de la Reserva</h4>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Cliente</label>
+            <span>{{ completingSelected?.customerName }}</span>
+          </div>
+          <div class="info-item">
+            <label>Hora</label>
+            <span>{{ formatTime(completingSelected?.reservationTime || '') }}</span>
+          </div>
+          <div class="info-item">
+            <label>Personas</label>
+            <span>{{ completingSelected?.numPeople }}</span>
+          </div>
+          <div class="info-item">
+            <label>Mesa</label>
+            <span>Mesa {{ completingSelected?.table?.tableNumber ?? '—' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeCompleteModal()">
+        <i class="bi bi-arrow-left me-1"></i>Cancelar
+      </button>
+      <button class="btn btn-success-custom" (click)="completeReservation()"
+        [disabled]="completingReservation[completeRequest.idReservation]">
+        <span *ngIf="!completingReservation[completeRequest.idReservation]">
+          <i class="bi bi-check2-circle me-1"></i>Marcar como Completada
+        </span>
+        <span *ngIf="completingReservation[completeRequest.idReservation]">
+          <span class="spinner-border spinner-border-sm me-1"></span>Completando...
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ver Detalle -->
+<div *ngIf="showViewModal" class="modal-overlay" (click)="closeViewModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3><i class="bi bi-eye me-2"></i>Detalle #{{ viewReservation?.idReservation }}</h3>
+      <button class="btn-close-modal" (click)="closeViewModal()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="detail-section">
+        <h4>Cliente</h4>
+        <div class="detail-grid">
+          <div class="detail-item"><label>Nombre</label><span>{{ viewReservation?.customerName }}</span></div>
+          <div class="detail-item"><label>Email</label><span>{{ viewReservation?.customerEmail }}</span></div>
+          <div class="detail-item"><label>Teléfono</label><span>{{ viewReservation?.customerPhone }}</span></div>
+        </div>
+      </div>
+      <div class="detail-section">
+        <h4>Reserva</h4>
+        <div class="detail-grid">
+          <div class="detail-item"><label>Hora</label><span>{{ formatTime(viewReservation?.reservationTime || '') }}</span></div>
+          <div class="detail-item"><label>Personas</label><span>{{ viewReservation?.numPeople }}</span></div>
+          <div class="detail-item">
+            <label>Mesa</label>
+            <span>{{ viewReservation?.table ? 'Mesa ' + viewReservation?.table?.tableNumber : '—' }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Estado</label>
+            <span class="status-badge" [ngClass]="getStatusClass(viewReservation?.status || 'CONFIRMADA')">
+              {{ getStatusText(viewReservation?.status || 'CONFIRMADA') }}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="viewReservation?.specialNotes" class="detail-section">
+        <h4>Notas del Cliente</h4>
+        <p class="notes-text">{{ viewReservation?.specialNotes }}</p>
+      </div>
+      <div *ngIf="viewReservation?.responseNotes" class="detail-section">
+        <h4>Notas de Confirmación</h4>
+        <p class="notes-text">{{ viewReservation?.responseNotes }}</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" (click)="closeViewModal()">
+        <i class="bi bi-x me-1"></i>Cerrar
+      </button>
+    </div>
+  </div>
+</div>

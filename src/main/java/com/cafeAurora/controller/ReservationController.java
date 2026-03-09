@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import com.cafeAurora.dto.CancelReservationRequest;
+import com.cafeAurora.dto.CompleteReservationRequest;
 import com.cafeAurora.dto.ConfirmReservationRequest;
+import com.cafeAurora.dto.RejectReservationRequest;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -89,7 +93,90 @@ public class ReservationController {
 		}
 	}
 
+	@PutMapping("/reject/{idReservation}")
+	public ResponseEntity<ResultResponse> rejectdReservation(
+	        @PathVariable Integer idReservation,
+	        @RequestBody RejectReservationRequest request
+	) {
+	    try {
+	        request.setIdReservation(idReservation);
 
+	        ResultResponse result = reservationService.rejectReservation(request);
+
+	        if (!result.getValue()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+	        }
+
+	        return ResponseEntity.ok(result);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(new ResultResponse(false, e.getMessage()));
+	    }
+	}
+	
+	@PutMapping("/complete/{idReservation}")
+	public ResponseEntity<ResultResponse> completeReservation(
+	        @PathVariable Integer idReservation,
+	        @RequestBody CompleteReservationRequest request
+	) {
+	    try {
+	        request.setIdReservation(idReservation);
+
+	        ResultResponse result = reservationService.completeReservation(request);
+
+	        if (!result.getValue()) {
+	            return ResponseEntity.badRequest().body(result);
+	        }
+
+	        return ResponseEntity.ok(result);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(new ResultResponse(false, e.getMessage()));
+	    }
+	}
+	
+	@GetMapping("/confirmed/today")
+	public ResponseEntity<?> getTodayConfirmedReservations() {
+	    try {
+	        List<Reservation> confirmed = reservationService.getTodayConfirmedReservations();
+
+	        if (confirmed.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+	                    .body("No hay reservas confirmadas hoy.");
+	        }
+
+	        return ResponseEntity.ok(confirmed);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error al obtener reservas confirmadas.");
+	    }
+	}
+	
+	@GetMapping("/list/rejectd/{idRecepcionist}")
+	public ResponseEntity<?> getRejectdByRecepcionist(@PathVariable UUID idRecepcionist) {
+		try {
+			List<Reservation> confirmed = reservationService.getRejectdByRecepcionist(idRecepcionist);
+
+			if (confirmed.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT)
+						.body("El recepcionista no tiene reservas rechazadas.");
+			}
+
+			return ResponseEntity.ok(confirmed);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Error al obtener reservas rechazadas.");
+		}
+	}
+	
 	@GetMapping("/list/confirmed/{idRecepcionist}")
 	public ResponseEntity<?> getConfirmedByRecepcionist(@PathVariable UUID idRecepcionist) {
 		try {
@@ -123,6 +210,24 @@ public class ReservationController {
 			ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
+	}
+	
+	@PutMapping("/cancel")
+	public ResponseEntity<ResultResponse> cancelReservation(@RequestBody CancelReservationRequest reservation) {
+	    try {
+	        ResultResponse result = reservationService.cancelReservation(reservation);
+
+	        if (!result.getValue()) {
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+	        }
+
+	        return ResponseEntity.ok(result);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+	    }
 	}
 
 	@GetMapping("/list/active/{idUser}")

@@ -21,6 +21,9 @@ public interface IReservationRepository extends JpaRepository<Reservation, Integ
 	@Query("SELECT r FROM Reservation r WHERE r.user.idUser = :idUser AND r.status IN ('RECHAZADA', 'CANCELADA', 'COMPLETADA')")
 	List<Reservation> findHistoryReservations(UUID idUser);
 
+	@Query("SELECT r FROM Reservation r WHERE r.status = 'CONFIRMADA' AND r.reservationDate = CURRENT_DATE ORDER BY r.reservationTime ASC")
+	List<Reservation> getTodayConfirmedReservations();
+	
 	long countByUser_IdUser(UUID idUser);
 
 	List<Reservation> findByStatusOrderByCreatedAtDesc(ReservationStatus status);

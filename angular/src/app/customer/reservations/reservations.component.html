@@ -103,18 +103,28 @@
             <i class="bi bi-clock-history"></i>
             <span>Creada: {{ formatDate(reservation.createdAt) }}</span>
           </div>
-
-          <button class="btn-download-pdf" (click)="downloadPdf(reservation)"
-            [disabled]="downloadingPdf[reservation.idReservation!]">
-            <span *ngIf="!downloadingPdf[reservation.idReservation!]">
-              <i class="bi bi-file-earmark-pdf me-2"></i>
-              Descargar PDF
-            </span>
-            <span *ngIf="downloadingPdf[reservation.idReservation!]">
-              <span class="spinner-border spinner-border-sm me-2"></span>
-              Descargando...
-            </span>
-          </button>
+          <div class="d-flex align-content-center gap-2">
+            <button class="btn-download-pdf" (click)="downloadPdf(reservation)"
+              [disabled]="downloadingPdf[reservation.idReservation!]">
+              <span *ngIf="!downloadingPdf[reservation.idReservation!]">
+                <i class="bi bi-file-earmark-pdf me-2"></i>
+                Descargar PDF
+              </span>
+              <span *ngIf="downloadingPdf[reservation.idReservation!]">
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Descargando...
+              </span>
+            </button>
+            <button class="btn-cancel-reservation" (click)="cancelReservation(reservation)"
+              [disabled]="cancellingReservation[reservation.idReservation!]">
+              <span *ngIf="!cancellingReservation[reservation.idReservation!]">
+                <i class="bi bi-x-circle me-2"></i>Cancelar
+              </span>
+              <span *ngIf="cancellingReservation[reservation.idReservation!]">
+                <span class="spinner-border spinner-border-sm me-2"></span>Cancelando...
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

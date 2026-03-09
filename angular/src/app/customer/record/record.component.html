@@ -50,10 +50,8 @@
     </div>
 
     <div class="reservations-list" *ngIf="reservations.length > 0">
-      <div 
-        *ngFor="let reservation of reservations" 
-        class="reservation-card">
-        
+      <div *ngFor="let reservation of reservations" class="reservation-card">
+
         <div class="reservation-header">
           <div class="reservation-date">
             <i class="bi bi-calendar3"></i>
@@ -63,9 +61,7 @@
             </div>
           </div>
 
-          <span 
-            class="status-badge"
-            [ngClass]="getStatusClass(reservation.status)">
+          <span class="status-badge" [ngClass]="getStatusClass(reservation.status)">
             <i [class]="getStatusIcon(reservation.status)"></i>
             {{ getStatusLabel(reservation.status) }}
           </span>
@@ -121,9 +117,7 @@
       <p>
         Aún no tienes reservas en tu historial
       </p>
-      <a 
-        routerLink="/cliente/reserva"
-        class="btn-primary">
+      <a routerLink="/cliente/reserva" class="btn-primary">
         <i class="bi bi-calendar-plus me-2"></i>
         Hacer una reserva
       </a>

@@ -567,3 +567,329 @@
     margin: 1rem;
   }
 }
+
+/* Dark mode base */
+:host-context(.dark-mode) .reservations-container {
+  background-color: #0f0a05;
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .content-wrapper {
+  color: #fafaf9;
+}
+
+/* Title */
+:host-context(.dark-mode) .title-group h2 {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .subtitle {
+  color: #a8a29e;
+}
+
+/* Tabs */
+:host-context(.dark-mode) .tabs-container {
+  border-bottom-color: #44403c;
+}
+
+:host-context(.dark-mode) .tab-button {
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .tab-button:hover,
+:host-context(.dark-mode) .tab-button.active {
+  color: #fbbf24;
+}
+
+:host-context(.dark-mode) .tab-button.active::after {
+  background-color: #fbbf24;
+}
+
+/* Search */
+:host-context(.dark-mode) .search-input {
+  background-color: #1c1310;
+  border-color: #44403c;
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .search-input:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+}
+
+:host-context(.dark-mode) .search-input::placeholder {
+  color: #78716c;
+}
+
+:host-context(.dark-mode) .search-icon {
+  color: #78716c;
+}
+
+:host-context(.dark-mode) .results-count {
+  color: #a8a29e;
+}
+
+/* Table */
+:host-context(.dark-mode) .table-container {
+  background-color: #1c1310;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+:host-context(.dark-mode) .data-table thead {
+  background-color: #292524;
+}
+
+:host-context(.dark-mode) .data-table th {
+  color: #fbbf24;
+}
+
+:host-context(.dark-mode) .data-table tbody tr {
+  border-bottom-color: #292524;
+}
+
+:host-context(.dark-mode) .data-table tbody tr:hover {
+  background-color: #231a15;
+}
+
+:host-context(.dark-mode) .data-table td {
+  color: #e7e5e4;
+}
+
+:host-context(.dark-mode) .customer-info strong {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .contact-info {
+  color: #a8a29e;
+}
+
+/* Badges */
+:host-context(.dark-mode) .people-badge {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+:host-context(.dark-mode) .table-badge {
+  background-color: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+}
+
+:host-context(.dark-mode) .id-badge {
+  color: #a8a29e;
+  font-size: 0.85rem;
+}
+
+/* ID badge light */
+.id-badge {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+/* Action buttons */
+:host-context(.dark-mode) .btn-view {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+:host-context(.dark-mode) .btn-view:hover {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+:host-context(.dark-mode) .btn-confirm {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+:host-context(.dark-mode) .btn-confirm:hover {
+  background-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Reject button */
+.btn-reject {
+  background-color: #ffcdd2;
+  color: #c62828;
+}
+
+.btn-reject:hover {
+  background-color: #ef9a9a;
+  transform: scale(1.05);
+}
+
+:host-context(.dark-mode) .btn-reject {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+:host-context(.dark-mode) .btn-reject:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Empty state */
+:host-context(.dark-mode) .empty-state {
+  color: #78716c;
+}
+
+/* Loading */
+:host-context(.dark-mode) .loading-state {
+  background-color: #1c1310;
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .spinner {
+  border-color: #44403c;
+  border-top-color: #fbbf24;
+}
+
+/* Modal dark */
+:host-context(.dark-mode) .modal-content {
+  background-color: #1c1310;
+  border: 1px solid #44403c;
+}
+
+:host-context(.dark-mode) .modal-header {
+  border-bottom-color: #44403c;
+}
+
+:host-context(.dark-mode) .modal-header h3 {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .modal-footer {
+  border-top-color: #44403c;
+}
+
+:host-context(.dark-mode) .reservation-summary {
+  background-color: #292524;
+}
+
+:host-context(.dark-mode) .reservation-summary h4 {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .info-item label {
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .info-item span {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .special-notes label {
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .special-notes p {
+  color: #e7e5e4;
+}
+
+:host-context(.dark-mode) .form-group label {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .form-control {
+  background-color: #292524;
+  border-color: #44403c;
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .form-control::placeholder {
+  color: #78716c;
+}
+
+:host-context(.dark-mode) .form-control:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+  background-color: #292524;
+}
+
+:host-context(.dark-mode) .warning-text {
+  color: #fbbf24;
+}
+
+:host-context(.dark-mode) .btn-secondary {
+  background-color: #44403c;
+  color: #e7e5e4;
+}
+
+:host-context(.dark-mode) .btn-secondary:hover {
+  background-color: #57534e;
+}
+
+/* Btn close modal */
+.btn-close-modal {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: #f3f4f6;
+  color: #64748b;
+}
+
+.btn-close-modal:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+:host-context(.dark-mode) .btn-close-modal {
+  background: #292524;
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .btn-close-modal:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+/* Danger button */
+.btn-danger-custom {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-danger-custom:hover:not(:disabled) {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+.btn-danger-custom:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Detail sections dark */
+:host-context(.dark-mode) .detail-section {
+  border-bottom-color: #44403c;
+}
+
+:host-context(.dark-mode) .detail-section h4 {
+  color: #fbbf24;
+}
+
+:host-context(.dark-mode) .detail-item label {
+  color: #a8a29e;
+}
+
+:host-context(.dark-mode) .detail-item span {
+  color: #fafaf9;
+}
+
+:host-context(.dark-mode) .notes-text {
+  background-color: #292524;
+  color: #e7e5e4;
+}
