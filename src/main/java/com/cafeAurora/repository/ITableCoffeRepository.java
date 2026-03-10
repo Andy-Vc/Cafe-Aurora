@@ -32,4 +32,6 @@ public interface ITableCoffeRepository extends JpaRepository<TableCoffe, Integer
 			@Param("endTime") LocalTime endTime);
 	
 	Long countByStatus(TableStatus status);
+	
+	Long countByIsAvailableTrue();
 }

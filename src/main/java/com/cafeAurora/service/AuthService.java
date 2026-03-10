@@ -42,6 +42,9 @@ public class AuthService {
 
 	@Value("${supabase.key}")
 	private String supabaseKey;
+	
+	@Value("${supabase.anon.key}")
+	private String anonKey;
 
 	@Transactional
 	public AuthResponse register(RegisterRequest request) {
@@ -65,7 +68,7 @@ public class AuthService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("apikey", supabaseKey);
+		headers.set("apikey", anonKey);
 
 		HttpEntity<Map<String, Object>> entity = new HttpEntity<>(supabaseAuthRequest, headers);
 

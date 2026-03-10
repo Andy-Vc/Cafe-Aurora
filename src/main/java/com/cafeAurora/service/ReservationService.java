@@ -250,4 +250,7 @@ public class ReservationService {
 	public List<Reservation> getRejectdByRecepcionist(UUID idRecepcionist) {
 		return reservationRepository.findByStatusAndAttendedByIdUser(ReservationStatus.RECHAZADA, idRecepcionist);
 	}
+	
+	/* ADMIN */
+	
 }

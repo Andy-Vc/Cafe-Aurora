@@ -1,1 +1,247 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div class="header-left">
+      <h1 class="page-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </h1>
+      <p class="page-subtitle">Resumen general del negocio</p>
+    </div>
+    <div class="header-right">
+      <span class="date-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        {{ today | date:'EEEE, d \'de\' MMMM yyyy':'':'es' }}
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando datos del dashboard...</p>
+  </div>
+
+  <ng-container *ngIf="!loading && dashboardData">
+
+    <div class="kpi-grid">
+
+      <div class="kpi-card kpi-today">
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <div class="kpi-content">
+          <span class="kpi-label">Reservas Hoy</span>
+          <span class="kpi-value">{{ dashboardData.reservationsToday }}</span>
+        </div>
+        <div class="kpi-accent-bar"></div>
+      </div>
+
+      <div class="kpi-card kpi-month">
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <div class="kpi-content">
+          <span class="kpi-label">Reservas este Mes</span>
+          <span class="kpi-value">{{ dashboardData.reservationsMonth }}</span>
+        </div>
+        <div class="kpi-accent-bar"></div>
+      </div>
+
+      <div class="kpi-card kpi-clients">
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="kpi-content">
+          <span class="kpi-label">Total Clientes</span>
+          <span class="kpi-value">{{ dashboardData.totalClients }}</span>
+        </div>
+        <div class="kpi-accent-bar"></div>
+      </div>
+
+      <div class="kpi-card kpi-tables">
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 7h18M3 12h18M9 17h6M5 7V5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2M7 17v2M17 17v2"></path>
+          </svg>
+        </div>
+        <div class="kpi-content">
+          <span class="kpi-label">Total Mesas</span>
+          <span class="kpi-value">{{ dashboardData.totalTables }}</span>
+        </div>
+        <div class="kpi-accent-bar"></div>
+      </div>
+
+    </div>
+
+    <div class="status-grid">
+
+      <div class="status-card status-pending">
+        <div class="status-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="status-info">
+          <span class="status-count">{{ dashboardData.pendingReservations }}</span>
+          <span class="status-label">Pendientes</span>
+        </div>
+        <div class="status-progress">
+          <div class="progress-bar" [style.width.%]="getPercent(dashboardData.pendingReservations)"></div>
+        </div>
+      </div>
+
+      <div class="status-card status-confirmed">
+        <div class="status-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="status-info">
+          <span class="status-count">{{ dashboardData.confirmedReservations }}</span>
+          <span class="status-label">Confirmadas</span>
+        </div>
+        <div class="status-progress">
+          <div class="progress-bar" [style.width.%]="getPercent(dashboardData.confirmedReservations)"></div>
+        </div>
+      </div>
+
+      <div class="status-card status-completed">
+        <div class="status-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <div class="status-info">
+          <span class="status-count">{{ dashboardData.completedReservations }}</span>
+          <span class="status-label">Completadas</span>
+        </div>
+        <div class="status-progress">
+          <div class="progress-bar" [style.width.%]="getPercent(dashboardData.completedReservations)"></div>
+        </div>
+      </div>
+
+      <div class="status-card status-cancelled">
+        <div class="status-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+        </div>
+        <div class="status-info">
+          <span class="status-count">{{ dashboardData.cancelledReservations }}</span>
+          <span class="status-label">Canceladas</span>
+        </div>
+        <div class="status-progress">
+          <div class="progress-bar" [style.width.%]="getPercent(dashboardData.cancelledReservations)"></div>
+        </div>
+      </div>
+      <div class="status-card status-rejected">
+        <div class="status-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+        <div class="status-info">
+          <span class="status-count">{{ dashboardData.rejectdReservations }}</span>
+          <span class="status-label">Rechazadas</span>
+        </div>
+        <div class="status-progress">
+          <div class="progress-bar" [style.width.%]="getPercent(dashboardData.rejectdReservations)"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-grid">
+
+      <div class="chart-card chart-main">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">Reservas Últimos Días</h3>
+            <p class="chart-subtitle">Tendencia de reservas recientes</p>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="lineChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card chart-side">
+        <div class="chart-header">
+          <div>
+            <h3 class="chart-title">Estado de Reservas</h3>
+            <p class="chart-subtitle">Distribución por estado</p>
+          </div>
+        </div>
+        <div class="chart-wrapper chart-donut-wrap">
+          <canvas id="donutChart"></canvas>
+        </div>
+        <div class="donut-legend">
+          <div class="legend-item">
+            <span class="legend-dot dot-pending"></span>
+            <span class="legend-text">Pendientes <strong>{{ dashboardData.pendingReservations }}</strong></span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot dot-confirmed"></span>
+            <span class="legend-text">Confirmadas <strong>{{ dashboardData.confirmedReservations }}</strong></span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot dot-completed"></span>
+            <span class="legend-text">Completadas <strong>{{ dashboardData.completedReservations }}</strong></span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot dot-cancelled"></span>
+            <span class="legend-text">Canceladas <strong>{{ dashboardData.cancelledReservations }}</strong></span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot dot-rejected"></span>
+            <span class="legend-text">Rechazadas <strong>{{ dashboardData.rejectdReservations }}</strong></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+
+</div>

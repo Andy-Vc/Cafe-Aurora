@@ -17,8 +17,6 @@ import com.cafeAurora.model.Reservation;
 
 @Repository
 public interface IReservationRepository extends JpaRepository<Reservation, Integer> {
-	Optional<Reservation> findByIdReservationAndUser_IdUser(Integer idReservation, UUID idUser);
-
 	@Query("SELECT r FROM Reservation r WHERE r.user.idUser = :idUser AND r.status IN ('PENDIENTE', 'CONFIRMADA')")
 	List<Reservation> findActiveReservations(UUID idUser);
 
@@ -33,17 +31,9 @@ public interface IReservationRepository extends JpaRepository<Reservation, Integ
 			""")
 	List<Reservation> getTodayConfirmedReservations(@Param("today") LocalDate today);
 
-	Long countByUser_IdUser(UUID idUser);
-
 	List<Reservation> findByStatusOrderByCreatedAtDesc(ReservationStatus status);
 
 	List<Reservation> findByStatusAndAttendedByIdUser(ReservationStatus status, UUID idUser);
-
-	Long countByStatus(ReservationStatus status);
-
-	Long countByStatusAndReservationDate(ReservationStatus status, LocalDate reservationDate);
-
-	Long countByReservationDate(LocalDate reservationDate);
 
 	@Query("""
 			SELECT r FROM Reservation r
@@ -53,4 +43,31 @@ public interface IReservationRepository extends JpaRepository<Reservation, Integ
 			ORDER BY r.reservationTime ASC
 			""")
 	List<Reservation> getNextReservations(LocalDate today, LocalTime now, Pageable pageable);
+
+	@Query("""
+			SELECT r.reservationDate, COUNT(r)
+			FROM Reservation r
+			WHERE r.reservationDate >= :startDate
+			GROUP BY r.reservationDate
+			ORDER BY r.reservationDate
+			""")
+	List<Object[]> getReservationsLastDays(@Param("startDate") LocalDate startDate);
+
+	Long countByUser_IdUser(UUID idUser);
+
+	Long countByStatus(ReservationStatus status);
+
+	Long countByStatusAndReservationDate(ReservationStatus status, LocalDate reservationDate);
+
+	Long countByReservationDate(LocalDate reservationDate);
+
+	@Query("""
+			SELECT COUNT(r)
+			FROM Reservation r
+			WHERE MONTH(r.reservationDate) = :month
+			AND YEAR(r.reservationDate) = :year
+			""")
+	Long countReservationsByMonth(@Param("month") int month, @Param("year") int year);
+
+	Optional<Reservation> findByIdReservationAndUser_IdUser(Integer idReservation, UUID idUser);
 }

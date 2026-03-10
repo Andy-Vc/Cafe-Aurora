@@ -26,7 +26,7 @@
 }
 
 :host-context(.light-mode) .page-title {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .page-title {
@@ -42,12 +42,12 @@
   margin: 0;
 }
 
-:host-context(.light-mode) .page-subtitle{
-  color: #64748b !important;
+:host-context(.light-mode) .page-subtitle {
+  color: #64748b;
 }
 
-:host-context(.dark-mode) .page-subtitle{
-    color: #94a3b8;
+:host-context(.dark-mode) .page-subtitle {
+  color: #94a3b8;
 }
 
 .btn-primary {
@@ -79,7 +79,7 @@
 }
 
 :host-context(.light-mode) .filters-section {
-  background: white !important;
+  background: white;
 }
 
 :host-context(.dark-mode) .filters-section {
@@ -97,8 +97,8 @@
 }
 
 :host-context(.light-mode) .search-box {
-  border: 2px solid var(--border-color) !important;
-  background: #f9fafb !important;
+  border: 2px solid var(--border-color);
+  background: #f9fafb;
 }
 
 :host-context(.dark-mode) .search-box {
@@ -130,7 +130,7 @@
 }
 
 :host-context(.light-mode) .search-box input {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .search-box input {
@@ -154,9 +154,9 @@
 }
 
 :host-context(.light-mode) .filter-select {
-  border-color: var(--border-color) !important;
-  background: white !important;
-  color: gray !important;
+  border-color: var(--border-color);
+  background: white;
+  color: gray;
 }
 
 :host-context(.dark-mode) .filter-select {
@@ -207,7 +207,7 @@
 }
 
 :host-context(.light-mode) .spinner {
-  border-color: #f3f4f6 !important;
+  border-color: #f3f4f6;
 }
 
 :host-context(.dark-mode) .spinner {
@@ -238,8 +238,8 @@
 }
 
 :host-context(.light-mode) .item-card {
-  background: white !important;
-  border: 1px solid rgba(241, 241, 241, 0.336) !important;
+  background: white;
+  border: 1px solid rgba(241, 241, 241, 0.336);
 }
 
 :host-context(.dark-mode) .item-card {
@@ -265,7 +265,7 @@
 }
 
 :host-context(.light-mode) .item-image {
-  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%) !important;
+  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%);
 }
 
 :host-context(.dark-mode) .item-image {
@@ -344,7 +344,7 @@
 }
 
 :host-context(.light-mode) .item-name {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .item-name {
@@ -364,7 +364,7 @@
 }
 
 :host-context(.light-mode) .item-description {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .item-description {
@@ -380,7 +380,7 @@
 }
 
 :host-context(.light-mode) .item-footer {
-  border-top-color: var(--border-color) !important;
+  border-top-color: var(--border-color);
 }
 
 :host-context(.dark-mode) .item-footer {
@@ -478,7 +478,7 @@
 }
 
 :host-context(.light-mode) .slider {
-  background-color: rgba(203, 213, 225, 0.9) !important;
+  background-color: rgba(203, 213, 225, 0.9);
 }
 
 :host-context(.dark-mode) .slider {
@@ -519,8 +519,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .empty-state {
-  background: white !important;
-  border: 1px solid rgba(182, 182, 182, 0.277) !important;
+  background: white;
+  border: 1px solid rgba(182, 182, 182, 0.277);
 }
 
 :host-context(.dark-mode) .empty-state {
@@ -539,7 +539,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .empty-state h3 {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .empty-state h3 {
@@ -550,7 +550,7 @@ input:checked+.slider:before {
   color: #94a3b8;
 }
 
-:host-context(.dark-mode)  .empty-state p {
+:host-context(.dark-mode) .empty-state p {
   color: #64748b;
 }
 
@@ -565,8 +565,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination {
-  background: white !important;
-  border: 1px solid rgba(99, 99, 99, 0.434) !important;
+  background: white;
+  border: 1px solid rgba(99, 99, 99, 0.434);
 }
 
 :host-context(.dark-mode) .pagination {
@@ -587,9 +587,9 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination-btn {
-  border-color: var(--border-color) !important;
-  background: white !important;
-  color: var(--light-text) !important;
+  border-color: var(--border-color);
+  background: white;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .pagination-btn {
@@ -638,8 +638,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination-number:hover {
-  background: #f9fafb !important; 
-  color: var(--light-text) !important;
+  background: #f9fafb;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .pagination-number:hover {
@@ -686,7 +686,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-content {
-  background: white !important;
+  background: white;
 }
 
 :host-context(.dark-mode) .modal-content {
@@ -718,7 +718,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-header {
-  border-bottom-color: var(--border-color) !important;
+  border-bottom-color: var(--border-color);
 }
 
 :host-context(.dark-mode) .modal-header {
@@ -732,7 +732,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-header h2 {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .modal-header h2 {
@@ -752,8 +752,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-close {
-  background: #f9fafb !important;
-  color: #64748b !important;
+  background: #f9fafb;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .modal-close {
@@ -762,8 +762,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-close:hover {
-  background: #fee2e2 !important;
-  color: var(--error-color) !important;
+  background: #fee2e2;
+  color: var(--error-color);
 }
 
 :host-context(.dark-mode) .modal-close:hover {
@@ -796,8 +796,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .image-preview {
-  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%) !important;
-  border-color: var(--border-color) !important;
+  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%);
+  border-color: var(--border-color);
 }
 
 :host-context(.dark-mode) .image-preview {
@@ -856,7 +856,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .form-group label {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .form-group label {
@@ -877,9 +877,9 @@ input:checked+.slider:before {
 :host-context(.light-mode) .form-group input,
 :host-context(.light-mode) .form-group select,
 :host-context(.light-mode) .form-group textarea {
-  border-color: var(--border-color) !important;
-  background: white !important;
-  color: gray !important;
+  border-color: var(--border-color);
+  background: white;
+  color: gray;
 }
 
 :host-context(.dark-mode) .form-group input,
@@ -943,7 +943,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .checkbox-label:hover {
-  background: #f9fafb !important;
+  background: #f9fafb;
 }
 
 :host-context(.dark-mode) .checkbox-label:hover {
@@ -962,7 +962,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .checkbox-label span {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .checkbox-label span {
@@ -995,9 +995,9 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .btn-secondary {
-  border-color: var(--border-color) !important; 
-  background: white !important;
-  color: var(--light-text) !important;
+  border-color: var(--border-color);
+  background: white;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .btn-secondary {
@@ -1007,8 +1007,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .btn-secondary:hover {
-  border-color: #cbd5e1 !important;
-  background: #f9fafb !important;
+  border-color: #cbd5e1;
+  background: #f9fafb;
 }
 
 :host-context(.dark-mode) .btn-secondary:hover {

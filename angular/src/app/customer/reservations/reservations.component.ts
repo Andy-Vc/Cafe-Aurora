@@ -6,6 +6,7 @@ import { AuthService } from '../../service/auth.service';
 import { ReservationService } from '../../service/reservation.service';
 import { CommonModule } from '@angular/common';
 import { CancelReservation } from '../../shared/dto/cancelreservation';
+import { ReportService } from '../../service/report.service';
 
 @Component({
   selector: 'app-reservations',
@@ -23,6 +24,7 @@ export class ReservationsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private reservationService: ReservationService,
+    private reportService: ReportService
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +100,7 @@ export class ReservationsComponent implements OnInit {
 
     this.downloadingPdf[reservation.idReservation!] = true;
 
-    this.reservationService
+    this.reportService
       .downloadReservationPdf(
         reservation.idReservation!,
         this.currentUser.idUser,

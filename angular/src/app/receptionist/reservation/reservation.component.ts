@@ -75,41 +75,53 @@ export class ReservationComponent implements OnInit {
 
   loadConfirmedReservations(): void {
     this.loading = true;
+    this.reservations = [];
+    this.filteredReservations = [];
     const currentUser = this.authService.getCurrentUserValue();
     if (currentUser?.idUser) {
       this.reservationService
         .getConfirmedByRecepcionist(currentUser.idUser)
         .subscribe({
           next: (data) => {
-            this.reservations = data;
-            this.filteredReservations = data;
+            this.reservations = data ?? [];
+            this.filteredReservations = data ?? [];
             this.loading = false;
           },
           error: (err) => {
             AlertService.error('Error al cargar reservas confirmadas');
+            this.reservations = [];
+            this.filteredReservations = [];
             this.loading = false;
           },
         });
+    } else {
+      this.loading = false;
     }
   }
 
   loadRejectdReservations(): void {
     this.loading = true;
+    this.reservations = [];
+    this.filteredReservations = [];
     const currentUser = this.authService.getCurrentUserValue();
     if (currentUser?.idUser) {
       this.reservationService
         .getRejectdByRecepcionist(currentUser.idUser)
         .subscribe({
           next: (data) => {
-            this.reservations = data;
-            this.filteredReservations = data;
+            this.reservations = data ?? [];
+            this.filteredReservations = data ?? [];
             this.loading = false;
           },
           error: (err) => {
             AlertService.error('Error al cargar reservas rechazadas');
+            this.reservations = [];
+            this.filteredReservations = [];
             this.loading = false;
           },
         });
+    } else {
+      this.loading = false;
     }
   }
 
@@ -135,7 +147,7 @@ export class ReservationComponent implements OnInit {
     this.filteredReservations = this.reservations.filter(
       (reservation) =>
         reservation.customerName.toLowerCase().includes(term) ||
-        reservation.customerPhone.includes(term)
+        reservation.customerPhone.includes(term),
     );
   }
 
@@ -283,6 +295,6 @@ export class ReservationComponent implements OnInit {
   }
 
   formatTime(timeString: string): string {
-    return timeString.substring(0, 5); 
+    return timeString.substring(0, 5);
   }
 }

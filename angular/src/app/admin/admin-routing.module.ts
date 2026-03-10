@@ -5,6 +5,7 @@ import { AdminComponent } from '../layout/admin/admin.component';
 import { CategoryCrudComponent } from './category-crud/category-crud.component';
 import { ItemCrudComponent } from './item-crud/item-crud.component';
 import { GalleryCrudComponent } from './gallery-crud/gallery-crud.component';
+import { ReceptionistCrudComponent } from './receptionist-crud/receptionist-crud.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,18 @@ const routes: Routes = [
             data: { title: 'Galeria' },
           },
         ],
-      }/*
+      },{
+        path: 'receptionist',
+        children: [
+          {
+            path: '',
+            component: ReceptionistCrudComponent,
+            data: { title: 'Recepcionista' },
+          },
+        ],
+      }
+      
+      /*
       {
         path: 'reportes',
         children : [

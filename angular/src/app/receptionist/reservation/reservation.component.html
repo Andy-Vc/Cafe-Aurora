@@ -105,7 +105,16 @@
       </table>
 
       <div *ngIf="filteredReservations.length === 0" class="empty-state">
-        <p>📭 No hay reservas {{ activeTab === 'pendientes' ? 'pendientes' : 'confirmadas' }}</p>
+        <p>
+          📭 No hay reservas
+          {{
+          activeTab === 'pendientes'
+          ? 'pendientes'
+          : activeTab === 'confirmadas'
+          ? 'confirmadas'
+          : 'rechazadas'
+          }}
+        </p>
       </div>
     </div>
   </div>
@@ -257,7 +266,7 @@
 
       <div *ngIf="viewReservation?.attendedBy" class="detail-section">
         <h4>Atendido Por</h4>
-        <p>{{ viewReservation?.attendedBy?.idUser }}</p>
+        <p>{{ viewReservation?.attendedBy?.name }}</p>
       </div>
 
       <div class="detail-section">
@@ -265,11 +274,11 @@
         <div class="detail-grid">
           <div class="detail-item">
             <label>Creada:</label>
-            <span>{{ formatDate(viewReservation?.createdAt || '') }}</span>
+            <span>{{ viewReservation?.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
           </div>
           <div class="detail-item">
             <label>Actualizada:</label>
-            <span>{{ formatDate(viewReservation?.updatedAt || '') }}</span>
+            <span>{{ viewReservation?.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
           </div>
         </div>
       </div>

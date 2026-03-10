@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cafeAurora.dto.DashboardAdmin;
 import com.cafeAurora.dto.DashboardRecepcionist;
 import com.cafeAurora.service.DashboardService;
 
@@ -18,5 +19,10 @@ public class DashboardController {
 	@GetMapping("/receptionist")
     public DashboardRecepcionist getReceptionistDashboard() {
         return dashboardService.getReceptionistDashboard();
+    }
+	
+	@GetMapping("/admin")
+    public DashboardAdmin getAdminDashboard(){
+        return dashboardService.getAdminDashboard();
     }
 }

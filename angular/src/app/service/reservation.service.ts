@@ -86,15 +86,6 @@ export class ReservationService {
     return this.http.get<Reservation>(`${this.apiUrl}/list/history/${idUser}`);
   }
 
-  downloadReservationPdf(
-    idReservation: number,
-    idUser: string,
-  ): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/pdf/${idReservation}/user/${idUser}`, {
-      responseType: 'blob',
-    });
-  }
-
   countReservationsByUser(idUser: string): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/count/${idUser}`);
   }

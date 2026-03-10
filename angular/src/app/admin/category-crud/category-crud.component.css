@@ -36,7 +36,7 @@
 }
 
 :host-context(.light-mode) .page-subtitle {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .page-subtitle {
@@ -83,7 +83,7 @@
 }
 
 :host-context(.light-mode) .search-section {
-  background-color: white !important;
+  background-color: white;
 }
 
 :host-context(.dark-mode) .search-section {
@@ -102,7 +102,7 @@
 }
 
 :host-context(.light-mode) .search-box {
-  background: #f9fafb !important;
+  background: #f9fafb;
   border: 2px solid var(--border-color);
 }
 
@@ -152,7 +152,7 @@
 }
 
 :host-context(.light-mode) .results-info {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .results-info {
@@ -178,7 +178,7 @@
 }
 
 :host-context(.dark-mode) .spinner {
-  border-color: #f3f4f6 !important;
+  border-color: #f3f4f6;
 }
 
 :host-context(.dark-mode) .spinner {
@@ -212,7 +212,7 @@
 }
 
 :host-context(.light-mode) .category-table thead {
-  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%) !important;
+  background: linear-gradient(135deg, #f9f3e9 0%, #fef5e7 100%);
 }
 
 :host-context(.dark-mode) .category-table thead {
@@ -229,7 +229,7 @@
 }
 
 :host-context(.light-mode) .category-table th {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .category-table th {
@@ -237,7 +237,7 @@
 }
 
 :host-context(.light-mode) .table-row {
-  border-bottom: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-color);
   background-color: white;
   transition: background 0.2s;
 }
@@ -247,7 +247,7 @@
 }
 
 :host-context(.light-mode) .table-row:hover {
-  background: #f9fafb !important;
+  background: #f9fafb;
 }
 
 :host-context(.dark-mode) .table-row:hover {
@@ -259,7 +259,7 @@
 }
 
 :host-context(.light-mode) .category-table td {
-  color: #475569 !important;
+  color: #475569;
 }
 
 :host-context(.dark-mode) .category-table td {
@@ -283,7 +283,7 @@
 }
 
 :host-context(.light-mode) .name-text {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .name-text {
@@ -328,7 +328,7 @@
 }
 
 :host-context(.light-mode) .slider {
-  background-color: #87e871 !important;
+  background-color: #87e871;
 }
 
 :host-context(.dark-mode) .slider {
@@ -454,7 +454,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .empty-state h3 {
-  color: #64748b !important;
+  color: #64748b;
 }
 
 :host-context(.dark-mode) .empty-state h3 {
@@ -480,7 +480,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination {
-  background: white !important;
+  background: white;
   ;
 }
 
@@ -500,9 +500,9 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination-btn {
-  border: 2px solid var(--border-color) !important;
-  background: white !important;
-  color: var(--light-text) !important;
+  border: 2px solid var(--border-color);
+  background: white;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .pagination-btn {
@@ -512,8 +512,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination-btn:hover:not(:disabled) {
-  border-color: var(--color-accent) !important;
-  color: var(--color-accent) !important;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
 :host-context(.dark-mode) .pagination-btn:hover:not(:disabled) {
@@ -551,8 +551,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .pagination-number:hover {
-  background: #f9fafb !important;
-  color: var(--light-text) !important;
+  background: #f9fafb;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .pagination-number:hover {
@@ -561,8 +561,8 @@ input:checked+.slider:before {
 }
 
 .pagination-number.active {
-  background: var(--color-accent) !important;
-  color: white !important;
+  background: var(--color-accent);
+  color: white;
 }
 
 .modal-overlay {
@@ -598,7 +598,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-content {
-  background: white !important;
+  background: white;
 }
 
 :host-context(.dark-mode) .modal-content {
@@ -626,7 +626,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-header {
-  border-bottom: 1px solid var(--border-color) !important;
+  border-bottom: 1px solid var(--border-color);
 }
 
 :host-context(.dark-mode) .modal-header {
@@ -640,7 +640,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-header h2 {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .modal-header h2 {
@@ -660,8 +660,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-close {
-  color: #64748b !important;
-  background: #f9fafb !important;
+  color: #64748b;
+  background: #f9fafb;
 }
 
 :host-context(.dark-mode) .modal-close {
@@ -670,8 +670,8 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-close:hover {
-  background: #fee2e2 !important;
-  color: var(--error-color) !important;
+  background: #fee2e2;
+  color: var(--error-color);
 }
 
 :host-context(.dark-mode) .modal-close:hover {
@@ -695,7 +695,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .form-group label {
-  color: var(--light-text) !important;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode).form-group label {
@@ -714,9 +714,9 @@ input:checked+.slider:before {
 
 :host-context(.light-mode) .form-group input,
 :host-context(.light-mode) .form-group textarea {
-  border: 2px solid var(--border-color) !important;
-  color: gray !important;
-  background-color: white !important;
+  border: 2px solid var(--border-color);
+  color: gray;
+  background-color: white;
 }
 
 :host-context(.dark-mode) .form-group input,
@@ -769,7 +769,7 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .modal-footer {
-  border-top: 1px solid var(--border-color) !important;
+  border-top: 1px solid var(--border-color);
 }
 
 :host-context(.dark-mode) .modal-footer {
@@ -785,9 +785,9 @@ input:checked+.slider:before {
 }
 
 :host-context(.light-mode) .btn-secondary {
-  border: 2px solid var(--border-color) !important;
-  background: white !important;
-  color: var(--light-text) !important;
+  border: 2px solid var(--border-color);
+  background: white;
+  color: var(--light-text);
 }
 
 :host-context(.dark-mode) .btn-secondary {
