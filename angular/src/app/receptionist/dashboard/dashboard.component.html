@@ -1,1 +1,159 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  <div class="content-wrapper">
+
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando dashboard...</p>
+    </div>
+
+    <ng-container *ngIf="!loading && dashboard">
+
+      <div class="dashboard-header">
+        <div class="header-left">
+          <div class="greeting-badge">
+            <i class="bi bi-sunrise"></i>
+            {{ getGreeting() }}
+          </div>
+          <h1 class="dashboard-title">Dashboard</h1>
+          <p class="dashboard-subtitle">
+            <i class="bi bi-calendar3 me-1"></i>
+            {{ today | date:'EEEE, d \'de\' MMMM yyyy':'':'es' }}
+          </p>
+        </div>
+        <button class="btn-refresh" (click)="loadDashboard()" [disabled]="loading">
+          <i class="bi bi-arrow-clockwise"></i>
+          Actualizar
+        </button>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card card-blue">
+          <div class="stat-icon-wrapper">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Total Reservas</span>
+            <h3 class="stat-number">{{ dashboard.totalReservations }}</h3>
+            <span class="stat-hint">reservas registradas</span>
+          </div>
+          <div class="stat-bg-icon"><i class="bi bi-calendar-check"></i></div>
+        </div>
+
+        <div class="stat-card card-amber">
+          <div class="stat-icon-wrapper">
+            <i class="bi bi-hourglass-split"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Pendientes</span>
+            <h3 class="stat-number">{{ dashboard.pending }}</h3>
+            <span class="stat-hint">por confirmar</span>
+          </div>
+          <div class="stat-bg-icon"><i class="bi bi-hourglass-split"></i></div>
+        </div>
+
+        <div class="stat-card card-green">
+          <div class="stat-icon-wrapper">
+            <i class="bi bi-check-circle"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Confirmadas hoy</span>
+            <h3 class="stat-number">{{ dashboard.confirmedToday }}</h3>
+            <span class="stat-hint">para hoy</span>
+          </div>
+          <div class="stat-bg-icon"><i class="bi bi-check-circle"></i></div>
+        </div>
+
+        <div class="stat-card card-teal">
+          <div class="stat-icon-wrapper">
+            <i class="bi bi-patch-check"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Completadas hoy</span>
+            <h3 class="stat-number">{{ dashboard.completedToday }}</h3>
+            <span class="stat-hint">atendidas</span>
+          </div>
+          <div class="stat-bg-icon"><i class="bi bi-patch-check"></i></div>
+        </div>
+
+        <div class="stat-card card-purple">
+          <div class="stat-icon-wrapper">
+            <i class="bi bi-grid-3x3-gap"></i>
+          </div>
+          <div class="stat-content">
+            <span class="stat-label">Mesas disponibles</span>
+            <h3 class="stat-number">{{ dashboard.availableTables }}</h3>
+            <span class="stat-hint">disponibles ahora</span>
+          </div>
+          <div class="stat-bg-icon"><i class="bi bi-grid-3x3-gap"></i></div>
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        <i class="bi bi-lightning-charge-fill"></i>
+        Acciones rápidas
+      </div>
+      <div class="quick-actions">
+        <a routerLink="/recepcionista/reserva" class="action-card action-orange">
+          <div class="action-icon"><i class="bi bi-calendar-plus"></i></div>
+          <span>Gestionar Reservas</span>
+          <i class="bi bi-arrow-right action-arrow"></i>
+        </a>
+        <a routerLink="/recepcionista/reservas-hoy" class="action-card action-green">
+          <div class="action-icon"><i class="bi bi-calendar-day"></i></div>
+          <span>Reservas de Hoy</span>
+          <i class="bi bi-arrow-right action-arrow"></i>
+        </a>
+      </div>
+
+      <div class="section-title">
+        <i class="bi bi-clock-history"></i>
+        Próximas reservas
+      </div>
+
+      <div class="next-reservations-card">
+        <div *ngIf="dashboard.nextReservations.length === 0" class="empty-state">
+          <div class="empty-icon"><i class="bi bi-calendar-x"></i></div>
+          <h4>Sin próximas reservas</h4>
+          <p>No hay reservas próximas registradas</p>
+        </div>
+
+        <div *ngIf="dashboard.nextReservations.length > 0" class="reservations-list">
+          <div *ngFor="let reservation of dashboard.nextReservations; let i = index" class="reservation-item"
+            [class.first-item]="i === 0">
+
+            <div class="reservation-time">
+              <span class="time">{{ formatTime(reservation.reservationTime) }}</span>
+              <span class="date">{{ formatDate(reservation.reservationDate) }}</span>
+            </div>
+
+            <div class="reservation-divider"></div>
+
+            <div class="reservation-info">
+              <strong class="customer-name">{{ reservation.customerName }}</strong>
+              <div class="reservation-meta">
+                <span class="meta-item">
+                  <i class="bi bi-people-fill"></i>{{ reservation.numPeople }} personas
+                </span>
+                <span *ngIf="reservation.table" class="meta-item">
+                  <i class="bi bi-grid-3x3-gap"></i>Mesa {{ reservation.table.tableNumber }}
+                </span>
+                <span class="meta-item">
+                  <i class="bi bi-telephone"></i>{{ reservation.customerPhone }}
+                </span>
+              </div>
+            </div>
+
+            <div class="reservation-status">
+              <span class="status-badge" [ngClass]="getStatusClass(reservation.status)">
+                {{ getStatusText(reservation.status) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>

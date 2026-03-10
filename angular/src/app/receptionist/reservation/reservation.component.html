@@ -25,13 +25,13 @@
     <div class="search-container">
       <div class="search-box">
         <i class="search-icon">🔍</i>
-        <input type="text" placeholder="Buscar reserva por nombre, email, teléfono o fecha..." [(ngModel)]="searchTerm"
+        <input type="text" placeholder="Buscar reserva por nombre o teléfono..." [(ngModel)]="searchTerm"
           (input)="searchReservations()" class="search-input">
       </div>
     </div>
 
     <p class="results-count">
-      Mostrando {{ filteredReservations?.length || 0 }} de {{ reservations?.length || 0 }} reservas
+      Mostrando {{ filteredReservations.length || 0 }} de {{ reservations.length || 0 }} reservas
     </p>
 
     <div *ngIf="loading" class="loading-state">

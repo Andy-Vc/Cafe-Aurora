@@ -1,16 +1,14 @@
 package com.cafeAurora.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
 import com.cafeAurora.dto.CancelReservationRequest;
 import com.cafeAurora.dto.CompleteReservationRequest;
 import com.cafeAurora.dto.ConfirmReservationRequest;
 import com.cafeAurora.dto.RejectReservationRequest;
-
 import org.springframework.stereotype.Service;
-
 import com.cafeAurora.enums.ReservationStatus;
 import com.cafeAurora.dto.ResultResponse;
 import com.cafeAurora.enums.TableStatus;
@@ -209,42 +207,42 @@ public class ReservationService {
 	}
 
 	public ResultResponse completeReservation(CompleteReservationRequest request) {
-	    try {
-	        Reservation reservation = reservationRepository.findById(request.getIdReservation())
-	                .orElseThrow(() -> new RuntimeException("La reserva no existe"));
+		try {
+			Reservation reservation = reservationRepository.findById(request.getIdReservation())
+					.orElseThrow(() -> new RuntimeException("La reserva no existe"));
 
-	        if (reservation.getStatus() != ReservationStatus.CONFIRMADA) {
-	            return new ResultResponse(false,
-	                    "Solo se pueden completar reservas en estado CONFIRMADA");
-	        }
+			if (reservation.getStatus() != ReservationStatus.CONFIRMADA) {
+				return new ResultResponse(false, "Solo se pueden completar reservas en estado CONFIRMADA");
+			}
 
-	        User recepcionista = userRepository.findById(request.getIdRecepcionista())
-	                .orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
+			User recepcionista = userRepository.findById(request.getIdRecepcionista())
+					.orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
 
-	        reservation.setStatus(ReservationStatus.COMPLETADA);
-	        reservation.setAttendedBy(recepcionista);
-	        reservation.setUpdatedAt(LocalDateTime.now());
+			reservation.setStatus(ReservationStatus.COMPLETADA);
+			reservation.setAttendedBy(recepcionista);
+			reservation.setUpdatedAt(LocalDateTime.now());
 
-	        if (reservation.getTable() != null) {
-	            TableCoffe table = reservation.getTable();
-	            table.setStatus(TableStatus.DISPONIBLE);
-	            tableCoffeRepository.save(table);
-	        }
+			if (reservation.getTable() != null) {
+				TableCoffe table = reservation.getTable();
+				table.setStatus(TableStatus.DISPONIBLE);
+				tableCoffeRepository.save(table);
+			}
 
-	        reservationRepository.save(reservation);
+			reservationRepository.save(reservation);
 
-	        return new ResultResponse(true, "Reserva completada exitosamente");
+			return new ResultResponse(true, "Reserva completada exitosamente");
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResultResponse(false, e.getMessage());
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultResponse(false, e.getMessage());
+		}
 	}
-	
-	public List<Reservation> getTodayConfirmedReservations(){
-		return reservationRepository.getTodayConfirmedReservations();
+
+	public List<Reservation> getTodayConfirmedReservations() {
+		LocalDate today = LocalDate.now();
+		return reservationRepository.getTodayConfirmedReservations(today);
 	}
-	
+
 	public List<Reservation> getConfirmedByRecepcionist(UUID idRecepcionist) {
 		return reservationRepository.findByStatusAndAttendedByIdUser(ReservationStatus.CONFIRMADA, idRecepcionist);
 	}

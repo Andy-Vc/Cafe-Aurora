@@ -132,13 +132,9 @@ export class ReceptionistComponent implements OnInit {
     this.showUserMenu = !this.showUserMenu;
   }
 
-  closeUserMenu(): void {
-    this.showUserMenu = false;
-  }
 
   logout(): void {
     this.authService.logout();
-    this.closeUserMenu();
     AlertService.success('Sesión cerrada correctamente.');
     this.router.navigate(['/auth/login']);
   }

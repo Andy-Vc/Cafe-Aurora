@@ -144,7 +144,7 @@
 
 .nav-item.active {
   background: linear-gradient(135deg, #d97706, #ea580c);
-  color: white;
+  color: white !important;
 }
 
 .nav-item.active:hover {

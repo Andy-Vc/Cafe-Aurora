@@ -9,5 +9,6 @@ import com.cafeAurora.model.User;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, UUID> {
-
+	boolean existsByEmail(String email);
+	boolean existsByPhone(String phone);
 }

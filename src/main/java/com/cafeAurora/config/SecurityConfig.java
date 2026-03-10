@@ -33,20 +33,24 @@ public class SecurityConfig {
 
 				.authorizeHttpRequests(auth -> auth
 						// Rutas públicas (sin autenticación)
-						.requestMatchers("/auth/**").permitAll().requestMatchers("/category/listActives").permitAll()
+						.requestMatchers("/auth/**").permitAll()
+						.requestMatchers("/category/listActives").permitAll()
 						.requestMatchers("/item/featured/category/**").permitAll()
 						.requestMatchers("/item/available/category/**").permitAll()
-						.requestMatchers("/gallery/listVisibles").permitAll().requestMatchers("/gallery/listFeatured")
+						.requestMatchers("/gallery/listVisibles").permitAll()
+						.requestMatchers("/gallery/listFeatured")
 						.permitAll()
 
 						// Rutas que requieren autenticación
-						.requestMatchers("/reservation/**").authenticated().requestMatchers("/user/**").authenticated()
+						.requestMatchers("/reservation/**").authenticated()
+						.requestMatchers("/user/**").authenticated()
 
 						// Rutas solo para Recepcionista (R)
 						.requestMatchers("/admin/reservations/**").hasAuthority("R")
 
 						// Rutas solo para Administrador (A)
-						.requestMatchers("/gallery/**").hasAuthority("A").requestMatchers("/item/**").hasAuthority("A")
+						.requestMatchers("/gallery/**").hasAuthority("A")
+						.requestMatchers("/item/**").hasAuthority("A")
 						.requestMatchers("/category/**").hasAuthority("A")
 
 						.anyRequest().authenticated())

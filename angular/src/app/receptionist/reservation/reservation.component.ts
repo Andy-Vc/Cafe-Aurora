@@ -26,7 +26,6 @@ export class ReservationComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = false;
 
-  // Para el modal de confirmación
   showConfirmModal: boolean = false;
   selectedReservation: Reservation | null = null;
   confirmRequest: ConfirmReservationRequest = {
@@ -44,11 +43,9 @@ export class ReservationComponent implements OnInit {
     notes: '',
   };
 
-  // Para el modal de vista detallada
   showViewModal: boolean = false;
   viewReservation: Reservation | null = null;
 
-  // Tabs
   activeTab: 'pendientes' | 'confirmadas' | 'rechazadas' = 'pendientes';
 
   constructor(
@@ -138,9 +135,7 @@ export class ReservationComponent implements OnInit {
     this.filteredReservations = this.reservations.filter(
       (reservation) =>
         reservation.customerName.toLowerCase().includes(term) ||
-        reservation.customerEmail.toLowerCase().includes(term) ||
-        reservation.customerPhone.includes(term) ||
-        reservation.reservationDate.includes(term),
+        reservation.customerPhone.includes(term)
     );
   }
 
@@ -283,15 +278,11 @@ export class ReservationComponent implements OnInit {
   }
 
   formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('es-PE', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-    });
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
   }
 
   formatTime(timeString: string): string {
-    return timeString.substring(0, 5); // HH:mm
+    return timeString.substring(0, 5); 
   }
 }
