@@ -75,7 +75,7 @@ export class RecordComponent implements OnInit {
       CANCELLED: 'status-cancelled',
       COMPLETED: 'status-completed',
       REJECTED: 'status-rejected',
-      NO_SHOW: 'status-no-show',
+      NO_ASISTIO: 'status-no-show',
     };
     return statusMap[status.toUpperCase()] || 'status-pending';
   }
@@ -85,7 +85,7 @@ export class RecordComponent implements OnInit {
       CANCELLED: 'Cancelada',
       COMPLETED: 'Completada',
       REJECTED: 'Rechazada',
-      NO_SHOW: 'No asistió',
+      NO_ASISTIO: 'No asistió',
     };
     return labelMap[status.toUpperCase()] || status;
   }
@@ -95,7 +95,7 @@ export class RecordComponent implements OnInit {
       CANCELLED: 'bi-x-circle-fill',
       COMPLETED: 'bi-check-all',
       REJECTED: 'bi-slash-circle-fill',
-      NO_SHOW: 'bi-person-x-fill',
+      NO_ASISTIO: 'bi-person-x-fill',
     };
     return iconMap[status.toUpperCase()] || 'bi-clock-history';
   }

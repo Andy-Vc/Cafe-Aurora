@@ -117,7 +117,7 @@ export class ReservationTodayComponent implements OnInit {
     this.updateRequest = {
       idReservation: reservation.idReservation || 0,
       idRecepcionista: currentUser?.idUser || '',
-      status: 'NO_SHOW',
+      status: 'NO_ASISTIO',
     };
     this.showNoShowModal = true;
   }
@@ -133,7 +133,7 @@ export class ReservationTodayComponent implements OnInit {
     this.reservationService.updateReservation(this.updateRequest).subscribe({
       next: (response) => {
         AlertService.success(
-          response.message || 'Reserva marcada como No Show',
+          response.message || 'Reserva marcada como No Asistió',
         );
         this.markingNoShow[this.updateRequest.idReservation] = false;
         this.closeNoShowModal();
@@ -164,7 +164,7 @@ export class ReservationTodayComponent implements OnInit {
       CANCELADA: 'status-cancelled',
       COMPLETADA: 'status-completed',
       RECHAZADA: 'status-cancelled',
-      NO_SHOW: 'status-noshow',
+      NO_ASISTIO: 'status-noshow',
     };
     return map[status] || '';
   }
@@ -176,7 +176,7 @@ export class ReservationTodayComponent implements OnInit {
       CANCELADA: 'Cancelada',
       COMPLETADA: 'Completada',
       RECHAZADA: 'Rechazada',
-      NO_SHOW: 'No Show',
+      NO_ASISTIO: 'No Asistió',
     };
     return map[status] || status;
   }

@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReceptionistComponent } from '../layout/receptionist/receptionist.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { ReservationTodayComponent } from './reservation-today/reservation-today.component';
+import { ReservationCreateComponent } from './reservation-create/reservation-create.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
         path: 'reservas-hoy',
         component: ReservationTodayComponent,
         data: { title: 'Reservas de Hoy' },
+      },
+      {
+        path: 'reserva-crear',
+        component: ReservationCreateComponent,
+        data: { title: 'Crear Reserva' },
       },
     ],
   },

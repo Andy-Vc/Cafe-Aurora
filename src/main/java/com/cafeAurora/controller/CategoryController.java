@@ -52,7 +52,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("/id/{id}")
-	public ResponseEntity<?> getUser(@PathVariable("id") Integer id) {
+	public ResponseEntity<?> getTable(@PathVariable("id") Integer id) {
 		try {
 			Category getCategory = categoryService.getOne(id);
 			if (getCategory == null) {

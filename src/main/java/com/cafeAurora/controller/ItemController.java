@@ -106,7 +106,7 @@ public class ItemController {
 	}
 
 	@PatchMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseEntity<ResultResponse> updateCategory(@RequestPart("item") Item item,
+	public ResponseEntity<ResultResponse> updateItem(@RequestPart("item") Item item,
 			@RequestPart(value = "image", required = false) MultipartFile image) {
 		try {
 			ResultResponse result = itemService.updateItem(item, image);

@@ -6,5 +6,5 @@ public enum ReservationStatus {
     RECHAZADA,
     CANCELADA,
     COMPLETADA,
-    NO_SHOW
+    NO_ASISTIO
 }

@@ -17,6 +17,15 @@ export class ReservationService {
   constructor(private http: HttpClient) {}
 
   /*  RECEPCIONIST  */
+  createReservationReceptionist(
+    reservation: Reservation,
+  ): Observable<ResultResponse> {
+    return this.http.post<ResultResponse>(
+      `${this.apiUrl}/create/receptionist`,
+      reservation,
+    );
+  }
+
   getPendientes(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(`${this.apiUrl}/list/pendientes`);
   }
@@ -37,7 +46,9 @@ export class ReservationService {
     );
   }
 
-  updateReservation(request: UpdateReservationStatusRequest): Observable<ResultResponse> {
+  updateReservation(
+    request: UpdateReservationStatusRequest,
+  ): Observable<ResultResponse> {
     return this.http.put<ResultResponse>(
       `${this.apiUrl}/updateReservation/${request.idReservation}`,
       request,
@@ -52,18 +63,14 @@ export class ReservationService {
     );
   }
 
-  getRejectdByRecepcionist(
-    idRecepcionista: string,
-  ): Observable<Reservation[]> {
+  getRejectdByRecepcionist(idRecepcionista: string): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(
       `${this.apiUrl}/list/rejectd/${idRecepcionista}`,
     );
   }
 
   getConfirmToday(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(
-      `${this.apiUrl}/confirmed/today`,
-    );
+    return this.http.get<Reservation[]>(`${this.apiUrl}/confirmed/today`);
   }
 
   /*  CUSTOMER  */

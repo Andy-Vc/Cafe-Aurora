@@ -200,7 +200,6 @@ export class ReservationComponent implements OnInit {
           this.availableTables = tables.filter(
             (t) =>
               t.isAvailable &&
-              t.status === 'DISPONIBLE' &&
               t.capacity >= reservation.numPeople,
           );
         },
@@ -274,7 +273,7 @@ export class ReservationComponent implements OnInit {
       CANCELADA: 'status-cancelled',
       COMPLETADA: 'status-completed',
       RECHAZADA: 'status-cancelled',
-      NO_SHOW: 'status-noshow',
+      NO_ASISTIO: 'status-noshow',
     };
     return statusClasses[status] || '';
   }
@@ -286,7 +285,7 @@ export class ReservationComponent implements OnInit {
       CANCELADA: 'Cancelada',
       COMPLETADA: 'Completada',
       RECHAZADA: 'Rechazada',
-      NO_SHOW: 'No Show',
+      NO_ASISTIO: 'No Asistió',
     };
     return statusTexts[status] || status;
   }

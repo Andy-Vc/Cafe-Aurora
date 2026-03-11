@@ -60,10 +60,10 @@ public class Reservation {
     @Column(name = "customer_name", nullable = false, length = 100)
     private String customerName;
     
-    @Column(name = "customer_phone", nullable = false, length = 15)
+    @Column(name = "customer_phone", length = 15)
     private String customerPhone;
     
-    @Column(name = "customer_email", nullable = false, length = 100)
+    @Column(name = "customer_email", length = 100)
     private String customerEmail;
     
     @Column(name = "special_notes", columnDefinition = "TEXT")

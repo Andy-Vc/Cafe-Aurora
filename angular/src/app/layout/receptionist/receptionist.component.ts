@@ -33,6 +33,12 @@ export class ReceptionistComponent implements OnInit {
       label: 'Dashboard',
       route: '/recepcionista/dashboard',
       active: true,
+    },  
+    {
+      icon: 'bi-plus-circle',
+      label: 'Crear Reserva',
+      route: '/recepcionista/reserva-crear',
+      active: false,
     },
     {
       icon: 'bi-calendar-check',
@@ -45,25 +51,7 @@ export class ReceptionistComponent implements OnInit {
       label: 'Reservas de Hoy',
       route: '/recepcionista/reservas-hoy',
       active: false,
-    },
-    {
-      icon: 'bi-table',
-      label: 'Mesas',
-      route: '/recepcionista/mesas',
-      active: false,
-    },
-    {
-      icon: 'bi-people',
-      label: 'Clientes',
-      route: '/recepcionista/clientes',
-      active: false,
-    },
-    {
-      icon: 'bi-clock-history',
-      label: 'Historial',
-      route: '/recepcionista/historial',
-      active: false,
-    },
+    }
   ];
 
   constructor(
@@ -129,7 +117,6 @@ export class ReceptionistComponent implements OnInit {
   toggleUserMenu(): void {
     this.showUserMenu = !this.showUserMenu;
   }
-
 
   logout(): void {
     this.authService.logout();

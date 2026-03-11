@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.cafeAurora.dto.DashboardAdmin;
 import com.cafeAurora.dto.DashboardRecepcionist;
 import com.cafeAurora.enums.ReservationStatus;
-import com.cafeAurora.enums.TableStatus;
 import com.cafeAurora.model.Reservation;
 import com.cafeAurora.repository.IReservationRepository;
 import com.cafeAurora.repository.ITableCoffeRepository;
@@ -38,7 +37,7 @@ public class DashboardService {
 		Long pending = reservationRepository.countByStatus(ReservationStatus.PENDIENTE);
 		Long completedToday = reservationRepository.countByStatusAndReservationDate(ReservationStatus.COMPLETADA,
 				today);
-		Long availableTables = tableCoffeRepository.countByStatus(TableStatus.DISPONIBLE);
+		Long availableTables = tableCoffeRepository.countByIsAvailableTrue();
 
 		List<Reservation> nextReservations = reservationRepository.getNextReservations(today, now, limit);
 		DashboardRecepcionist dashboard = new DashboardRecepcionist(todayReservations, confirmedToday, pending,
@@ -74,7 +73,7 @@ public class DashboardService {
                 reservationRepository.countByStatus(ReservationStatus.CANCELADA);
         
         Long noShow =
-        		reservationRepository.countByStatus(ReservationStatus.NO_SHOW);
+        		reservationRepository.countByStatus(ReservationStatus.NO_ASISTIO);
         
         Long rejectd =
         		reservationRepository.countByStatus(ReservationStatus.RECHAZADA);

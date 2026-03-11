@@ -1,0 +1,203 @@
+<div class="create-container">
+  <div class="content-wrapper">
+
+    <div class="page-header">
+      <div class="header-left">
+        <div class="header-icon">
+          <i class="bi bi-calendar-plus"></i>
+        </div>
+        <div>
+          <h2 class="page-title">Nueva Reserva Presencial</h2>
+          <p class="page-subtitle">Registra una reserva directamente desde recepción</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-layout">
+      <div class="form-column">
+        <div class="form-card">
+          <div class="card-header-section">
+            <i class="bi bi-person-circle"></i>
+            <h3>Datos del Cliente</h3>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">
+              Nombre completo <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <i class="bi bi-person input-icon"></i>
+              <input type="text" class="field-input" [(ngModel)]="reservation.customerName"
+                placeholder="Ej: Juan Pérez García" maxlength="100">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">
+              Teléfono
+            </label>
+            <div class="input-wrapper">
+              <i class="bi bi-telephone input-icon"></i>
+              <input type="tel" class="field-input" [(ngModel)]="reservation.customerPhone"
+                placeholder="Ej: 999 888 777" maxlength="20">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">
+              Correo electrónico
+              <span class="optional-tag">opcional — se enviará confirmación</span>
+            </label>
+            <div class="input-wrapper">
+              <i class="bi bi-envelope input-icon"></i>
+              <input type="email" class="field-input" [(ngModel)]="reservation.customerEmail"
+                placeholder="cliente@email.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="card-header-section">
+            <i class="bi bi-chat-left-text"></i>
+            <h3>Notas Especiales</h3>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Solicitudes o comentarios <span class="optional-tag">opcional</span></label>
+            <textarea class="field-input field-textarea" [(ngModel)]="reservation.specialNotes" rows="4"
+              placeholder="Ej: Cumpleaños, alergias, preferencia de ubicación..."></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-column">
+        <div class="form-card">
+          <div class="card-header-section">
+            <i class="bi bi-calendar3"></i>
+            <h3>Detalles de la Reserva</h3>
+          </div>
+
+          <div class="fields-row">
+            <div class="field-group">
+              <label class="field-label">Fecha <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="bi bi-calendar3 input-icon"></i>
+                <input type="date" class="field-input" [(ngModel)]="reservation.reservationDate"
+                  [min]="minDate" (change)="onDateOrTimeChange()">
+              </div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Hora <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <i class="bi bi-clock input-icon"></i>
+                <input type="time" class="field-input" [(ngModel)]="reservation.reservationTime"
+                  (change)="onDateOrTimeChange()">
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Número de personas <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="bi bi-people input-icon"></i>
+              <input type="number" class="field-input" [(ngModel)]="reservation.numPeople"
+                min="1" max="50" (change)="onNumPeopleChange()">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="card-header-section">
+            <i class="bi bi-grid-3x3-gap"></i>
+            <h3>Asignación de Mesa</h3>
+          </div>
+
+          <div *ngIf="!reservation.reservationDate || !reservation.reservationTime"
+            class="tables-hint">
+            <i class="bi bi-info-circle"></i>
+            <span>Selecciona fecha y hora para ver las mesas disponibles</span>
+          </div>
+
+          <div *ngIf="loadingTables" class="tables-loading">
+            <div class="mini-spinner"></div>
+            <span>Buscando mesas disponibles...</span>
+          </div>
+
+          <div *ngIf="tablesLoaded && !loadingTables">
+
+            <div *ngIf="availableTables.length === 0" class="tables-empty">
+              <i class="bi bi-exclamation-triangle"></i>
+              <span>No hay mesas disponibles para {{ reservation.numPeople }} persona(s) en esa fecha y hora</span>
+            </div>
+
+            <div *ngIf="availableTables.length > 0" class="tables-grid">
+              <div *ngFor="let table of availableTables"
+                class="table-option"
+                [class.selected]="reservation.table?.idTable === table.idTable"
+                (click)="reservation.table = table">
+                <div class="table-number">
+                  <i class="bi bi-grid-3x3-gap-fill"></i>
+                  Mesa {{ table.tableNumber }}
+                </div>
+                <div class="table-meta">
+                  <span><i class="bi bi-people-fill me-1"></i>{{ table.capacity }} personas</span>
+                  <span *ngIf="table.location" class="table-location">
+                    <i class="bi bi-geo-alt me-1"></i>{{ table.location }}
+                  </span>
+                </div>
+                <div *ngIf="reservation.table?.idTable === table.idTable" class="table-selected-check">
+                  <i class="bi bi-check-circle-fill"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div *ngIf="isFormValid()" class="summary-card">
+          <div class="card-header-section">
+            <i class="bi bi-clipboard-check"></i>
+            <h3>Resumen</h3>
+          </div>
+          <div class="summary-list">
+            <div class="summary-item">
+              <span class="summary-label"><i class="bi bi-person me-1"></i>Cliente</span>
+              <span class="summary-value">{{ reservation.customerName }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label"><i class="bi bi-calendar3 me-1"></i>Fecha</span>
+              <span class="summary-value">{{ reservation.reservationDate }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label"><i class="bi bi-clock me-1"></i>Hora</span>
+              <span class="summary-value">{{ reservation.reservationTime }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label"><i class="bi bi-people me-1"></i>Personas</span>
+              <span class="summary-value">{{ reservation.numPeople }}</span>
+            </div>
+            <div class="summary-item" *ngIf="reservation.table?.idTable">
+              <span class="summary-label"><i class="bi bi-grid-3x3-gap me-1"></i>Mesa</span>
+              <span class="summary-value">Mesa {{ reservation.table?.tableNumber }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <button class="btn-reset" (click)="reset()" [disabled]="loading">
+            <i class="bi bi-arrow-counterclockwise me-1"></i>Limpiar
+          </button>
+          <button class="btn-submit" (click)="submit()" [disabled]="!isFormValid() || loading">
+            <span *ngIf="!loading">
+              <i class="bi bi-check-circle me-1"></i>Crear Reserva
+            </span>
+            <span *ngIf="loading">
+              <span class="spinner-border spinner-border-sm me-1"></span>Creando...
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

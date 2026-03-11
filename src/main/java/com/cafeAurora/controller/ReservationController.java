@@ -26,8 +26,23 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReservationController {
 	private final ReservationService reservationService;
-
+	
 	/* RECEPCIONIST */
+	@PostMapping("/create/receptionist")
+	public ResponseEntity<ResultResponse> createReservationReceptionist(@RequestBody Reservation reservation){
+		try {
+			ResultResponse result = reservationService.createReceptionReservation(reservation);
+			if (!result.getValue()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+			}
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ResultResponse errorResponse = new ResultResponse(false, e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+		}
+	}
+	
 	@GetMapping("/list/pendientes")
 	public ResponseEntity<?> getPendientes() {
 		try {
