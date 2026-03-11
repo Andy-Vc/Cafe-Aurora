@@ -7,7 +7,7 @@ import { ResultResponse } from '../shared/dto/resultresponse';
 import { ConfirmReservationRequest } from '../shared/dto/confirmreservation';
 import { RejectdReservation } from '../shared/dto/rejectreservation';
 import { CancelReservation } from '../shared/dto/cancelreservation';
-import { CompleteReservation } from '../shared/dto/completereservation';
+import { UpdateReservationStatusRequest } from '../shared/dto/updatereservation';
 
 @Injectable({
   providedIn: 'root',
@@ -37,9 +37,9 @@ export class ReservationService {
     );
   }
 
-  completedReservation(request: CompleteReservation): Observable<ResultResponse> {
+  updateReservation(request: UpdateReservationStatusRequest): Observable<ResultResponse> {
     return this.http.put<ResultResponse>(
-      `${this.apiUrl}/complete/${request.idReservation}`,
+      `${this.apiUrl}/updateReservation/${request.idReservation}`,
       request,
     );
   }

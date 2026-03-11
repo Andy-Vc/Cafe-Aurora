@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <div class="empty-state" *ngIf="!loading && reservations.length === 0">
+    <div class="empty-state" *ngIf="!loading && !reservations?.length">
       <div class="empty-icon">
         <i class="bi bi-inbox"></i>
       </div>

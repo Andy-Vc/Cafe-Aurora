@@ -7,10 +7,11 @@ import { ReservationService } from '../../service/reservation.service';
 import { CommonModule } from '@angular/common';
 import { CancelReservation } from '../../shared/dto/cancelreservation';
 import { ReportService } from '../../service/report.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-reservations',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './reservations.component.html',
   styleUrl: './reservations.component.css',
 })
@@ -45,7 +46,7 @@ export class ReservationsComponent implements OnInit {
 
     this.reservationService.getActiveReservations(userId).subscribe({
       next: (data) => {
-        this.reservations = data;
+        this.reservations = data ?? [];
         this.loading = false;
       },
       error: (err) => {
@@ -182,18 +183,17 @@ export class ReservationsComponent implements OnInit {
     return new Date(date) > new Date();
   }
 
-  get totalReservations(): number {
-    return this.reservations.length;
-  }
+ get totalReservations(): number {
+  return this.reservations?.length ?? 0;
+}
 
-  get upcomingReservations(): number {
-    return this.reservations.filter((r) => this.isUpcoming(r.reservationDate))
-      .length;
-  }
+get upcomingReservations(): number {
+  return this.reservations?.filter((r) => this.isUpcoming(r.reservationDate)).length ?? 0;
+}
 
-  get confirmedReservations(): number {
-    return this.reservations.filter(
-      (r) => r.status.toUpperCase() === 'CONFIRMADA',
-    ).length;
-  }
+get confirmedReservations(): number {
+  return this.reservations?.filter(
+    (r) => r.status.toUpperCase() === 'CONFIRMADA'
+  ).length ?? 0;
+}
 }

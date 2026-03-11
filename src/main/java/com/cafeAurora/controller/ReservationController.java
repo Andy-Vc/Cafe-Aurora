@@ -3,7 +3,7 @@ package com.cafeAurora.controller;
 import java.util.List;
 import java.util.UUID;
 import com.cafeAurora.dto.CancelReservationRequest;
-import com.cafeAurora.dto.CompleteReservationRequest;
+import com.cafeAurora.dto.UpdateReservationStatusRequest;
 import com.cafeAurora.dto.ConfirmReservationRequest;
 import com.cafeAurora.dto.RejectReservationRequest;
 import org.springframework.http.HttpStatus;
@@ -92,15 +92,15 @@ public class ReservationController {
 	    }
 	}
 	
-	@PutMapping("/complete/{idReservation}")
-	public ResponseEntity<ResultResponse> completeReservation(
+	@PutMapping("/updateReservation/{idReservation}")
+	public ResponseEntity<ResultResponse> updateReservation(
 	        @PathVariable Integer idReservation,
-	        @RequestBody CompleteReservationRequest request
+	        @RequestBody UpdateReservationStatusRequest request
 	) {
 	    try {
 	        request.setIdReservation(idReservation);
 
-	        ResultResponse result = reservationService.completeReservation(request);
+	        ResultResponse result = reservationService.updateReservationStatusReceptionist(request);
 
 	        if (!result.getValue()) {
 	            return ResponseEntity.badRequest().body(result);

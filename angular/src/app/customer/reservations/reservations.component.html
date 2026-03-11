@@ -51,6 +51,7 @@
       </div>
     </div>
     <div class="reservations-list" *ngIf="reservations.length > 0">
+
       <div *ngFor="let reservation of reservations" class="reservation-card"
         [class.upcoming]="isUpcoming(reservation.reservationDate)">
 
@@ -126,7 +127,19 @@
             </button>
           </div>
         </div>
+        
       </div>
     </div>
+          <div class="empty-state" *ngIf="reservations.length === 0">
+          <div class="empty-icon">
+            <i class="bi bi-calendar-x"></i>
+          </div>
+          <h3>Sin reservas registradas</h3>
+          <p>Aún no tienes reservas. ¡Haz tu primera reserva ahora!</p>
+          <a routerLink="/cliente/reserva" class="btn-primary">
+            <i class="bi bi-plus-circle"></i>
+            Nueva Reserva
+          </a>
+        </div>
   </div>
-</section>
+</section>s

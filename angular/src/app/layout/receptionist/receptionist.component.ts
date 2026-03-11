@@ -22,13 +22,11 @@ export class ReceptionistComponent implements OnInit {
   currentYear = new Date().getFullYear();
   sidebarOpen = true;
 
-  // Auth state
   currentUser: UserResponse | null = null;
   showUserMenu = false;
 
   private userSubscription?: Subscription;
 
-  // Navigation items
   navItems = [
     {
       icon: 'bi-speedometer2',

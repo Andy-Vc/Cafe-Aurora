@@ -90,6 +90,7 @@ export class ReservationComponent implements OnInit {
         specialNotes: this.reservationForm.message || undefined,
         user: { idUser: this.currentUser!.idUser },
         status: 'PENDIENTE',
+        source: 'ONLINE',
         createdAt: '',
         updatedAt: '',
       };

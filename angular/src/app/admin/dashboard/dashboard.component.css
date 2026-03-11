@@ -107,7 +107,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .kpi-grid {
@@ -224,10 +226,21 @@
   border-radius: 0 0 16px 16px;
 }
 
-.kpi-today .kpi-accent-bar { background: var(--color-accent); }
-.kpi-month .kpi-accent-bar { background: #6366f1; }
-.kpi-clients .kpi-accent-bar { background: #10b981; }
-.kpi-tables .kpi-accent-bar { background: #f59e0b; }
+.kpi-today .kpi-accent-bar {
+  background: var(--color-accent);
+}
+
+.kpi-month .kpi-accent-bar {
+  background: #6366f1;
+}
+
+.kpi-clients .kpi-accent-bar {
+  background: #10b981;
+}
+
+.kpi-tables .kpi-accent-bar {
+  background: #f59e0b;
+}
 
 .status-grid {
   display: grid;
@@ -305,16 +318,26 @@
   line-height: 1;
 }
 
-:host-context(.light-mode) .status-count { color: var(--light-text); }
-:host-context(.dark-mode) .status-count { color: var(--dark-text-color); }
+:host-context(.light-mode) .status-count {
+  color: var(--light-text);
+}
+
+:host-context(.dark-mode) .status-count {
+  color: var(--dark-text-color);
+}
 
 .status-label {
   font-size: 0.8rem;
   font-weight: 500;
 }
 
-:host-context(.light-mode) .status-label { color: #64748b; }
-:host-context(.dark-mode) .status-label { color: #94a3b8; }
+:host-context(.light-mode) .status-label {
+  color: #64748b;
+}
+
+:host-context(.dark-mode) .status-label {
+  color: #94a3b8;
+}
 
 .status-progress {
   position: absolute;
@@ -326,8 +349,13 @@
   overflow: hidden;
 }
 
-:host-context(.light-mode) .status-progress { background: #f1f5f9; }
-:host-context(.dark-mode) .status-progress { background: rgba(255,255,255,0.05); }
+:host-context(.light-mode) .status-progress {
+  background: #f1f5f9;
+}
+
+:host-context(.dark-mode) .status-progress {
+  background: rgba(255, 255, 255, 0.05);
+}
 
 .progress-bar {
   height: 100%;
@@ -335,10 +363,21 @@
   transition: width 0.8s ease;
 }
 
-.status-pending .progress-bar { background: #f59e0b; }
-.status-confirmed .progress-bar { background: #6366f1; }
-.status-completed .progress-bar { background: #10b981; }
-.status-cancelled .progress-bar { background: #ef4444; }
+.status-pending .progress-bar {
+  background: #f59e0b;
+}
+
+.status-confirmed .progress-bar {
+  background: #6366f1;
+}
+
+.status-completed .progress-bar {
+  background: #10b981;
+}
+
+.status-cancelled .progress-bar {
+  background: #ef4444;
+}
 
 .charts-grid {
   display: grid;
@@ -385,16 +424,26 @@
   margin: 0 0 4px 0;
 }
 
-:host-context(.light-mode) .chart-title { color: var(--light-text); }
-:host-context(.dark-mode) .chart-title { color: var(--dark-text-color); }
+:host-context(.light-mode) .chart-title {
+  color: var(--light-text);
+}
+
+:host-context(.dark-mode) .chart-title {
+  color: var(--dark-text-color);
+}
 
 .chart-subtitle {
   font-size: 0.82rem;
   margin: 0;
 }
 
-:host-context(.light-mode) .chart-subtitle { color: #94a3b8; }
-:host-context(.dark-mode) .chart-subtitle { color: #64748b; }
+:host-context(.light-mode) .chart-subtitle {
+  color: #94a3b8;
+}
+
+:host-context(.dark-mode) .chart-subtitle {
+  color: #64748b;
+}
 
 .chart-wrapper {
   position: relative;
@@ -417,8 +466,13 @@
   border-top: 1px solid;
 }
 
-:host-context(.light-mode) .donut-legend { border-top-color: var(--border-color); }
-:host-context(.dark-mode) .donut-legend { border-top-color: rgba(255, 102, 0, 0.15); }
+:host-context(.light-mode) .donut-legend {
+  border-top-color: var(--border-color);
+}
+
+:host-context(.dark-mode) .donut-legend {
+  border-top-color: rgba(255, 102, 0, 0.15);
+}
 
 .legend-item {
   display: flex;
@@ -433,18 +487,38 @@
   flex-shrink: 0;
 }
 
-.dot-pending   { background: #f59e0b; }
-.dot-confirmed { background: #6366f1; }
-.dot-completed { background: #10b981; }
-.dot-cancelled { background: #ef4444; }
-.dot-rejected { background: rgba(168, 85, 247, 0.85); }
+.dot-pending {
+  background: #f59e0b;
+}
+
+.dot-confirmed {
+  background: #6366f1;
+}
+
+.dot-completed {
+  background: #10b981;
+}
+
+.dot-cancelled {
+  background: #ef4444;
+}
+
+.dot-rejected {
+  background: rgba(168, 85, 247, 0.85);
+}
+
+.dot-no-show {
+  background: #6b7280;
+}
 
 .status-rejected .status-icon-wrap {
   background: rgba(168, 85, 247, 0.15);
   color: #a855f7;
 }
 
-.status-rejected .progress-bar { background: #a855f7; }
+.status-rejected .progress-bar {
+  background: #a855f7;
+}
 
 .legend-text {
   font-size: 0.85rem;
@@ -453,35 +527,101 @@
   justify-content: space-between;
 }
 
-:host-context(.light-mode) .legend-text { color: #64748b; }
-:host-context(.dark-mode) .legend-text { color: #94a3b8; }
+:host-context(.light-mode) .legend-text {
+  color: #64748b;
+}
+
+:host-context(.dark-mode) .legend-text {
+  color: #94a3b8;
+}
 
 .legend-text strong {
   font-weight: 700;
 }
 
-:host-context(.light-mode) .legend-text strong { color: var(--light-text); }
-:host-context(.dark-mode) .legend-text strong { color: var(--dark-text-color); }
+:host-context(.light-mode) .legend-text strong {
+  color: var(--light-text);
+}
+
+:host-context(.dark-mode) .legend-text strong {
+  color: var(--dark-text-color);
+}
+
+.status-no-show {
+  background: rgba(107, 114, 128, 0.15);
+  border-left: 4px solid #6b7280;
+}
+
+.status-no-show .status-icon-wrap {
+  background: #6b7280;
+}
+
+.status-no-show .progress-bar {
+  background: #6b7280;
+}
 
 @media (max-width: 1200px) {
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  .status-grid { grid-template-columns: repeat(2, 1fr); }
-  .charts-grid { grid-template-columns: 1fr; }
-  .chart-side { order: -1; }
-  .chart-donut-wrap { height: 200px; }
-  .donut-legend { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-side {
+    order: -1;
+  }
+
+  .chart-donut-wrap {
+    height: 200px;
+  }
+
+  .donut-legend {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
 }
 
 @media (max-width: 768px) {
-  .dashboard-container { padding: 16px; }
-  .dashboard-header { flex-direction: column; }
-  .page-title { font-size: 1.5rem; }
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .status-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .kpi-value { font-size: 1.8rem; }
+  .dashboard-container {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .status-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .kpi-value {
+    font-size: 1.8rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .kpi-grid { grid-template-columns: 1fr; }
-  .status-grid { grid-template-columns: 1fr; }
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -19,7 +19,7 @@ export class RecordComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
   ) {}
 
   ngOnInit(): void {
@@ -40,14 +40,14 @@ export class RecordComponent implements OnInit {
 
     this.reservationService.getHistoryReservations(userId).subscribe({
       next: (data) => {
-        this.reservations = data;
+        this.reservations = data ?? [];
         this.loading = false;
       },
       error: (err) => {
         console.error('Error loading history reservations:', err);
         AlertService.error(
           'Error al cargar historial',
-          'No se pudo cargar tu historial de reservas. Por favor intenta nuevamente.'
+          'No se pudo cargar tu historial de reservas. Por favor intenta nuevamente.',
         );
         this.loading = false;
       },
@@ -74,6 +74,8 @@ export class RecordComponent implements OnInit {
     const statusMap: { [key: string]: string } = {
       CANCELLED: 'status-cancelled',
       COMPLETED: 'status-completed',
+      REJECTED: 'status-rejected',
+      NO_SHOW: 'status-no-show',
     };
     return statusMap[status.toUpperCase()] || 'status-pending';
   }
@@ -82,6 +84,8 @@ export class RecordComponent implements OnInit {
     const labelMap: { [key: string]: string } = {
       CANCELLED: 'Cancelada',
       COMPLETED: 'Completada',
+      REJECTED: 'Rechazada',
+      NO_SHOW: 'No asistió',
     };
     return labelMap[status.toUpperCase()] || status;
   }
@@ -90,6 +94,8 @@ export class RecordComponent implements OnInit {
     const iconMap: { [key: string]: string } = {
       CANCELLED: 'bi-x-circle-fill',
       COMPLETED: 'bi-check-all',
+      REJECTED: 'bi-slash-circle-fill',
+      NO_SHOW: 'bi-person-x-fill',
     };
     return iconMap[status.toUpperCase()] || 'bi-clock-history';
   }
@@ -107,8 +113,9 @@ export class RecordComponent implements OnInit {
 
   get cancelledReservations(): number {
     return (
-      this.reservations?.filter((r) => r.status?.toUpperCase() === 'CANCELLED')
-        ?.length ?? 0
+      this.reservations?.filter((r) =>
+        ['CANCELLED', 'REJECTED'].includes(r.status?.toUpperCase()),
+      ).length ?? 0
     );
   }
 }

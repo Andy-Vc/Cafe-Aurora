@@ -1,7 +1,7 @@
 import { ReservationUserRef } from '../dto/reservationuserid';
 import { TableCoffe } from './table.model';
 
-export type ReservationStatus = 'PENDIENTE' | 'CONFIRMADA' | 'CANCELADA' | 'COMPLETADA';
+export type ReservationStatus = 'PENDIENTE' | 'CONFIRMADA' | 'CANCELADA' | 'COMPLETADA' | 'NO_SHOW';
 
 export interface Reservation {
   idReservation?: number;
@@ -19,4 +19,5 @@ export interface Reservation {
   responseNotes?: string;
   createdAt: string;
   updatedAt: string;
+  source:string;
 }

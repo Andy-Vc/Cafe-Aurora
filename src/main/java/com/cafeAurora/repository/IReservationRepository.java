@@ -20,7 +20,7 @@ public interface IReservationRepository extends JpaRepository<Reservation, Integ
 	@Query("SELECT r FROM Reservation r WHERE r.user.idUser = :idUser AND r.status IN ('PENDIENTE', 'CONFIRMADA')")
 	List<Reservation> findActiveReservations(UUID idUser);
 
-	@Query("SELECT r FROM Reservation r WHERE r.user.idUser = :idUser AND r.status IN ('RECHAZADA', 'CANCELADA', 'COMPLETADA')")
+	@Query("SELECT r FROM Reservation r WHERE r.user.idUser = :idUser AND r.status IN ('RECHAZADA', 'CANCELADA', 'COMPLETADA', 'NO_SHOW')")
 	List<Reservation> findHistoryReservations(UUID idUser);
 
 	@Query("""

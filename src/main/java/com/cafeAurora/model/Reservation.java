@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import com.cafeAurora.enums.ReservationSource;
 import com.cafeAurora.enums.ReservationStatus;
 
 import jakarta.persistence.Column;
@@ -40,7 +41,7 @@ public class Reservation {
     private Integer idReservation;
     
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "id_user")
     private User user;
     
     @ManyToOne
@@ -84,6 +85,10 @@ public class Reservation {
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name="source")
+    private ReservationSource source = ReservationSource.ONLINE;
     
     @PrePersist
     protected void onCreate() {

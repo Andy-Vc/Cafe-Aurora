@@ -6,6 +6,7 @@ export interface DashboardAdmin{
     completedReservations: number;
     cancelledReservations: number;
     rejectdReservations: number;
+    noShosReservations:number;
     totalClients: number;
     totalTables: number;
     reservationsLastDays: [string, number][];

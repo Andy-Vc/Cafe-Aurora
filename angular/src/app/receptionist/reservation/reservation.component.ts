@@ -274,6 +274,7 @@ export class ReservationComponent implements OnInit {
       CANCELADA: 'status-cancelled',
       COMPLETADA: 'status-completed',
       RECHAZADA: 'status-cancelled',
+      NO_SHOW: 'status-noshow',
     };
     return statusClasses[status] || '';
   }
@@ -285,6 +286,7 @@ export class ReservationComponent implements OnInit {
       CANCELADA: 'Cancelada',
       COMPLETADA: 'Completada',
       RECHAZADA: 'Rechazada',
+      NO_SHOW: 'No Show',
     };
     return statusTexts[status] || status;
   }

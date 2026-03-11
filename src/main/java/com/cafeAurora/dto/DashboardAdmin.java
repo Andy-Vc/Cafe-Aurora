@@ -19,6 +19,7 @@ public class DashboardAdmin {
     private Long completedReservations;
     private Long cancelledReservations;
     private Long rejectdReservations;
+    private Long noShosReservations;
 
     private Long totalClients;
     private Long totalTables;

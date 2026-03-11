@@ -66,7 +66,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.dashboardData.confirmedReservations +
       this.dashboardData.completedReservations +
       this.dashboardData.cancelledReservations +
-      this.dashboardData.rejectdReservations;
+      this.dashboardData.rejectdReservations +
+      this.dashboardData.noShosReservations;
     return total === 0 ? 0 : Math.round((value / total) * 100);
   }
 
@@ -196,6 +197,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           'Completadas',
           'Canceladas',
           'Rechazadas',
+          'No asistidas'
         ],
         datasets: [
           {
@@ -205,6 +207,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               data.completedReservations,
               data.cancelledReservations,
               data.rejectdReservations,
+              data.noShosReservations
             ],
             backgroundColor: [
               'rgba(245, 158, 11, 0.85)',
@@ -212,6 +215,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
               'rgba(16, 185, 129, 0.85)',
               'rgba(239, 68, 68, 0.85)',
               'rgba(168, 85, 247, 0.85)',
+              'rgba(107, 114, 128, 0.85)'
             ],
             borderColor: isDark ? '#1e293b' : '#ffffff',
             borderWidth: 3,

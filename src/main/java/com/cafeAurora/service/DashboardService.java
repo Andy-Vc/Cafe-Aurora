@@ -73,6 +73,9 @@ public class DashboardService {
         Long cancelled =
                 reservationRepository.countByStatus(ReservationStatus.CANCELADA);
         
+        Long noShow =
+        		reservationRepository.countByStatus(ReservationStatus.NO_SHOW);
+        
         Long rejectd =
         		reservationRepository.countByStatus(ReservationStatus.RECHAZADA);
 
@@ -93,6 +96,7 @@ public class DashboardService {
                 completed,
                 cancelled,
                 rejectd,
+                noShow,
                 clients,
                 tables,
                 lastDays

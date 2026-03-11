@@ -497,3 +497,39 @@
     align-items: stretch;
   }
 }
+
+.status-rejected {
+  background-color: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+}
+
+:host-context(.dark-mode) .status-rejected {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+}
+
+.status-no-show {
+  background-color: rgba(156, 163, 175, 0.15);
+  color: #6b7280;
+}
+
+:host-context(.dark-mode) .status-no-show {
+  background-color: rgba(156, 163, 175, 0.1);
+  color: #9ca3af;
+}
+
+.reservation-card.rejected {
+  border-left-color: #dc2626;
+}
+
+:host-context(.dark-mode) .reservation-card.rejected {
+  border-left-color: #f87171;
+}
+
+.reservation-card.no-show {
+  border-left-color: #9ca3af;
+}
+
+:host-context(.dark-mode) .reservation-card.no-show {
+  border-left-color: #6b7280;
+}
