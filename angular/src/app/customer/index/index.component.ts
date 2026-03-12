@@ -90,7 +90,6 @@ export class IndexComponent implements OnInit {
     this.selectedImage = null;
   }
 
-  /*default mockup nosotros */
   teamMembers: TeamMember[] = [
     {
       name: 'María García',

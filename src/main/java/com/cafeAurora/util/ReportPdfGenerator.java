@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ReportPdfGenerator {
+
 	private static final BaseColor PRIMARY = new BaseColor(217, 119, 6);
 	private static final BaseColor DARK_TEXT = new BaseColor(31, 41, 55);
 	private static final BaseColor GRAY_TEXT = new BaseColor(107, 114, 128);
@@ -38,6 +39,7 @@ public class ReportPdfGenerator {
 			document.open();
 
 			addHeader(document, "Reporte de Reservas", start, end);
+
 			// Filtros activos
 			if (status != null || source != null) {
 				Paragraph filters = new Paragraph();
@@ -52,7 +54,7 @@ public class ReportPdfGenerator {
 
 			// Tabla
 			String[] headers = { "#", "Cliente", "Fecha", "Hora", "Personas", "Mesa", "Ubicación", "Estado", "Origen" };
-			float[] widths = { 4, 18, 9, 7, 8, 7, 10, 11, 9 };
+			float[] widths = { 4, 20, 9, 7, 6, 7, 10, 11, 9 };
 			PdfPTable table = buildTableHeader(headers, widths);
 
 			boolean alt = false;
@@ -67,7 +69,7 @@ public class ReportPdfGenerator {
 				alt = !alt;
 			}
 			document.add(table);
-			addSummary(document, "Total reservaciones: " + data.size());
+			addSummary(document, "Total de reservas: " + data.size());
 			addFooter(document);
 
 			document.close();
@@ -81,31 +83,46 @@ public class ReportPdfGenerator {
 	public static byte[] generateTableOccupationReport(List<ReportTableCoffeDTO> data, LocalDate start, LocalDate end) {
 		try {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			Document document = new Document(PageSize.A4, 40, 40, 40, 40);
+
+			Document document = new Document(PageSize.A4.rotate(), 40, 40, 40, 40);
 			PdfWriter.getInstance(document, stream);
 			document.open();
 
 			addHeader(document, "Reporte de Ocupación de Mesas", start, end);
 
-			String[] headers = { "Mesa", "Ubicación", "Capacidad", "Total", "Confirmadas", "Canceladas", "No asistió",
+			// Summary cards
+			long totalRes = data.stream().mapToLong(ReportTableCoffeDTO::getTotalReservations).sum();
+			long totalConf = data.stream().mapToLong(ReportTableCoffeDTO::getConfirmed).sum();
+			long totalNS = data.stream().mapToLong(ReportTableCoffeDTO::getNoShow).sum();
+			long totalComp = data.stream().mapToLong(ReportTableCoffeDTO::getCompleted).sum();
+
+			addSummaryCards(document,
+					new String[] { "Mesas", "Total Reservas", "Confirmadas", "No Asistió", "Completadas" },
+					new String[] { String.valueOf(data.size()), String.valueOf(totalRes), String.valueOf(totalConf),
+							String.valueOf(totalNS), String.valueOf(totalComp) });
+
+			// Tabla
+			String[] headers = { "Mesa", "Ubicación", "Capacidad", "Total", "Confirmadas", "Canceladas", "No Asistió",
 					"Completadas" };
-			float[] widths = { 10, 15, 10, 10, 13, 13, 10, 13 };
+			float[] widths = { 11, 14, 10, 10, 12, 12, 11, 12 };
 			PdfPTable table = buildTableHeader(headers, widths);
 
 			boolean alt = false;
 			for (ReportTableCoffeDTO t : data) {
 				BaseColor bg = alt ? new BaseColor(249, 250, 251) : BaseColor.WHITE;
-				addRow(table, bg, "Table " + t.getTableNumber(), t.getLocation() != null ? t.getLocation() : "-",
+				addRow(table, bg, "Mesa " + t.getTableNumber(), t.getLocation() != null ? t.getLocation() : "-",
 						String.valueOf(t.getCapacity()), String.valueOf(t.getTotalReservations()),
 						String.valueOf(t.getConfirmed()), String.valueOf(t.getCancelled()),
 						String.valueOf(t.getNoShow()), String.valueOf(t.getCompleted()));
 				alt = !alt;
 			}
+
 			document.add(table);
 			addFooter(document);
 
 			document.close();
 			return stream.toByteArray();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -115,43 +132,108 @@ public class ReportPdfGenerator {
 	public static byte[] generateReceptionistReport(List<ReportReceptionistDTO> data, LocalDate start, LocalDate end) {
 		try {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			Document document = new Document(PageSize.A4, 40, 40, 40, 40);
+			Document document = new Document(PageSize.A4.rotate(), 40, 40, 40, 40);
 			PdfWriter.getInstance(document, stream);
 			document.open();
 
-			addHeader(document, "Reporte de Desempeño del Personal de Recepción", start, end);
+			addHeader(document, "Reporte de Rendimiento de Recepcionistas", start, end);
 
-			String[] headers = { "Nombre", "Correo electrónico", "Reservas Atendidas", "Confirmadas", "Rechazadas",
-					"Completadas" };
-			float[] widths = { 18, 28, 14, 13, 13, 14 };
+			// Summary cards
+			long totalAtt = data.stream().mapToLong(ReportReceptionistDTO::getTotalAttended).sum();
+			long totalConf = data.stream().mapToLong(ReportReceptionistDTO::getConfirmed).sum();
+			long totalComp = data.stream().mapToLong(ReportReceptionistDTO::getCompleted).sum();
+
+			int approvalRate = totalAtt > 0 ? (int) Math.round((totalConf * 100.0) / totalAtt) : 0;
+
+			addSummaryCards(document,
+					new String[] { "Recepcionistas", "Total Atendidos", "Confirmados", "Completados",
+							"Tasa de Aprobación" },
+					new String[] { String.valueOf(data.size()), String.valueOf(totalAtt), String.valueOf(totalConf),
+							String.valueOf(totalComp), approvalRate + "%" });
+
+			// Tabla
+			String[] headers = { "#", "Nombre", "Correo", "Total Atendidos", "Confirmados", "Rechazados", "Completados",
+					"Aprobación" };
+			float[] widths = { 8, 14, 26, 13, 12, 12, 12, 11 };
 			PdfPTable table = buildTableHeader(headers, widths);
 
+			int rank = 1;
 			boolean alt = false;
+
 			for (ReportReceptionistDTO r : data) {
 				BaseColor bg = alt ? new BaseColor(249, 250, 251) : BaseColor.WHITE;
-				addRow(table, bg, r.getReceptName(), r.getReceptEmail(), String.valueOf(r.getTotalAttended()),
+
+				int rate = r.getTotalAttended() > 0
+						? (int) Math.round((r.getConfirmed() * 100.0) / r.getTotalAttended())
+						: 0;
+
+				String medal = rank == 1 ? "TOP 1" : rank == 2 ? "TOP 2" : rank == 3 ? "TOP 3" : "#" + rank;
+				addRow(table, bg, medal, r.getReceptName(), r.getReceptEmail(), String.valueOf(r.getTotalAttended()),
 						String.valueOf(r.getConfirmed()), String.valueOf(r.getRejected()),
-						String.valueOf(r.getCompleted()));
+						String.valueOf(r.getCompleted()), rate + "%");
+
 				alt = !alt;
+				rank++;
 			}
+
 			document.add(table);
-			addSummary(document, "Total recepcionistas: " + data.size());
+			addSummary(document, "Total de recepcionistas: " + data.size());
 			addFooter(document);
 
 			document.close();
 			return stream.toByteArray();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+	private static void addSummaryCards(Document document, String[] labels, String[] values) throws DocumentException {
+		PdfPTable cards = new PdfPTable(labels.length);
+		cards.setWidthPercentage(100);
+		cards.setSpacingBefore(4);
+		cards.setSpacingAfter(14);
+
+		BaseColor cardBg = new BaseColor(254, 243, 199);
+		BaseColor cardBorder = new BaseColor(245, 158, 11);
+
+		for (int i = 0; i < labels.length; i++) {
+			PdfPCell card = new PdfPCell();
+			card.setBackgroundColor(cardBg);
+			card.setBorder(Rectangle.BOX);
+			card.setBorderColor(cardBorder);
+			card.setBorderWidth(1f);
+			card.setPadding(10);
+			card.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+			Paragraph labelP = new Paragraph(labels[i], new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD, GRAY_TEXT));
+			labelP.setAlignment(Element.ALIGN_CENTER);
+
+			Paragraph valueP = new Paragraph(values[i], new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD, PRIMARY));
+			valueP.setAlignment(Element.ALIGN_CENTER);
+			valueP.setSpacingBefore(4);
+
+			card.addElement(labelP);
+			card.addElement(valueP);
+			cards.addCell(card);
+		}
+		document.add(cards);
+	}
+
 	private static void addHeader(Document document, String title, LocalDate start, LocalDate end) throws Exception {
 		PdfPTable headerTable = new PdfPTable(2);
 		headerTable.setWidthPercentage(100);
 		headerTable.setWidths(new float[] { 1, 2 });
-		headerTable.addCell(buildLogoCell());
-		headerTable.addCell(buildContactCell());
+		headerTable.setSpacingAfter(4);
+
+		PdfPCell logoCell = buildLogoCell();
+		PdfPCell contactCell = buildContactCell();
+		logoCell.setMinimumHeight(60f);
+		contactCell.setMinimumHeight(60f);
+
+		headerTable.addCell(logoCell);
+		headerTable.addCell(contactCell);
 		document.add(headerTable);
 
 		LineSeparator line = new LineSeparator();
@@ -160,6 +242,7 @@ public class ReportPdfGenerator {
 		document.add(new Chunk(line));
 		document.add(new Paragraph(" "));
 
+		// Título del reporte
 		Paragraph titleP = new Paragraph(title, FONT_TITLE);
 		titleP.setAlignment(Element.ALIGN_CENTER);
 		document.add(titleP);
@@ -219,7 +302,7 @@ public class ReportPdfGenerator {
 		document.add(new Paragraph(" "));
 
 		Paragraph footerText = new Paragraph(
-				"Generado: " + LocalDateTime.now().format(FMT_DT) + "   |   Café Aurora – Reporte Administrativo",
+				"Generated: " + LocalDateTime.now().format(FMT_DT) + "   |   Café Aurora – Administrative Report",
 				FONT_FOOTER);
 		footerText.setAlignment(Element.ALIGN_CENTER);
 		document.add(footerText);

@@ -8,6 +8,8 @@ import { GalleryCrudComponent } from './gallery-crud/gallery-crud.component';
 import { ReceptionistCrudComponent } from './receptionist-crud/receptionist-crud.component';
 import { TableCrudComponent } from './table-crud/table-crud.component';
 import { ReportReservationComponent } from './report-reservation/report-reservation.component';
+import { ReportTableComponent } from './report-table/report-table.component';
+import { ReportReceptionistComponent } from './report-receptionist/report-receptionist.component';
 
 const routes: Routes = [
   {
@@ -30,7 +32,7 @@ const routes: Routes = [
           },
         ],
       },
-       {
+      {
         path: 'item',
         children: [
           {
@@ -49,7 +51,8 @@ const routes: Routes = [
             data: { title: 'Galeria' },
           },
         ],
-      },{
+      },
+      {
         path: 'receptionist',
         children: [
           {
@@ -58,7 +61,8 @@ const routes: Routes = [
             data: { title: 'Recepcionista' },
           },
         ],
-      },{
+      },
+      {
         path: 'table',
         children: [
           {
@@ -67,7 +71,8 @@ const routes: Routes = [
             data: { title: 'Mesas' },
           },
         ],
-      },{
+      },
+      {
         path: 'reports/reservations',
         children: [
           {
@@ -76,8 +81,27 @@ const routes: Routes = [
             data: { title: 'Reporte Reservas' },
           },
         ],
-      }
-      
+      },
+      {
+        path: 'reports/tables',
+        children: [
+          {
+            path: '',
+            component: ReportTableComponent,
+            data: { title: 'Reporte Mesas Ocupadas' },
+          },
+        ],
+      },
+      {
+        path: 'reports/receptionists',
+        children: [
+          {
+            path: '',
+            component: ReportReceptionistComponent,
+            data: { title: 'Reporte Recepcionistas' },
+          },
+        ],
+      },
       /*
       {
         path: 'reportes',
@@ -87,7 +111,7 @@ const routes: Routes = [
           
         ]
       }
-    */,
+    */
     ],
   },
 ];

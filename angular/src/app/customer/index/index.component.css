@@ -1,10 +1,8 @@
-/*      HERO SECTION BASE        */
 .section-hero{
   padding-top: 8rem;
   padding-bottom: 2rem;
 }
 
-/*       CONTENIDO HERO          */
 .hero-content {
   position: relative;
   z-index: 10;
@@ -12,12 +10,10 @@
   margin: 0 auto;
 }
 
-/*        TÍTULO HERO            */
 .hero-title {
   font-size: clamp(3.5rem, 10vw, 6rem);
 }
 
-/*         SLOGAN                */
 .hero-slogan {
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   margin-bottom: 2rem;
@@ -33,7 +29,6 @@
   color: #d6d3d1; 
 }
 
-/*       DESCRIPCIÓN             */
 .hero-description {
   font-size: clamp(1rem, 2vw, 1.125rem);
   line-height: 1.75;
@@ -53,7 +48,6 @@
   color: #d6d3d1; 
 }
 
-/*          BOTONES              */
 .hero-buttons {
   margin-bottom: 4rem;
 }
@@ -106,7 +100,6 @@
   color: white;
 }
 
-/*      TARJETAS DE INFO         */
 .info-card {
   padding: 1.5rem;
   border-radius: 1rem;
@@ -140,7 +133,6 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Iconos de las tarjetas */
 .info-icon {
   width: 2rem;
   height: 2rem;
@@ -153,7 +145,6 @@
   color: #fbbf24;
 }
 
-/* Títulos de las tarjetas */
 .info-title {
   font-size: 1rem;
   font-weight: 600;
@@ -170,7 +161,6 @@
   color: #fafaf9;
 }
 
-/* Texto de las tarjetas */
 .info-text {
   font-size: 0.875rem;
   margin: 0;
@@ -186,7 +176,6 @@
   color: #d6d3d1;
 }
 
-/*      ANIMACIONES FADE IN      */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -222,7 +211,6 @@
   animation: fadeIn 0.8s ease-out 0.8s forwards;
 }
 
-/*          RESPONSIVE           */
 @media (max-width: 768px) {
   .hero-section {
     padding-top: 4rem;
@@ -292,7 +280,6 @@
   }
 }
 
-/*       SECCIÓN MENÚ            */
 .menu-section {
   padding: 5rem 0;
   transition: background-color 0.3s ease;
@@ -307,7 +294,6 @@
   background-color: #130F0B;
 }
 
-/*       ENCABEZADO              */
 .menu-header {
   margin-bottom: 4rem;
 }
@@ -339,7 +325,6 @@
   color: #d6d3d1; 
 }
 
-/*    BOTONES DE CATEGORÍA       */
 .category-btn {
   display: inline-flex;
   align-items: center;
@@ -381,7 +366,6 @@
   color: #fbbf24;
 }
 
-/* Botón activo */
 .category-btn-active {
   background: linear-gradient(to right, #d97706, #ea580c) !important;
   color: white !important;
@@ -394,13 +378,11 @@
   height: 1.25rem;
 }
 
-/*       GRID DE MENÚ            */
 .menu-grid {
   max-width: 75rem;
   margin: 0 auto 4rem;
 }
 
-/*       TARJETAS DE MENÚ        */
 .menu-card {
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -449,7 +431,6 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
 }
 
-/*    HEADER DE LA TARJETA       */
 .menu-card-header {
   padding: 1.5rem 1.5rem 0.75rem;
 }
@@ -514,7 +495,6 @@
   transform: scale(1.1);
 }
 
-/* Badge de categoría */
 .menu-badge {
   position: absolute;
   top: 0.75rem;
@@ -538,7 +518,6 @@
   color: #fbbf24;
 }
 
-/* Badge de no disponible */
 .menu-unavailable-badge {
   position: absolute;
   top: 0.75rem;
@@ -562,17 +541,14 @@
   color: #fecaca;
 }
 
-/* Overlay oscuro cuando no está disponible */
 .menu-card:has(.menu-unavailable-badge) .menu-img {
   filter: grayscale(100%) brightness(0.7);
 }
 
-/*    AJUSTES AL CARD HEADER     */
 .menu-card-header {
   padding: 1rem 1.5rem 0.75rem;
 }
 
-/*    EFECTO SHIMMER LOADING     */
 .menu-img[src=""] {
   background: linear-gradient(
     90deg,
@@ -601,7 +577,6 @@
     background-position: 200% 0;
   }
 }
-/*     BODY DE LA TARJETA        */
 .menu-card-body {
   padding: 0 1.5rem 1.5rem;
   flex: 1;
@@ -618,14 +593,13 @@
 
 :host-context(.light-mode) .menu-card-description,
 :host-context(body:not(.dark-mode)) .menu-card-description {
-  color: #57534e; /* muted */
+  color: #57534e; 
 }
 
 :host-context(.dark-mode) .menu-card-description {
   color: #d6d3d1;
 }
 
-/*          CTA FINAL            */
 .menu-cta {
   margin-top: 4rem;
 }
@@ -702,7 +676,6 @@
   box-shadow: 0 20px 25px -5px rgba(217, 119, 6, 0.4);
 }
 
-/*          RESPONSIVE           */
 @media (max-width: 768px) {
   .menu-section {
     padding: 3rem 0;
@@ -759,7 +732,6 @@
   background-color: #181310;
 }
 
-/*         ENCABEZADO            */
 .galeria-header {
   margin-bottom: 4rem;
 }
@@ -798,17 +770,15 @@
   color: #d6d3d1;
 }
 
-/*       GRID DE GALERÍA         */
 .galeria-grid {
   max-width: 75rem;
   margin: 0 auto 4rem;
 }
 
-/*       ITEMS DE GALERÍA        */
 .galeria-item {
   position: relative;
   width: 100%;
-  padding-bottom: 100%; /* Aspect ratio 1:1 */
+  padding-bottom: 100%;
   border-radius: 1rem;
   overflow: hidden;
   cursor: pointer;
@@ -836,7 +806,6 @@
   background: linear-gradient(135deg, #451a03, #431407);
 }
 
-/*          IMÁGENES             */
 .galeria-img {
   position: absolute;
   top: 0;
@@ -851,7 +820,6 @@
   transform: scale(1.1);
 }
 
-/*      OVERLAY HOVER            */
 .galeria-overlay {
   position: absolute;
   inset: 0;
@@ -904,7 +872,6 @@
   color: #fafaf9;
 }
 
-/*       BADGE NÚMERO            */
 .galeria-badge {
   position: absolute;
   top: 1rem;
@@ -926,7 +893,6 @@
   font-weight: 700;
 }
 
-/*          CTA FINAL            */
 .galeria-cta {
   margin-top: 4rem;
 }
@@ -949,7 +915,6 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
 }
 
-/*       MODAL DE IMAGEN         */
 .modal-content {
   background-color: transparent !important;
 }
@@ -974,7 +939,6 @@
   transform: scale(1.1);
 }
 
-/*          RESPONSIVE           */
 @media (max-width: 992px) {
   .galeria-section {
     padding: 4rem 0;
@@ -1033,7 +997,6 @@
   }
 }
 
-/*      ANIMACIÓN ESCALONADA     */
 .galeria-item:nth-child(1) {
   animation-delay: 0s;
 }
@@ -1058,13 +1021,10 @@
   animation-delay: 0.5s;
 }
 
-/* Si hay más de 6 imágenes, continuar el patrón */
 .galeria-item:nth-child(n+7) {
   animation-delay: 0.6s;
 }
 
-/*      SECCIÓN NOSOTROS         */
-/* ============================= */
 .nosotros-section {
   padding: 5rem 0;
   transition: background-color 0.3s ease;
@@ -1081,9 +1041,6 @@
   background: var(--dark-bg-brown);
 }
 
-/* ============================= */
-/*         ENCABEZADO            */
-/* ============================= */
 .nosotros-header {
   margin-bottom: 4rem;
 }
@@ -1115,9 +1072,6 @@
   color: #d6d3d1;
 }
 
-/* ============================= */
-/*      CONTENIDO PRINCIPAL      */
-/* ============================= */
 .nosotros-content {
   margin-bottom: 5rem;
 }
@@ -1126,9 +1080,6 @@
   padding: 0 1rem;
 }
 
-/* ============================= */
-/*          HISTORIA             */
-/* ============================= */
 .nosotros-story {
   margin-bottom: 3rem;
   animation: fadeInLeft 0.8s ease-out;
@@ -1199,9 +1150,6 @@
   color: #d6d3d1;
 }
 
-/* ============================= */
-/*          VALORES              */
-/* ============================= */
 .nosotros-valores {
   animation: fadeInUp 0.8s ease-out 0.3s backwards;
 }
@@ -1303,9 +1251,6 @@
   color: #a8a29e;
 }
 
-/* ============================= */
-/*       SECCIÓN VISUAL          */
-/* ============================= */
 .nosotros-visual {
   position: relative;
   animation: fadeInRight 0.8s ease-out;
@@ -1395,9 +1340,6 @@
   color: #fafaf9;
 }
 
-/* ============================= */
-/*       ESTADÍSTICAS            */
-/* ============================= */
 .nosotros-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1455,9 +1397,6 @@
   color: #d6d3d1;
 }
 
-/* ============================= */
-/*          EQUIPO               */
-/* ============================= */
 .nosotros-team {
   padding-top: 3rem;
   border-top: 1px solid;
@@ -1606,9 +1545,6 @@
   color: #a8a29e;
 }
 
-/* ============================= */
-/*          RESPONSIVE           */
-/* ============================= */
 @media (max-width: 992px) {
   .nosotros-section {
     padding: 4rem 0;

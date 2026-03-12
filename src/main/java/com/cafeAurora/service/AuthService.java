@@ -19,6 +19,7 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -149,8 +150,14 @@ public class AuthService {
 					.phone(user.getPhone()).role(user.getRole().getNameRole())
 					.message("Inicio de sesión exitoso. ¡Bienvenido de nuevo, " + user.getName() + "!").build();
 
+		}  catch (HttpClientErrorException e) {
+		    String body = e.getResponseBodyAsString();
+		    if (body.contains("invalid_credentials")) {
+		        throw new RuntimeException("Correo o contraseña incorrectos");
+		    }
+		    throw new RuntimeException("Error en autenticación Supabase: " + body);
 		} catch (Exception e) {
-			throw new RuntimeException("Error al iniciar sesión: " + e.getMessage());
+		    throw new RuntimeException("Error interno al iniciar sesión");
 		}
 	}
 

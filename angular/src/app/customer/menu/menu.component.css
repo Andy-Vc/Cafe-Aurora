@@ -84,7 +84,6 @@
   right: 0.5rem;
 }
 
-/* Botones de categoría */
 .category-btn {
   flex-shrink: 0;
   white-space: nowrap;
@@ -135,7 +134,6 @@
   box-shadow: 0 10px 15px -3px rgba(217, 119, 6, 0.3) !important;
 }
 
-/*       TARJETAS DE MENÚ        */
 .menu-card {
   border-radius: 0.75rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -334,7 +332,6 @@
   color: #d6d3d1;
 }
 
-/*        EMPTY STATE            */
 .empty-icon {
   opacity: 0.3;
   transition: color 0.3s ease;
