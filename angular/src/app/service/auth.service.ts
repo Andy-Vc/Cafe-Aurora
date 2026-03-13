@@ -7,6 +7,7 @@ import { LoginRequest } from '../shared/dto/loginrequest';
 import { UserResponse } from '../shared/dto/userresponse';
 import { environment } from '../../environments/environment';
 import { TokenService } from './token.service';
+import { CompleteGoogleProfileRequest } from '../shared/dto/completegooglerequest';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class AuthService {
       });
     }
   }
-  
+
   register(request: RegisterRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/register`, request)
@@ -40,6 +41,31 @@ export class AuthService {
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/login`, request)
+      .pipe(tap((response) => this.handleAuthResponse(response)));
+  }
+
+  loginWithGoogle(token: string): Observable<AuthResponse> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/google`, {}, { headers })
+      .pipe(tap((response) => this.handleAuthResponse(response)));
+  }
+
+  completeGoogleProfile(
+    token: string,
+    request: CompleteGoogleProfileRequest,
+  ): Observable<AuthResponse> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/google/complete`, request, {
+        headers,
+      })
       .pipe(tap((response) => this.handleAuthResponse(response)));
   }
 

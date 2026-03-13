@@ -4,6 +4,7 @@ import com.cafeAurora.dto.LoginRequest;
 import com.cafeAurora.dto.RegisterRequest;
 import com.cafeAurora.dto.AuthResponse;
 import com.cafeAurora.dto.UserResponse;
+import com.cafeAurora.exception.IncompleteProfileException;
 import com.cafeAurora.model.User;
 import com.cafeAurora.model.Role;
 import com.cafeAurora.repository.IUserRepository;
@@ -24,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,7 +45,7 @@ public class AuthService {
 
 	@Value("${supabase.key}")
 	private String supabaseKey;
-	
+
 	@Value("${supabase.anon.key}")
 	private String anonKey;
 
@@ -142,6 +144,11 @@ public class AuthService {
 			User user = userRepository.findById(UUID.fromString(userId))
 					.orElseThrow(() -> new RuntimeException("Usuario no encontrado en TB_USERS"));
 
+			if (user.getPassword() == null) {
+				throw new RuntimeException(
+						"Esta cuenta fue creada con Google. Usa 'Continuar con Google' para iniciar sesión.");
+			}
+			
 			if (!user.getIsActive()) {
 				throw new RuntimeException("Usuario inactivo");
 			}
@@ -150,28 +157,100 @@ public class AuthService {
 					.phone(user.getPhone()).role(user.getRole().getNameRole())
 					.message("Inicio de sesión exitoso. ¡Bienvenido de nuevo, " + user.getName() + "!").build();
 
-		}  catch (HttpClientErrorException e) {
-		    String body = e.getResponseBodyAsString();
-		    if (body.contains("invalid_credentials")) {
-		        throw new RuntimeException("Correo o contraseña incorrectos");
-		    }
-		    throw new RuntimeException("Error en autenticación Supabase: " + body);
+		} catch (HttpClientErrorException e) {
+			String body = e.getResponseBodyAsString();
+			if (body.contains("invalid_credentials")) {
+				throw new RuntimeException("Correo o contraseña incorrectos");
+			}
+			throw new RuntimeException("Error en autenticación Supabase: " + body);
 		} catch (Exception e) {
-		    throw new RuntimeException("Error interno al iniciar sesión");
+			throw new RuntimeException("Error interno al iniciar sesión");
 		}
+	}
+
+	@Transactional(noRollbackFor = IncompleteProfileException.class)
+	public AuthResponse loginWithGoogle(String accessToken) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("apikey", supabaseKey);
+		headers.set("Authorization", "Bearer " + accessToken);
+		HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+		ResponseEntity<Map> response = restTemplate.exchange(supabaseUrl + "/auth/v1/user", HttpMethod.GET, entity,
+				Map.class);
+
+		Map<String, Object> userData = response.getBody();
+		String userId = (String) userData.get("id");
+		String email = (String) userData.get("email");
+
+		Map<String, Object> userMetadata = (Map<String, Object>) userData.get("user_metadata");
+		String name = userMetadata != null ? (String) userMetadata.getOrDefault("full_name", email) : email;
+
+		Optional<User> existingUser = userRepository.findById(UUID.fromString(userId));
+
+		User user;
+		if (existingUser.isPresent()) {
+	        user = existingUser.get();
+	    } else {
+			Role clientRole = roleRepository.findByNameRole("C")
+					.orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+
+			user = new User();
+			user.setIdUser(UUID.fromString(userId));
+			user.setRole(clientRole);
+			user.setEmail(email);
+			user.setName(name);
+			user.setPassword(null);
+			user.setPhone(null);
+			user.setIsActive(true);
+			userRepository.saveAndFlush(user);
+		}
+
+		if (!user.getIsActive()) {
+			throw new RuntimeException("Usuario inactivo");
+		}
+
+		if (user.getPhone() == null || user.getPassword() == null) {
+			throw new IncompleteProfileException(accessToken, userId, email, user.getName());
+		}
+
+		return AuthResponse.builder().token(accessToken).userId(userId).email(email).name(user.getName())
+				.role(user.getRole().getNameRole()).message("¡Bienvenido de nuevo, " + user.getName() + "!").build();
+	}
+
+	@Transactional
+	public AuthResponse completeGoogleProfile(String accessToken, String userId, 
+	                                           String phone, String password) {
+	    User user = userRepository.findById(UUID.fromString(userId))
+	        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+	    if (userRepository.existsByPhone(phone)) {
+	        throw new RuntimeException("El número telefónico ya está registrado.");
+	    }
+
+	    user.setPhone(phone);
+	    user.setPassword(passwordEncoder.encode(password));
+	    userRepository.save(user);
+
+	    return AuthResponse.builder()
+	        .token(accessToken)
+	        .userId(userId)
+	        .email(user.getEmail())
+	        .name(user.getName())
+	        .phone(phone)
+	        .role(user.getRole().getNameRole())
+	        .message("¡Perfil completado! Bienvenido a Café Aurora, " + user.getName() + "!")
+	        .build();
 	}
 
 	public UserResponse getCurrentUser(String authHeader) {
 		String token = authHeader.replace("Bearer ", "");
 
 		try {
-			// Decodificar el JWT usando el secret de Supabase
 			Claims claims = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(supabaseJwtSecret.getBytes())).build()
 					.parseClaimsJws(token).getBody();
 
-			String userId = claims.getSubject(); // El 'sub' contiene el user ID
+			String userId = claims.getSubject(); 
 
-			// Obtener datos completos de TB_USERS
 			User user = userRepository.findById(UUID.fromString(userId))
 					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 

@@ -37,7 +37,17 @@ public class SupabaseJwtFilter extends OncePerRequestFilter {
 		this.jwtSecret = jwtSecret;
 		this.supabaseUrl = supabaseUrl;
 	}
-
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+	    String path = request.getServletPath();
+	    return path.startsWith("/auth/")       
+	        || path.equals("/category/listActives")
+	        || path.startsWith("/item/featured/")
+	        || path.startsWith("/item/available/")
+	        || path.equals("/gallery/listVisibles")
+	        || path.equals("/gallery/listFeatured");
+	}
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
