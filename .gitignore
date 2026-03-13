@@ -11,8 +11,8 @@ application-local.properties
 application-prod.properties
 .env
 *.env
-src/environments/environment.ts
-src/environments/environment.prod.ts
+angular/src/environments/environment.ts
+angular/src/environments/environment.prod.ts
 
 ### STS ###
 .apt_generated
