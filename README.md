@@ -75,7 +75,7 @@ Variables necesarias en frontend:
 
 🔗 Demo
 Frontend
-https://cafe-aurora.vercel.app
+https://cafe-aurora-app.vercel.app/cliente/index
 
 Backend
 https://cafe-aurora.onrender.com
