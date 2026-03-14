@@ -1,5 +1,5 @@
 {
-  "buildCommand": "echo \"export const environment = { production: true, apiUrl: '$API_URL', supabaseUrl: '$SUPABASE_URL', supabaseAnonKey: '$SUPABASE_ANON_KEY' };\" > src/environments/environment.prod.ts && npm run build -- --configuration production",
+  "buildCommand": "node -e \"const fs=require('fs');fs.writeFileSync('src/environments/environment.prod.ts','export const environment = { production: true, apiUrl: \\\"'+process.env.API_URL+'\\\", supabaseUrl: \\\"'+process.env.SUPABASE_URL+'\\\", supabaseAnonKey: \\\"'+process.env.SUPABASE_ANON_KEY+'\\\" };');\" && npm run build -- --configuration production",
   "outputDirectory": "dist/cafe-aurora/browser",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
