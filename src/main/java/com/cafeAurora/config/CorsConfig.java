@@ -13,10 +13,14 @@ public class CorsConfig {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200")
-						.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*")
-						.allowCredentials(true);
-			}
+				registry.addMapping("/**")
+    				.allowedOrigins(
+					"http://localhost:4200",
+					"https://cafe-aurora-app.vercel.app"
+				)
+				.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+				.allowedHeaders("*")
+				.allowCredentials(true);
 		};
 	}
 }
