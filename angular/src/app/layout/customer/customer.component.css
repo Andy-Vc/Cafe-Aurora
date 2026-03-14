@@ -416,18 +416,14 @@
     left: -100%;
     width: 80%;
     max-width: 300px;
-    height: 100vh;
+    height: calc(100vh - 65px); 
     justify-content: start;
     flex-direction: column;
     gap: 0;
-    background-color: inherit;
-    padding: 5rem 0 2rem;
-    margin: 0;
-    list-style: none;
-    transition: left 0.3s ease;
+    padding: 1rem 0 2rem;        
     overflow-y: auto;
-    z-index: 1000;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;  
   }
 
   :host-context(.light-mode) .nav-links,
@@ -1011,4 +1007,28 @@
   .auth-section {
     display: none;
   }
+}
+
+.footer-brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand-block .brand-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.footer-brand-block .brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d97706, #ea580c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }

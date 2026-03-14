@@ -77,6 +77,12 @@
             </button>
           </li>
           <li class="mobile-only auth-section" *ngIf="isAuthenticated">
+            <button class="auth-btn-mobile profile" routerLink="/cliente/mis-reservas" (click)="closeMenuMobile()">
+              <i class="bi bi-calendar-check"></i>
+              <span>Mis Reservas</span>
+            </button>
+          </li>
+          <li class="mobile-only auth-section" *ngIf="isAuthenticated">
             <button class="auth-btn-mobile logout" (click)="logout()">
               <i class="bi bi-box-arrow-right"></i>
               <span>Cerrar Sesión</span>
@@ -183,7 +189,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-section">
-          <div class="brand-block">
+          <div class="footer-brand-block">
             <div class="brand-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
