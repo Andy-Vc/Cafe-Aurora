@@ -1,6 +1,6 @@
 {
   "buildCommand": "node scripts/generate-env.js && npm run build -- --configuration production",
-  "outputDirectory": "dist/cafe-aurora/browser",
+  "outputDirectory": "dist/angular/browser",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
