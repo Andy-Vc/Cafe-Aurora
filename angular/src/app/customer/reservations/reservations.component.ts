@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-reservations',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './reservations.component.html',
   styleUrl: './reservations.component.css',
 })
@@ -25,7 +25,7 @@ export class ReservationsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private reservationService: ReservationService,
-    private reportService: ReportService
+    private reportService: ReportService,
   ) {}
 
   ngOnInit(): void {
@@ -136,21 +136,27 @@ export class ReservationsComponent implements OnInit {
   }
 
   formatDate(date: string): string {
-    return new Date(date).toLocaleDateString('es-ES', {
+    if (!date) return '';
+    const d = date.includes('T')
+      ? new Date(date)
+      : new Date(date + 'T00:00:00');
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('es-ES', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
   }
-
-  formatTime(date: string): string {
-    return new Date(date).toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
+  formatTime(time: string): string {
+    if (!time) return '';
+    const parts = time.split(':');
+    const h = parseInt(parts[0]);
+    const minutes = parts[1] ?? '00';
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    return `${h12}:${minutes} ${ampm}`;
   }
-
   formatDateForFilename(date: string): string {
     return new Date(date).toISOString().split('T')[0];
   }
@@ -183,17 +189,21 @@ export class ReservationsComponent implements OnInit {
     return new Date(date) > new Date();
   }
 
- get totalReservations(): number {
-  return this.reservations?.length ?? 0;
-}
+  get totalReservations(): number {
+    return this.reservations?.length ?? 0;
+  }
 
-get upcomingReservations(): number {
-  return this.reservations?.filter((r) => this.isUpcoming(r.reservationDate)).length ?? 0;
-}
+  get upcomingReservations(): number {
+    return (
+      this.reservations?.filter((r) => this.isUpcoming(r.reservationDate))
+        .length ?? 0
+    );
+  }
 
-get confirmedReservations(): number {
-  return this.reservations?.filter(
-    (r) => r.status.toUpperCase() === 'CONFIRMADA'
-  ).length ?? 0;
-}
+  get confirmedReservations(): number {
+    return (
+      this.reservations?.filter((r) => r.status.toUpperCase() === 'CONFIRMADA')
+        .length ?? 0
+    );
+  }
 }
