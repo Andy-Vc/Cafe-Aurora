@@ -29,6 +29,18 @@
   z-index: 1;
   transition: box-shadow 0.3s ease, background 0.3s ease;
 }
+@media (max-width: 968px){
+  .register-wrapper {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start; 
+  }
+
+  .register-container {
+    height: auto;
+  }
+}
 
 :host-context(body:not(.dark-mode)) .register-container {
   background: white;

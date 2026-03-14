@@ -420,7 +420,7 @@
     justify-content: start;
     flex-direction: column;
     gap: 0;
-    padding: 1rem 0 2rem;        
+    padding: 1rem 0 4.5rem;        
     overflow-y: auto;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;  
