@@ -33,32 +33,25 @@ public class ReservationService {
 
 	/* CUSTOMER */
 	public ResultResponse createReservation(Reservation reservation) {
-	    try {
-	        reservationRepository.save(reservation);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResultResponse(false, "Error al guardar la reserva: " + e.getMessage());
-	    }
+		try {
+			reservationRepository.save(reservation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultResponse(false, "Error al guardar la reserva: " + e.getMessage());
+		}
 
-	    try {
-	        String subject = "Confirmación de solicitud de reserva - Café Aurora";
-	        String message = "Hola " + reservation.getCustomerName() + ",\n\n"
-	                + "¡Gracias por elegir Café Aurora! ☕\n\n"
-	                + "Hemos recibido tu solicitud de reserva con los siguientes detalles:\n\n"
-	                + "📅 Fecha: " + reservation.getReservationDate() + "\n"
-	                + "⏰ Hora: " + reservation.getReservationTime() + "\n"
-	                + "👥 Número de personas: " + reservation.getNumPeople() + "\n\n"
-	                + "Nuestro equipo de recepción revisará tu solicitud y te confirmará la disponibilidad lo antes posible.\n\n"
-	                + "Si necesitas modificar tu reserva o tienes alguna consulta, no dudes en contactarnos.\n\n"
-	                + "Te esperamos en Café Aurora.\n\n"
-	                + "Saludos,\n" + "Equipo de Café Aurora\n\n"
-	                + "— Este es un mensaje automático, por favor no respondas a este correo —";
-	        emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
-	    } catch (Exception e) {
-	        System.err.println("Error enviando correo: " + e.getMessage());
-	    }
+		String subject = "Confirmación de solicitud de reserva - Café Aurora";
+		String message = "Hola " + reservation.getCustomerName() + ",\n\n" + "¡Gracias por elegir Café Aurora! ☕\n\n"
+				+ "Hemos recibido tu solicitud de reserva con los siguientes detalles:\n\n" + "📅 Fecha: "
+				+ reservation.getReservationDate() + "\n" + "⏰ Hora: " + reservation.getReservationTime() + "\n"
+				+ "👥 Número de personas: " + reservation.getNumPeople() + "\n\n"
+				+ "Nuestro equipo de recepción revisará tu solicitud y te confirmará la disponibilidad lo antes posible.\n\n"
+				+ "Si necesitas modificar tu reserva o tienes alguna consulta, no dudes en contactarnos.\n\n"
+				+ "Te esperamos en Café Aurora.\n\n" + "Saludos,\n" + "Equipo de Café Aurora\n\n"
+				+ "— Este es un mensaje automático, por favor no respondas a este correo —";
+		emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
 
-	    return new ResultResponse(true, "¡Reserva registrada con éxito! Te enviaremos la confirmación por correo.");
+		return new ResultResponse(true, "¡Reserva registrada con éxito! Te enviaremos la confirmación por correo.");
 	}
 
 	public ResultResponse cancelReservation(CancelReservationRequest request) {
@@ -105,54 +98,49 @@ public class ReservationService {
 	/* RECEPCIONIST */
 	@Transactional
 	public ResultResponse createReceptionReservation(Reservation request) {
-	    Reservation reservation;
+		Reservation reservation;
 
-	    try {
-	        TableCoffe table = tableCoffeRepository.findById(request.getTable().getIdTable())
-	                .orElseThrow(() -> new RuntimeException("La mesa no existe"));
+		try {
+			TableCoffe table = tableCoffeRepository.findById(request.getTable().getIdTable())
+					.orElseThrow(() -> new RuntimeException("La mesa no existe"));
 
-	        User recepcionista = userRepository.findById(request.getAttendedBy().getIdUser())
-	                .orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
+			User recepcionista = userRepository.findById(request.getAttendedBy().getIdUser())
+					.orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
 
-	        reservation = new Reservation();
-	        reservation.setReservationDate(request.getReservationDate());
-	        reservation.setReservationTime(request.getReservationTime());
-	        reservation.setNumPeople(request.getNumPeople());
-	        reservation.setCustomerName(request.getCustomerName());
-	        reservation.setCustomerPhone(request.getCustomerPhone());
-	        reservation.setCustomerEmail(request.getCustomerEmail());
-	        reservation.setSpecialNotes(request.getSpecialNotes());
-	        reservation.setStatus(ReservationStatus.CONFIRMADA);
-	        reservation.setSource(ReservationSource.RECEPCION);
-	        reservation.setTable(table);
-	        reservation.setAttendedBy(recepcionista);
-	        reservation.setCreatedAt(LocalDateTime.now());
-	        reservation.setUpdatedAt(LocalDateTime.now());
+			reservation = new Reservation();
+			reservation.setReservationDate(request.getReservationDate());
+			reservation.setReservationTime(request.getReservationTime());
+			reservation.setNumPeople(request.getNumPeople());
+			reservation.setCustomerName(request.getCustomerName());
+			reservation.setCustomerPhone(request.getCustomerPhone());
+			reservation.setCustomerEmail(request.getCustomerEmail());
+			reservation.setSpecialNotes(request.getSpecialNotes());
+			reservation.setStatus(ReservationStatus.CONFIRMADA);
+			reservation.setSource(ReservationSource.RECEPCION);
+			reservation.setTable(table);
+			reservation.setAttendedBy(recepcionista);
+			reservation.setCreatedAt(LocalDateTime.now());
+			reservation.setUpdatedAt(LocalDateTime.now());
 
-	        tableCoffeRepository.save(table);
-	        reservationRepository.save(reservation);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResultResponse(false, e.getMessage());
-	    }
+			tableCoffeRepository.save(table);
+			reservationRepository.save(reservation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultResponse(false, e.getMessage());
+		}
 
-	    if (reservation.getCustomerEmail() != null && !reservation.getCustomerEmail().isBlank()) {
-	        try {
-	            String subject = "Reserva registrada - Café Aurora";
-	            String message = "Hola " + reservation.getCustomerName() + ",\n\n"
-	                    + "Tu reserva ha sido registrada en Café Aurora.\n\n"
-	                    + "📅 Fecha: " + reservation.getReservationDate() + "\n"
-	                    + "⏰ Hora: " + reservation.getReservationTime() + "\n"
-	                    + "🍽 Mesa: " + reservation.getTable().getTableNumber() + "\n\n"
-	                    + "Te esperamos. ☕\n\n"
-	                    + "Equipo Café Aurora";
-	            emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
-	        } catch (Exception e) {
-	            System.err.println("Error enviando correo: " + e.getMessage());
-	        }
-	    }
+		if (reservation.getCustomerEmail() != null && !reservation.getCustomerEmail().isBlank()) {
+			String subject = "Reserva registrada - Café Aurora";
+			String message = "Hola " + reservation.getCustomerName() + ",\n\n"
+					+ "Tu reserva ha sido registrada en Café Aurora.\n\n" + "📅 Fecha: "
+					+ reservation.getReservationDate() + "\n" + "⏰ Hora: " + reservation.getReservationTime() + "\n"
+					+ "🍽 Mesa: " + reservation.getTable().getTableNumber() + "\n\n" + "Te esperamos. ☕\n\n"
+					+ "Equipo Café Aurora";
+			emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
 
-	    return new ResultResponse(true, "Reserva creada correctamente");
+		}
+
+		return new ResultResponse(true, "Reserva creada correctamente");
 	}
 
 	public List<Reservation> getReservationPendiente() {
@@ -160,106 +148,94 @@ public class ReservationService {
 	}
 
 	public ResultResponse confirmReservation(ConfirmReservationRequest request) {
-	    Reservation reservation;
-	    TableCoffe table;
-	    User recepcionista;
+		Reservation reservation;
+		TableCoffe table;
+		User recepcionista;
 
-	    try {
-	        reservation = reservationRepository.findById(request.getIdReservation())
-	                .orElseThrow(() -> new RuntimeException("La reserva no existe"));
+		try {
+			reservation = reservationRepository.findById(request.getIdReservation())
+					.orElseThrow(() -> new RuntimeException("La reserva no existe"));
 
-	        if (reservation.getStatus() != ReservationStatus.PENDIENTE) {
-	            return new ResultResponse(false, "Solo se pueden confirmar reservas en estado PENDIENTE");
-	        }
+			if (reservation.getStatus() != ReservationStatus.PENDIENTE) {
+				return new ResultResponse(false, "Solo se pueden confirmar reservas en estado PENDIENTE");
+			}
 
-	        table = tableCoffeRepository.findById(request.getIdTable())
-	                .orElseThrow(() -> new RuntimeException("La mesa no existe"));
+			table = tableCoffeRepository.findById(request.getIdTable())
+					.orElseThrow(() -> new RuntimeException("La mesa no existe"));
 
-	        boolean mesaOcupada = reservationRepository.existsByTableAndReservationDateAndReservationTimeAndStatusIn(
-	                table, reservation.getReservationDate(), reservation.getReservationTime(),
-	                List.of(ReservationStatus.CONFIRMADA, ReservationStatus.PENDIENTE));
+			boolean mesaOcupada = reservationRepository.existsByTableAndReservationDateAndReservationTimeAndStatusIn(
+					table, reservation.getReservationDate(), reservation.getReservationTime(),
+					List.of(ReservationStatus.CONFIRMADA, ReservationStatus.PENDIENTE));
 
-	        if (mesaOcupada) {
-	            return new ResultResponse(false, "La mesa ya está ocupada en esa fecha y hora");
-	        }
+			if (mesaOcupada) {
+				return new ResultResponse(false, "La mesa ya está ocupada en esa fecha y hora");
+			}
 
-	        recepcionista = userRepository.findById(request.getIdRecepcionista())
-	                .orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
+			recepcionista = userRepository.findById(request.getIdRecepcionista())
+					.orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
 
-	        reservation.setStatus(ReservationStatus.CONFIRMADA);
-	        reservation.setAttendedBy(recepcionista);
-	        reservation.setResponseNotes(request.getNotes());
-	        reservation.setUpdatedAt(LocalDateTime.now());
-	        reservation.setTable(table);
-	        reservationRepository.save(reservation);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResultResponse(false, e.getMessage());
-	    }
+			reservation.setStatus(ReservationStatus.CONFIRMADA);
+			reservation.setAttendedBy(recepcionista);
+			reservation.setResponseNotes(request.getNotes());
+			reservation.setUpdatedAt(LocalDateTime.now());
+			reservation.setTable(table);
+			reservationRepository.save(reservation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultResponse(false, e.getMessage());
+		}
 
-	    try {
-	        String subject = "¡Tu reserva está confirmada! - Café Aurora";
-	        String message = "Hola " + reservation.getCustomerName() + ",\n\n"
-	                + "¡Buenas noticias! Tu reserva ha sido CONFIRMADA. ☕\n\n"
-	                + "📋 Detalles de tu reserva:\n"
-	                + "📅 Fecha: " + reservation.getReservationDate() + "\n"
-	                + "⏰ Hora: " + reservation.getReservationTime() + "\n"
-	                + " 🍽 Mesa asignada: " + table.getTableNumber() + "\n"
-	                + "👤 Recepcionista: " + recepcionista.getName() + "\n\n"
-	                + "Te esperamos en Café Aurora para brindarte una experiencia agradable.\n\n"
-	                + "¡Nos vemos pronto! ✨\n\n"
-	                + "Equipo de Café Aurora\n\n"
-	                + "— Este es un mensaje automático, por favor no respondas a este correo —";
-	        emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
-	    } catch (Exception e) {
-	        System.err.println("Error enviando correo de confirmación: " + e.getMessage());
-	    }
+		String subject = "¡Tu reserva está confirmada! - Café Aurora";
+		String message = "Hola " + reservation.getCustomerName() + ",\n\n"
+				+ "¡Buenas noticias! Tu reserva ha sido CONFIRMADA. ☕\n\n" + "📋 Detalles de tu reserva:\n"
+				+ "📅 Fecha: " + reservation.getReservationDate() + "\n" + "⏰ Hora: " + reservation.getReservationTime()
+				+ "\n" + " 🍽 Mesa asignada: " + table.getTableNumber() + "\n" + "👤 Recepcionista: "
+				+ recepcionista.getName() + "\n\n"
+				+ "Te esperamos en Café Aurora para brindarte una experiencia agradable.\n\n"
+				+ "¡Nos vemos pronto! ✨\n\n" + "Equipo de Café Aurora\n\n"
+				+ "— Este es un mensaje automático, por favor no respondas a este correo —";
+		emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
 
-	    return new ResultResponse(true, "Reserva confirmada con éxito");
+		return new ResultResponse(true, "Reserva confirmada con éxito");
 	}
 
 	public ResultResponse rejectReservation(RejectReservationRequest request) {
-	    Reservation reservation;
-	    User recepcionista;
+		Reservation reservation;
+		User recepcionista;
 
-	    try {
-	        reservation = reservationRepository.findById(request.getIdReservation())
-	                .orElseThrow(() -> new RuntimeException("La reserva no existe"));
+		try {
+			reservation = reservationRepository.findById(request.getIdReservation())
+					.orElseThrow(() -> new RuntimeException("La reserva no existe"));
 
-	        if (reservation.getStatus() != ReservationStatus.PENDIENTE) {
-	            return new ResultResponse(false, "Solo se pueden rechazar reservas en estado PENDIENTE");
-	        }
+			if (reservation.getStatus() != ReservationStatus.PENDIENTE) {
+				return new ResultResponse(false, "Solo se pueden rechazar reservas en estado PENDIENTE");
+			}
 
-	        recepcionista = userRepository.findById(request.getIdRecepcionista())
-	                .orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
+			recepcionista = userRepository.findById(request.getIdRecepcionista())
+					.orElseThrow(() -> new RuntimeException("El recepcionista no existe"));
 
-	        reservation.setStatus(ReservationStatus.RECHAZADA);
-	        reservation.setAttendedBy(recepcionista);
-	        reservation.setResponseNotes(request.getNotes());
-	        reservation.setUpdatedAt(LocalDateTime.now());
-	        reservationRepository.save(reservation);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResultResponse(false, e.getMessage());
-	    }
+			reservation.setStatus(ReservationStatus.RECHAZADA);
+			reservation.setAttendedBy(recepcionista);
+			reservation.setResponseNotes(request.getNotes());
+			reservation.setUpdatedAt(LocalDateTime.now());
+			reservationRepository.save(reservation);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResultResponse(false, e.getMessage());
+		}
 
-	    try {
-	        String subject = "Actualización sobre tu reserva - Café Aurora";
-	        String message = "Hola " + reservation.getCustomerName() + ",\n\n"
-	                + "Gracias por tu interés en reservar con Café Aurora.\n\n"
-	                + "Lamentablemente, en esta ocasión no hemos podido confirmar tu reserva.\n\n"
-	                + "📌 Motivo:\n" + request.getNotes() + "\n\n"
-	                + "Te invitamos a intentar nuevamente con otro horario o fecha.\n"
-	                + "Nuestro equipo estará encantado de atenderte.\n\n"
-	                + "Gracias por tu comprensión y esperamos recibirte pronto.\n\n"
-	                + "Saludos,\n" + "Equipo de Café Aurora ☕\n\n"
-	                + "— Este es un mensaje automático, por favor no respondas a este correo —";
-	        emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
-	    } catch (Exception e) {
-	        System.err.println("Error enviando correo de rechazo: " + e.getMessage());
-	    }
+		String subject = "Actualización sobre tu reserva - Café Aurora";
+		String message = "Hola " + reservation.getCustomerName() + ",\n\n"
+				+ "Gracias por tu interés en reservar con Café Aurora.\n\n"
+				+ "Lamentablemente, en esta ocasión no hemos podido confirmar tu reserva.\n\n" + "📌 Motivo:\n"
+				+ request.getNotes() + "\n\n" + "Te invitamos a intentar nuevamente con otro horario o fecha.\n"
+				+ "Nuestro equipo estará encantado de atenderte.\n\n"
+				+ "Gracias por tu comprensión y esperamos recibirte pronto.\n\n" + "Saludos,\n"
+				+ "Equipo de Café Aurora ☕\n\n"
+				+ "— Este es un mensaje automático, por favor no respondas a este correo —";
+		emailService.sendEmail(reservation.getCustomerEmail(), subject, message);
 
-	    return new ResultResponse(true, "Reserva rechazada exitosamente");
+		return new ResultResponse(true, "Reserva rechazada exitosamente");
 	}
 
 	public ResultResponse updateReservationStatusReceptionist(UpdateReservationStatusRequest request) {

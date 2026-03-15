@@ -163,24 +163,24 @@ export class ReservationsComponent implements OnInit {
 
   getStatusClass(status: string): string {
     const statusMap: { [key: string]: string } = {
-      PENDING: 'status-pending',
-      CONFIRMED: 'status-confirmed',
+      PENDIENTE: 'status-pending',
+      CONFIRMADA: 'status-confirmed',
     };
     return statusMap[status.toUpperCase()] || 'status-pending';
   }
 
   getStatusLabel(status: string): string {
     const labelMap: { [key: string]: string } = {
-      PENDING: 'Pendiente',
-      CONFIRMED: 'Confirmada',
+      PENDIENTE: 'Pendiente',
+      CONFIRMADA: 'Confirmada',
     };
     return labelMap[status.toUpperCase()] || status;
   }
 
   getStatusIcon(status: string): string {
     const iconMap: { [key: string]: string } = {
-      PENDING: 'bi-clock-history',
-      CONFIRMED: 'bi-check-circle-fill',
+      PENDIENTE: 'bi-clock-history',
+      CONFIRMADA: 'bi-check-circle-fill',
     };
     return iconMap[status.toUpperCase()] || 'bi-clock-history';
   }
