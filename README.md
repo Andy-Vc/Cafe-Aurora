@@ -116,3 +116,8 @@ VALUES (
 database/DB_Cafe_Aurora.sql
 
 Esto creará las tablas y los datos iniciales del sistema.
+
+⚠️ Nota sobre el envío de correos
+En local funciona correctamente con Gmail SMTP (puerto 465).
+En producción (Render free) no funciona ya que bloquea 
+todas las conexiones SMTP salientes (puertos 25, 465, 587).
