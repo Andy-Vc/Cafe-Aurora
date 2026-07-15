@@ -22,6 +22,40 @@ CREATE TABLE TB_USERS (
   CREATED_AT TIMESTAMP DEFAULT NOW()
 );
 
+INSERT INTO TB_USERS (
+    ID_USER,
+    ID_ROLE,
+    EMAIL,
+    NAME,
+    PASSWORD,
+    PHONE
+)
+VALUES
+(
+    '9c0c9a0d-7a2d-4d73-9f49-2f4d7bfc0d11',
+    1,
+    'admin@cafaurora.com',
+    'Administrador',
+    'clave123',
+    '999111222'
+),
+(
+    '7d8c1f0a-6d52-4d8b-a92e-8c3efdd5e991',
+    2,
+    'recepcion@cafaurora.com',
+    'Recepcionista',
+    'clave123',
+    '999222333'
+),
+(
+    '1f2b3d4c-5e6f-4789-a123-456789abcdef',
+    3,
+    'cliente@gmail.com',
+    'Juan Pérez',
+    'clave123',
+    '999333444'
+);
+
 -- TABLA DE CATEGORÍAS DEL MENÚ
 CREATE TABLE TB_CATEGORIES (
   ID_CAT SERIAL PRIMARY KEY,
@@ -177,3 +211,29 @@ CREATE TRIGGER trg_update_reservations
 BEFORE UPDATE ON TB_RESERVATIONS
 FOR EACH ROW
 EXECUTE FUNCTION update_timestamp();
+
+ALTER TABLE TB_USERS ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_RESERVATIONS ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_TABLES ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_GALLERY ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_ROLES ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_CATEGORIES ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TB_ITEMS ENABLE ROW LEVEL SECURITY;
+
+-- Cualquiera (incluso anónimo) puede ver el menú, mesas disponibles y galería
+CREATE POLICY "public read items" ON TB_ITEMS
+  FOR SELECT USING (IS_AVAILABLE = true);
+
+CREATE POLICY "public read categories" ON TB_CATEGORIES
+  FOR SELECT USING (IS_ACTIVE = true);
+
+CREATE POLICY "public read gallery" ON TB_GALLERY
+  FOR SELECT USING (IS_VISIBLE = true);
+
+-- Un usuario solo ve/edita su propia fila
+CREATE POLICY "users read own row" ON TB_USERS
+  FOR SELECT USING (auth.uid() = ID_USER);
+
+-- Reservas: el cliente solo ve las suyas, admin/recepción ven todas
+CREATE POLICY "user reads own reservations" ON TB_RESERVATIONS
+  FOR SELECT USING (auth.uid() = ID_USER);

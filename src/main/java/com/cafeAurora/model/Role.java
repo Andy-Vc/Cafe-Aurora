@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Getter
@@ -23,6 +25,7 @@ public class Role {
     @Column(name = "id_role")
     private Integer idRole;
     
-    @Column(name = "name_role", nullable = false, unique = true, length = 1)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "name_role", nullable = false, unique = true, columnDefinition = "char(1)")
     private String nameRole;
 }

@@ -22,7 +22,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
+import com.auth0.jwk.Jwk;
+import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import java.net.URL;
+import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -42,9 +49,6 @@ public class AuthService {
 
 	@Value("${supabase.url}")
 	private String supabaseUrl;
-
-	@Value("${supabase.key}")
-	private String supabaseKey;
 
 	@Value("${supabase.anon.key}")
 	private String anonKey;
@@ -128,7 +132,7 @@ public class AuthService {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("apikey", supabaseKey);
+		headers.set("apikey", anonKey);
 
 		HttpEntity<Map<String, String>> entity = new HttpEntity<>(supabaseAuthRequest, headers);
 
@@ -162,16 +166,16 @@ public class AuthService {
 			if (body.contains("invalid_credentials")) {
 				throw new RuntimeException("Correo o contraseña incorrectos");
 			}
-			throw new RuntimeException("Error en autenticación Supabase: " + body);
+			throw new RuntimeException("Error en autenticación Supabase: " +  e.getMessage());
 		} catch (Exception e) {
-			throw new RuntimeException("Error interno al iniciar sesión");
+			throw new RuntimeException("Error interno al iniciar sesión" +  e.getMessage());
 		}
 	}
 
 	@Transactional(noRollbackFor = IncompleteProfileException.class)
 	public AuthResponse loginWithGoogle(String accessToken) {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("apikey", supabaseKey);
+		headers.set("apikey", anonKey);
 		headers.set("Authorization", "Bearer " + accessToken);
 		HttpEntity<Void> entity = new HttpEntity<>(headers);
 
@@ -243,22 +247,29 @@ public class AuthService {
 	}
 
 	public UserResponse getCurrentUser(String authHeader) {
-		String token = authHeader.replace("Bearer ", "");
+    String token = authHeader.replace("Bearer ", "");
 
-		try {
-			Claims claims = Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(supabaseJwtSecret.getBytes())).build()
-					.parseClaimsJws(token).getBody();
+    try {
+        DecodedJWT unverified = JWT.decode(token);
+        String keyId = unverified.getKeyId();
 
-			String userId = claims.getSubject(); 
+        JwkProvider jwkProvider = new UrlJwkProvider(new URL(supabaseUrl + "/auth/v1/.well-known/jwks.json"));
+        Jwk jwk = jwkProvider.get(keyId);
+        ECPublicKey publicKey = (ECPublicKey) jwk.getPublicKey();
 
-			User user = userRepository.findById(UUID.fromString(userId))
-					.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Algorithm algorithm = Algorithm.ECDSA256(publicKey, null);
+        DecodedJWT jwt = JWT.require(algorithm).build().verify(token);
 
-			return UserResponse.builder().idUser(user.getIdUser()).email(user.getEmail()).name(user.getName())
-					.phone(user.getPhone()).role(user.getRole().getNameRole()).isActive(user.getIsActive()).build();
+        String userId = jwt.getSubject();
 
-		} catch (Exception e) {
-			throw new RuntimeException("Token JWT inválido: " + e.getMessage());
-		}
-	}
+        User user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return UserResponse.builder().idUser(user.getIdUser()).email(user.getEmail()).name(user.getName())
+                .phone(user.getPhone()).role(user.getRole().getNameRole()).isActive(user.getIsActive()).build();
+
+    } catch (Exception e) {
+        throw new RuntimeException("Token JWT inválido: " + e.getMessage());
+    }
+}
 }

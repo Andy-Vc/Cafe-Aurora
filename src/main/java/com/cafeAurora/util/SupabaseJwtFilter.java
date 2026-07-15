@@ -1,5 +1,8 @@
 package com.cafeAurora.util;
 
+import com.auth0.jwk.Jwk;
+import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -11,7 +14,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,23 +22,25 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.net.URL;
+import java.security.interfaces.ECPublicKey;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Component
 public class SupabaseJwtFilter extends OncePerRequestFilter {
 	private final IUserRepository userRepository;
-	private final String jwtSecret;
 	private final String supabaseUrl;
+	private final JwkProvider jwkProvider;
 
-	public SupabaseJwtFilter(IUserRepository userRepository, @Value("${supabase.jwt.secret}") String jwtSecret,
-			@Value("${supabase.url}") String supabaseUrl) {
+	public SupabaseJwtFilter(IUserRepository userRepository,
+			@Value("${supabase.url}") String supabaseUrl) throws Exception {
 		this.userRepository = userRepository;
-		this.jwtSecret = jwtSecret;
 		this.supabaseUrl = supabaseUrl;
+		this.jwkProvider = new UrlJwkProvider(new URL(supabaseUrl + "/auth/v1/.well-known/jwks.json"));
 	}
+
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 	    String path = request.getServletPath();
@@ -47,7 +51,7 @@ public class SupabaseJwtFilter extends OncePerRequestFilter {
 	        || path.equals("/gallery/listVisibles")
 	        || path.equals("/gallery/listFeatured");
 	}
-	
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
@@ -62,7 +66,13 @@ public class SupabaseJwtFilter extends OncePerRequestFilter {
 		try {
 			String token = authHeader.substring(7);
 
-			Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
+			DecodedJWT unverified = JWT.decode(token);
+			String keyId = unverified.getKeyId();
+
+			Jwk jwk = jwkProvider.get(keyId);
+			ECPublicKey publicKey = (ECPublicKey) jwk.getPublicKey();
+
+			Algorithm algorithm = Algorithm.ECDSA256(publicKey, null);
 			DecodedJWT jwt = JWT.require(algorithm).withIssuer(supabaseUrl + "/auth/v1").build().verify(token);
 
 			String userId = jwt.getSubject();
